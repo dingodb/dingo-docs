@@ -1,0 +1,35 @@
+---
+book_repo: dingodb/docs-book
+cred_repo: dingodb/docs-site-credentials
+layout_repo: pivotal-cf/docs-layout-repo
+
+broken_link_exclusions: iefix|arrowhead
+repo_link_enabled: false
+feedback_enabled: false
+
+sections:
+- repository:
+    name: dingodb/docs-amazon-s3
+  directory: amazon-s3
+  subnav_template: amazon_s3_subnav.erb
+
+
+template_variables:
+  book_title: DingoDB Product Documentation
+  book_title_short: Dingo Docs
+
+  company: DingoDB
+  support_url: https://dingodb.slack.com
+
+  domain_name: localhost
+
+  product_link:
+  support_link: <a href="https://dingodb.slack.com" target="_blank">Chat with us on Slack</a>
+  support_call_to_action: configyml.support_call_to_action
+  hero_text: configyml.hero_text
+
+  # https://cse.google.com/cse/
+  cse_id: configyml.cse_id
+  ga_account_id: configyml.ga_account_id
+
+public_host: localhost:4567
