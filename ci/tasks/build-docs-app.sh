@@ -1,4 +1,18 @@
 #!/bin/bash
 
 cd docs
-ls -al
+
+cd docs-book
+bundle
+bin/bookbinder bind local
+cd final_app
+
+cat >manifest.yml <<EOF
+---
+applications:
+- name: docs
+  memory: 256M
+  instances: 1
+  host: docs
+  domain: dingotiles.com
+EOF

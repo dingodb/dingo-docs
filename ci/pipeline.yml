@@ -13,8 +13,13 @@ jobs:
   serial: true
   plan:
   - get: docs
-  - task: build-docs-app
+  - task: docs-app
     file: docs/ci/tasks/build-docs-app.yml
+  - put: docs-web-app
+    params:
+      manifest: docs-app/docs-book/final_app/manifest.yml
+      path: docs-app/docs-book/final_app
+      environment_variables: {}
 
 - name: build-task-image
   public: true
@@ -31,13 +36,25 @@ resources:
   type: git
   source:
     uri: git@github.com:dingotiles/dingo-docs.git
-    branch: {{tile-branch}}
+    branch: {{docs-branch}}
     private_key: {{github-key}}
+
+- name: docs-web-app
+  type: cf
+  source:
+    api: https://api.run.pivotal.io
+    username: {{cf-username}}
+    password: {{cf-password}}
+    organization: {{cf-org}}
+    space: {{cf-space}}
+    skip_cert_check: {{cf-skip-cert-check}}
+
+
 - name: docs-docker-image
   type: git
   source:
     uri: git@github.com:dingotiles/dingo-docs.git
-    branch: {{tile-branch}}
+    branch: {{docs-branch}}
     private_key: {{github-key}}
     paths: [ci/ci_image/*]
 - name: docker-image
