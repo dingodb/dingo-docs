@@ -8,7 +8,7 @@ When an application no longer needs to communicate with an S3 bucket, or if you 
 
 ```
 cf unbind-service myapp myapp-bucket
-```.
+```
 
 ## Destroy S3 bucket
 
