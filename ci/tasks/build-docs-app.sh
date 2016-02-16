@@ -6,13 +6,15 @@ set -x # show commands
 cd docs/docs-book
 sed -i "s/ruby '2.0.0'//g" Gemfile
 cat Gemfile
-bundle update
+bundle update --local
+bundle install --binstubs
 
 ./bin/bookbinder bind local
 cd final_app
 
 sed -i "s/ruby '2.0.0'//g" Gemfile
-bundle update
+bundle update --local
+bundle install --binstubs
 
 cat >manifest.yml <<EOF
 ---
