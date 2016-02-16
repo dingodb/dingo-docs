@@ -25,3 +25,6 @@ applications:
   host: docs
   domain: dingotiles.com
 EOF
+
+cat manifest.yml
+pwd
