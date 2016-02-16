@@ -2,6 +2,8 @@
 title: Access S3 credentials
 ---
 
+TODO: blocked on implementing support for Service Keys https://trello.com/c/V1x9a9ek/73-support-service-keys-appguid-field-required
+
 ## Binding credentials
 
 ## Service keys
