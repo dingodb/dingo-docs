@@ -26,6 +26,21 @@ cf restart myapp
 
 ## <a id="credentials"></a>Credentials
 
-The bucket name and API access credentials are passed to your application via environment variables, specifically `$VCAP_SERVICES`.
+The bucket name and API access credentials are passed to your application via environment variables, specifically [`$VCAP_SERVICES`](https://docs.cloudfoundry.org/devguide/deploy-apps/environment-variable.html#VCAP-SERVICES).
+
+Either use a JSON parser or find a language-specific community Cloud Foundry library to make navigating this environment variable easy.
+
+See the [Language Examples](lang-examples.html) for samples of looking up the credentials.
+
+The `credentials` section contains the following keys:
+
+```json
+{
+  "username": "IAM_USER_NAME",
+  "access_key_id": "AWS_ACCESS_KEY",
+  "secret_access_key": "AWS_SECRET",
+  "bucket": "BUCKET_NAME"
+}
+```
 
 ## <a id="provision"></a>Unbind & destroy
