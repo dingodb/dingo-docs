@@ -6,4 +6,4 @@ FROM concourse/concourse-ci
 #ADD https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 /usr/bin/jq
 #RUN chmod 775 /usr/bin/jq
 
-RUN gem install therubyracer bookbindery
+RUN gem install therubyracer bookbindery --no-rdoc --no-ri
