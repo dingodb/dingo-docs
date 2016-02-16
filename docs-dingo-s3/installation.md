@@ -2,7 +2,7 @@
 title: Installing to Pivotal Ops Manager
 ---
 
-## <a id="requirements"></a>requirements
+## <a id="requirements"></a>Requirements
 
 * Pivotal Cloud Foundry
 * 512M in the `system` organization
