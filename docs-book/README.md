@@ -1,6 +1,6 @@
-# DingoTiles Product Documentation
+# Dingo Tiles Product Documentation
 
-This project publishes the DingoTiles Product Documentation as a web application.
+This project publishes the Dingo Tiles Product Documentation as a web application.
 
 **Breaking Change**: This book now uses a centralized layout repository, [docs-layout-repo](https://github.com/pivotal-cf/docs-layout-repo).  
 You must clone this repository to run `bookbinder bind local`.
@@ -20,7 +20,7 @@ This repository does not contain the documentation content. That's contained in 
 
 ## Topic Repositories
 
-The topic repositories that make up the DingoTiles documentation set are:
+The topic repositories that make up the Dingo Tiles documentation set are:
 
 * [Dingo S3](http://github.com/dingodb/docs-dingo-s3): Dingo S3 buckets for Cloud Foundry
 

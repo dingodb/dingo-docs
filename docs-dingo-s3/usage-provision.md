@@ -24,4 +24,8 @@ Applications will have access to the bucket name and Amazon S3 API credentials w
 cf restart myapp
 ```
 
+## <a id="credentials"></a>Credentials
+
+The bucket name and API access credentials are passed to your application via environment variables, specifically `$VCAP_SERVICES`.
+
 ## <a id="provision"></a>Unbind & destroy
