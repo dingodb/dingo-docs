@@ -1,0 +1,41 @@
+---
+groups:
+# - name: pipeline
+#   jobs:
+#   - create-product
+- name: image
+  jobs:
+  - build-task-image
+
+jobs:
+- name: build-task-image
+  public: true
+  serial: true
+  plan:
+  - get: docs-docker-image
+    trigger: true
+  - put: docker-image
+    params:
+      build: docs-docker-image/ci/ci_image
+
+resources:
+- name: docs
+  type: git
+  source:
+    uri: git@github.com:dingotile/dingo-docs.git
+    branch: {{tile-branch}}
+    private_key: {{github-key}}
+- name: docs-docker-image
+  type: git
+  source:
+    uri: git@github.com:dingotile/dingo-docs.git
+    branch: {{tile-branch}}
+    private_key: {{github-key}}
+    paths: [ci/ci_image/*]
+- name: docker-image
+  type: docker-image
+  source:
+    email: {{docker-hub-email}}
+    username: {{docker-hub-username}}
+    password: {{docker-hub-password}}
+    repository: dingodb/dingo-docs-pipeline
