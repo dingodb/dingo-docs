@@ -6,4 +6,4 @@ inputs:
 - name: docs
 
 run:
-  path: tile/ci/tasks/build-docs-app.sh
+  path: docs/ci/tasks/build-docs-app.sh
