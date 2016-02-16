@@ -15,10 +15,10 @@ sections:
 
 
 template_variables:
-  book_title: DingoDB Product Documentation
+  book_title: DingoTiles Product Documentation
   book_title_short: Dingo Docs
 
-  company: DingoDB
+  company: DingoTiles
   support_url: https://dingodb.slack.com
 
   domain_name: localhost
