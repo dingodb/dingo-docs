@@ -13,6 +13,7 @@ jobs:
   serial: true
   plan:
   - get: docs
+  - {get: docs-contents, trigger: true}
   - task: docs-app
     file: docs/ci/tasks/build-docs-app.yml
   - put: docs-web-app
@@ -37,6 +38,13 @@ resources:
     uri: git@github.com:dingotiles/dingo-docs.git
     branch: {{docs-branch}}
     private_key: {{github-key}}
+- name: docs-contents
+  type: git
+  source:
+    uri: git@github.com:dingotiles/dingo-docs.git
+    branch: {{docs-branch}}
+    private_key: {{github-key}}
+    paths: [docs*/**/*]
 
 - name: docs-web-app
   type: cf
