@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e # fail fast
+
 cd docs
 
 cd docs-book
