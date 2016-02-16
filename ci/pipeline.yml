@@ -19,7 +19,6 @@ jobs:
     params:
       manifest: docs-app/docs-book/final_app/manifest.yml
       path: docs-app/docs-book/final_app
-      environment_variables: {}
 
 - name: build-task-image
   public: true
@@ -43,11 +42,11 @@ resources:
   type: cf
   source:
     api: https://api.run.pivotal.io
+    skip_cert_check: false
     username: {{cf-username}}
     password: {{cf-password}}
     organization: {{cf-org}}
     space: {{cf-space}}
-    skip_cert_check: {{cf-skip-cert-check}}
 
 
 - name: docs-docker-image
