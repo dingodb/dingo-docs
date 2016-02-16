@@ -1,3 +1,3 @@
 ---
-title: About Amazon S3 tile
+title: About Dingo S3 tile
 ---
