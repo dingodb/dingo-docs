@@ -26,7 +26,7 @@ template_variables:
   product_link:
   # support_link: <a href="http://slack.dingotiles.com" target="_blank">Chat with us on Slack</a>
   support_link: <script async defer src="http://slack.dingotiles.com/slackin.js"></script>
-  support_call_to_action: configyml.support_call_to_action
+  support_call_to_action: <script async defer src="http://slack.dingotiles.com/slackin.js"></script>
   hero_text: configyml.hero_text
 
   # https://cse.google.com/cse/
