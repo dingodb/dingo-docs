@@ -1,5 +1,5 @@
 ---
-title: Using Dingo S3 with Pivotal Cloud Foundry
+title: Provision &amp; bind new S3 bucket
 ---
 
 Dingo S3 allows all Pivotal Cloud Foundry users to create and use Amazon S3 buckets within their applications. Applications can then use any Amazon S3 library/SDK to read & write to the Amazon S3 API.

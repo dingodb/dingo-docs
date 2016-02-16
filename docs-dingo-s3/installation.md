@@ -6,6 +6,7 @@ title: Installing to Pivotal Ops Manager
 
 * Pivotal Cloud Foundry
 * 512M in the `system` organization
+* AWS account
 * AWS credentials with full S3/IAM privileges (see <a href="#iam-user">Setup AWS IAM user</a>)
 
 ## <a id="upload-tile"></a>Upload tile
