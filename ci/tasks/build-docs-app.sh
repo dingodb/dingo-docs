@@ -1,11 +1,11 @@
 #!/bin/bash
 
 set -e # fail fast
+set -x # show commands
 
-cd docs
-
-cd docs-book
+cd docs/docs-book
 sed -i "s/ruby '2.0.0'/ruby '2.2.4'/g" Gemfile
+cat Gemfile
 bundle update
 
 bin/bookbinder bind local
