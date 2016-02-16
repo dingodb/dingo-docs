@@ -50,3 +50,32 @@ The `dingo-s3` service should be available to all users after installation. Obse
 ```
 cf marketplace
 ```
+
+The output will look like:
+
+```
+Getting services from marketplace in org system / space dingo-s3 as admin...
+OK
+
+service          plans                     description
+app-autoscaler   bronze, gold              Scales bound applications in response to load
+dingo-s3         basic*                    Amazon S3 is storage for the Internet.
+p-mysql          100mb-dev                 MySQL service for application development and testing
+redis            shared-vm, dedicated-vm   Redis service to provide a key-value store
+
+* These service plans have an associated cost. Creating a service instance will incur this cost.
+```
+
+To confirm that you and your users can create & delete buckets:
+
+```
+cf create-service dingo-s3 basic test-bucket
+```
+
+If there are any issues with Internet access or specifically https://aws.amazon.com access, or if your AWS credentials are not sufficient, then this command will fail.
+
+To destroy the test bucket:
+
+```
+cf delete-service test-bucket -f
+```
