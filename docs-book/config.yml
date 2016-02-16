@@ -24,7 +24,8 @@ template_variables:
   domain_name: localhost
 
   product_link:
-  support_link: <a href="https://slack.dingotiles.com" target="_blank">Chat with us on Slack</a>
+  # support_link: <a href="http://slack.dingotiles.com" target="_blank">Chat with us on Slack</a>
+  support_link: <script async defer src="http://slack.dingotiles.com/slackin.js"></script>
   support_call_to_action: configyml.support_call_to_action
   hero_text: configyml.hero_text
 
