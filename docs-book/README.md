@@ -1,6 +1,6 @@
-# Dingo Tiles Product Documentation
+# Dingo Tiles Documentation
 
-This project publishes the Dingo Tiles Product Documentation as a web application.
+This project publishes the Dingo Tiles Documentation as a web application.
 
 **Breaking Change**: This book now uses a centralized layout repository, [docs-layout-repo](https://github.com/pivotal-cf/docs-layout-repo).  
 You must clone this repository to run `bookbinder bind local`.

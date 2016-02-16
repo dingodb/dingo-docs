@@ -15,7 +15,7 @@ sections:
 
 
 template_variables:
-  book_title: Dingo Tiles Product Documentation
+  book_title: Dingo Tiles Documentation
   book_title_short: Dingo Docs
 
   company: Dingo Tiles
