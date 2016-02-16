@@ -1,0 +1,9 @@
+---
+platform: linux
+image: docker:///dingodb/dingo-docs-pipeline
+
+inputs:
+- name: docs
+
+run:
+  path: tile/ci/tasks/build-docs-app.sh
