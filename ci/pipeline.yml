@@ -20,6 +20,7 @@ jobs:
     params:
       manifest: docs-app/docs-book/final_app/manifest.yml
       path: docs-app/docs-book/final_app
+      current_app_name: docs
 
 - name: build-task-image
   public: true
