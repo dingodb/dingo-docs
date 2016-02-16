@@ -19,12 +19,12 @@ template_variables:
   book_title_short: Dingo Docs
 
   company: Dingo Tiles
-  support_url: https://dingotiles.slack.com
+  support_url: https://slack.dingotiles.com
 
   domain_name: localhost
 
   product_link:
-  support_link: <a href="https://dingotiles.slack.com" target="_blank">Chat with us on Slack</a>
+  support_link: <a href="https://slack.dingotiles.com" target="_blank">Chat with us on Slack</a>
   support_call_to_action: configyml.support_call_to_action
   hero_text: configyml.hero_text
 
