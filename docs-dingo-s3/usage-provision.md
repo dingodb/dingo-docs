@@ -1,5 +1,5 @@
 ---
-title: Using AWS S3 with Pivotal Cloud Foundry
+title: Using Dingo S3 with Pivotal Cloud Foundry
 ---
 
 USAGE

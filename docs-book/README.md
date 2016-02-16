@@ -22,7 +22,7 @@ This repository does not contain the documentation content. That's contained in 
 
 The topic repositories that make up the DingoDB documentation set are:
 
-* [AWS S3](http://github.com/dingodb/docs-amazon-s3): AWS S3 buckets for Cloud Foundry
+* [Dingo S3](http://github.com/dingodb/docs-dingo-s3): Dingo S3 buckets for Cloud Foundry
 
 ## Contributing Pull Requests
 

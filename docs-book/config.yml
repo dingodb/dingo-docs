@@ -9,9 +9,9 @@ feedback_enabled: false
 
 sections:
 - repository:
-    name: dingodb/docs-amazon-s3
-  directory: amazon-s3
-  subnav_template: amazon_s3_subnav.erb
+    name: dingodb/docs-dingo-s3
+  directory: dingo-s3
+  subnav_template: dingo_s3_subnav.erb
 
 
 template_variables:
