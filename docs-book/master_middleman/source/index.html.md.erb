@@ -16,33 +16,70 @@ breadcrumb: <%=vars.book_title%>
     </a>
   </li>
   <li class="panel span3">
-    <a class="button" href="/dingo-s3">
+    <a class="button" href="/dingo-s3/installation.html">
       <h3 class="title-flashy" style="padding-top: 0em; padding-left: 0em; line-height: 0.7em; margin-top: 0em;">
         <span class="title-deemph" style="font-size: 0.8em;">Install Tile</span><br>Dingo S3</h3>
     </a>
   </li>
   <li class="panel span3">
-    <a class="button" href="http://slack.dingotiles.com">
+    <a class="button" href="/dingo-s3/usage-provision.html">
       <h3 class="title-flashy" style="padding-top: 0em; padding-left: 0em; line-height: 0.7em; margin-top: 0em;">
-        <span class="title-deemph" style="font-size: 0.8em;">Ask for help on</span><br>Slack</h3>
+        <span class="title-deemph" style="font-size: 0.8em;">Create buckets on</span><br>Amazon S3</h3>
     </a>
   </li>
 </ul>
 <div class="main docs-column-main">
   <div class="docs-subsection">
-    <h3><a class="title" href="/dingo-s3/">Dingo S3</a></h3>
-    <div class="docs-module-description">The Dingo S3 product tile allows Pivotal Cloud Foundry users to provision new Dingo S3 buckets, bind them to their applications, and then access the buckets using any Dingo S3 library.div>
+    <h3><a class="title" href="/dingo-s3/">General Information</a></h3>
+    <div class="docs-module-description">
+      Dingo S3 users can create new Amazon S3 buckets instantly and access the buckets using any Amazon S3 library from their Pivotal Cloud Foundry applications.
+    </div>
     <br>
     <div class="docs-column-description">
       <div class="docs-link">
-        <a href="/dingo-s3/usage-provision.html">Getting started with Dingo S3 with Pivotal Cloud Foundry</a>
-      </div>
+        <a href="https://aws.amazon.com/s3/">Why Amazon S3 as your blobstore?</a>
+      </li>
       <div class="docs-link">
-        <a href="/dingo-s3/installation.html">Installing Dingo S3 tile into Pivotal Ops Manager</a>
-      </div>
+        <a href="https://aws.amazon.com/s3/faqs/">Amazon S3 FAQs</a>
+      </li>
       <div class="docs-link">
-        <a href="/dingo-s3/admin.html">Administering Dingo S3 for Pivotal Cloud Foundry</a>
-      </div>
+        <a href="/dingo-s3/about-tile.html">Dingo S3 tile and Amazon S3</a>
+      </li>
+    </div>
+  </div>
+
+  <div class="docs-subsection">
+    <h3><a class="title" href="/dingo-s3/">Developers</a></h3>
+    <div class="docs-module-description">
+      Use <code>cf</code> commands to create, bind, revoke and destroy buckets from any application.
+    </div>
+    <br>
+    <div class="docs-column-description">
+      <div class="docs-link">
+        <a href="/dingo-s3/usage-provision.html">Provision &amp; bind new S3 bucket</a>
+      </li>
+      <div class="docs-link">
+        <a href="/dingo-s3/usage-delete.html">Revoke access &amp; destroy buckets</a>
+      </li>
+      <div class="docs-link">
+        <a href="/dingo-s3/lang-examples.html">Language examples</a>
+      </li>
+    </div>
+  </div>
+  <hr/>
+  <div class="docs-subsection">
+    <h3><a class="title" href="/dingo-s3/">Operations</a></h3>
+    <div class="docs-module-description">
+      Guides to installation and operations/administration.
+    </div>
+    <br>
+    <div class="docs-column-description">
+      <div class="docs-link">
+        <a href="/dingo-s3/installation.html">Installation</a>
+      </li>
+      <div class="docs-link">
+        <a href="/dingo-s3/admin.html">Administration</a>
+      </li>
     </div>
   </div>
 </div>
