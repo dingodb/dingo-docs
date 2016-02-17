@@ -13,3 +13,99 @@ cf t -o system -s dingo-s3
 cf logs s3-cf-service-broker --recent
 cf logs s3-cf-service-broker
 ```
+
+## <a id="amazon-s3-console"></a>Amazon S3 console
+
+With Dingo S3 users/developers/CI systems can autonomously create new Amazon S3 buckets, and their applications can read/write objects to those buckets.
+
+As an administrator you may be requested to help perform Amazon S3 administration tasks.
+
+First, you will want to determine the Amazon S3 bucket name for a developer's Dingo S3 service instance.
+
+Secondly, you will want to log into the AWS Web Console, and find their bucket. You can then use the AWS Web Console to perform tasks
+
+### <a id="determine-bucket-names"></a>Determining bucket names
+
+To help any user you will need to identify which Pivotal Elastic Runtime organization & space they are working within. As an admin you can then target that space:
+
+```
+cf target -o users-org -s users-space
+```
+
+The user needs to also tell you the service instance name for their Dingo S3 bucket. It will be `users-bucket` in examples below.
+
+To get the list of available service instances:
+
+```
+cf services
+```
+
+The output will look similar to:
+
+```
+Getting services in org users-org / space users-space as admin...
+OK
+
+name           service    plan    bound apps          last operation
+users-bucket   dingo-s3   basic   users-application   create succeeded
+```
+
+You can only discover the Amazon S3 bucket name once the service instance has been bound to at least one application.
+
+You can now use the [`jq`](https://stedolan.github.io/jq/) CLI tool and some advanced use of the `cf curl` subcommand to discover the Amazon S3 bucket name and API credentials.
+
+```
+service_instance_name="users-bucket"
+space_guid=$(cat ~/.cf/config.json | jq -r ".SpaceFields.Guid")
+cf curl $(cf curl /v2/spaces/${space_guid}/service_instances\?q=name:${service_instance_name} | jq -r ".resources[0].entity.service_bindings_url")
+```
+
+The output will look similar too:
+
+```json
+{
+   "total_results": 1,
+   "total_pages": 1,
+   "prev_url": null,
+   "next_url": null,
+   "resources": [
+      {
+         "metadata": {
+            "guid": "22870f9b-4619-451d-befc-3f943fb53575",
+            "url": "/v2/service_bindings/22870f9b-4619-451d-befc-3f943fb53575",
+            "created_at": "2016-02-17T05:31:50Z",
+            "updated_at": null
+         },
+         "entity": {
+            "app_guid": "b2c3096b-51b3-4eb7-bd05-3d4e29983f9f",
+            "service_instance_guid": "5cb4169b-cd93-4fd1-97ec-77a253eeea49",
+            "credentials": {
+              "bucket": "dingo-s3-5cb4169b-cd93-4fd1-97ec-77a253eeea4X",
+              "access_key_id": "AKIAJDKOBK2LGAKJSC6X",
+              "secret_access_key": "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",
+              "username": "dingo-s3-22870f9b-4619-451d-befc-3f943fb5357X"
+            },
+            "binding_options": {},
+            "gateway_data": null,
+            "gateway_name": "",
+            "syslog_drain_url": null,
+            "app_url": "/v2/apps/b2c3096b-51b3-4eb7-bd05-3d4e29983f9f",
+            "service_instance_url": "/v2/service_instances/5cb4169b-cd93-4fd1-97ec-77a253eeea49"
+         }
+      }
+   ]
+}
+```
+
+In the middle are the service binding credentials:
+
+```json
+"credentials": {
+   "bucket": "dingo-s3-5cb4169b-cd93-4fd1-97ec-77a253eeea4X",
+   "access_key_id": "AKIAJDKOBK2LGAKJSC6X",
+   "secret_access_key": "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",
+   "username": "dingo-s3-22870f9b-4619-451d-befc-3f943fb5357X"
+},
+```
+
+The `bucket` value is the globally unique Amazon S3 bucket name (`dingo-s3-5cb4169b-cd93-4fd1-97ec-77a253eeea4X` in this example).
