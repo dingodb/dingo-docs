@@ -10,8 +10,8 @@ You can use the `cf logs` command to see recent or incoming logs:
 
 ```
 cf t -o system -s dingo-s3
-cf logs s3-cf-service-broker --recent
-cf logs s3-cf-service-broker
+cf logs dingo-s3 --recent
+cf logs dingo-s3
 ```
 
 ## <a id="amazon-s3-console"></a>Amazon S3 console
