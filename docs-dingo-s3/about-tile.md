@@ -20,6 +20,6 @@ Dingo S3 is a brokering service between the Pivotal Elastic Runtime and the publ
 
 ![dingo-s3-architecture](/dingo-s3/images/architecture.png)
 
-Requests from the `cf` CLI or Pivotal Web Service are sent to the Pivotal Elastic Runtime API, which forwards them to the Dingo S3 broker, which communicates with Amazon S3 API.
+Requests from the `cf` CLI or Pivotal Web Service are sent to the Pivotal Elastic Runtime API, which forwards them to the Dingo S3 broker. Dingo S3 then communicates with Amazon S3 API to create/destroy buckets; and with Amazon's identity management (IAM) API to create users/permissions to access the buckets.
 
 When an application is given AWS access credentials, it will directly communicate with the Amazon S3 API. Applications do not communicate, nor are they aware, of Dingo S3 (see sections [AWS SDKs](/dingo-s3/lang-s3-sdk.html) and [Language examples](/dingo-s3/lang-examples.html)).
