@@ -8,7 +8,7 @@ Amazon Simple Storage Service (Amazon S3), provides developers and IT teams with
 
 The Dingo S3 tile offers a bucket/blob/object store service to applications, backed by the legendary Amazon Simple Storage Service (Amazon S3). Amazon S3 provides developers and IT teams with secure, durable, highly-scalable object storage.
 
-[]![dingo-s3-architecture](/dingo-s3/images/architecture.png)(/dingo-s3/about-tile.md)
+[![dingo-s3-architecture](/dingo-s3/images/architecture.png)](/dingo-s3/about-tile.md)
 
 Once Dingo S3 is installed then every developer is enabled to go fast - create new S3 buckets on demand, or create them within CI pipelines, and discard when no longer necessary.
 
