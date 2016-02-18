@@ -18,6 +18,8 @@ If you or your developers ever need to revoke permissions to an Amazon S3 bucket
 
 Dingo S3 is a brokering service between the Pivotal Elastic Runtime and the public Amazon S3 service.
 
+![dingo-s3-architecture](/dingo-s3/images/architecture.png)
+
 Requests from the `cf` CLI or Pivotal Web Service are sent to the Pivotal Elastic Runtime API, which forwards them to the Dingo S3 broker, which communicates with Amazon S3 API.
 
 When an application is given AWS access credentials, it will directly communicate with the Amazon S3 API. Applications do not communicate, nor are they aware, of Dingo S3 (see sections [AWS SDKs](/dingo-s3/lang-s3-sdk.html) and [Language examples](/dingo-s3/lang-examples.html)).
