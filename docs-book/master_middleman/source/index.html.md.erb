@@ -8,6 +8,17 @@ breadcrumb: <%=vars.book_title%>
     </h2>
   </div>
 </div>
+
+<div class="main">
+  <p>Most applications running on Pivotal Cloud Foundry require somewhere to upload & retrieve files/objects/blobs. It is an anti-pattern to use a shared file system; and as such Pivotal Cloud Foundry installations do not offer one. Instead, it is best to offer a bucket service/blob store/object store.</p>
+  <p>Amazon Simple Storage Service (Amazon S3), provides developers and IT teams with secure, durable, highly-scalable object storage.</p>
+  <p>The Dingo S3 tile offers a bucket/blob/object store service to applications, backed by the legendary Amazon Simple Storage Service (Amazon S3). Amazon S3 provides developers and IT teams with secure, durable, highly-scalable object storage.</p>
+  <p><a href="/dingo-s3/about-tile.html"><img alt="dingo-s3-architecture" src="/dingo-s3/images/architecture.png"></a></p>
+  <p>Once Dingo S3 is installed then every developer is enabled to go fast - create new S3 buckets on demand, or create them within CI pipelines, and discard when no longer necessary.</p>
+  <p>Dingo S3 makes Amazon S3 safe and secure across all organizations. Each application is only able to access the single S3 bucket it is bound to.</p>
+  <p>Any application written in any programming language can bind to an Amazon S3 bucket and communicate with its API. Many languages have libraries that make it even easier.</p>
+</div>
+
 <ul class="panels">
   <li class="panel span3">
     <a class="button" href="http://docs.pivotal.io/pivotalcf/getstarted/pcf-docs.html">
