@@ -24,7 +24,6 @@ template_variables:
   # hero_text: Learn how to use Dingo Tiles to make your developers go fast
   # book_title_short: Dingo Docs
 
-  company: WorldProtect Investments Ltd
   support_url: https://slack.dingotiles.com
 
   domain_name: docs.dingotiles.com
