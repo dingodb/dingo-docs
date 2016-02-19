@@ -25,8 +25,11 @@ applications:
   memory: 256M
   instances: 1
   host: docs
-  domain: dingotiles.com
   buildpack: ruby_buildpack
+  domain: dingotiles.com
+  hosts:
+  - www
+  - docs
 EOF
 
 cat manifest.yml
