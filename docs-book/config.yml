@@ -27,7 +27,7 @@ template_variables:
   hero_text: Learn how to use Dingo Tiles to make your developers go fast
 
   product_link:
-  support_link: <a href="http://slack.dingotiles.com" target="_blank">Chat with us on Slack</a>
+  support_link: <a href="http://slack.dingotiles.com" target="_blank">Ask any question anytime on Slack</a>
   support_call_to_action: <script async defer src="http://slack.dingotiles.com/slackin.js"></script>
 
   # https://cse.google.com/cse/

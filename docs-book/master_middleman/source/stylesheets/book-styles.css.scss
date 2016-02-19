@@ -111,7 +111,7 @@ hr {
 
 .header-item:after {
   @media (min-width: $bp-wide) {
-    content: "";
+    content: "|";
   }
 }
 
