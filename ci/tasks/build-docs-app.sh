@@ -13,6 +13,7 @@ bundle install --binstubs
 cd final_app
 
 sed -i "s/ruby '2.0.0'//g" Gemfile
+echo "gem 'puma'" >> Gemfile
 bundle update --local
 bundle install --binstubs
 
