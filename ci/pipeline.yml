@@ -45,7 +45,10 @@ resources:
     uri: git@github.com:dingotiles/dingo-docs.git
     branch: {{docs-branch}}
     private_key: {{github-key}}
-    paths: [docs*/**/*]
+    paths:
+      - docs-book/**/*
+      - docs-layout-repo/**/*
+      - docs-dingo-s3/**/*
 
 - name: docs-web-app
   type: cf
