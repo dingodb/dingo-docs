@@ -22,7 +22,7 @@ Today, there is a Dingobot waiting to give you a download link for the Dingo S3 
 
     The URL is valid for a few minutes. If you need a new URL, you can type `/download` again.
 
-4. We are very happy to help you (we like screensharing via [Zoom](https://zoom.us)) to get the Dingo S3 tile installed, connected to your AWS account.
+4. We are very happy to help you (we like screensharing via [Zoom](https://zoom.us)) to get the Dingo S3 tile installed and connected to your AWS account.
 
     We have also written up an [Installation](installation.html) guide.
 
