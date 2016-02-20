@@ -3,6 +3,5 @@ final_app
 .bundle
 cached_shas.yml
 **/.sass-cache/*
-bin
 Gemfile.lock
 .DS_Store
