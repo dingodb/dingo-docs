@@ -10,7 +10,7 @@ Bookbinder uses this centralized layout repository by default, but files in the 
 
 ## What's in this Repo
 
-This repo uses the [Bookbinder gem](http://github.com/pivotal-cf/docs-bookbinder) to generate the documentation as a web application.
+This repo uses the [Bookbinder gem](https://github.com/pivotal-cf/docs-bookbinder) to generate the documentation as a web application.
 
 The `config.yml` file contains the list of topic repositories.
 
@@ -22,7 +22,7 @@ This repository does not contain the documentation content. That's contained in 
 
 The topic repositories that make up the Dingo Tiles documentation set are:
 
-* [Dingo S3](http://github.com/dingodb/docs-dingo-s3): Dingo S3 buckets for Cloud Foundry
+* [Dingo S3](https://github.com/dingodb/docs-dingo-s3): Dingo S3 buckets for Cloud Foundry
 
 ## Contributing Pull Requests
 
