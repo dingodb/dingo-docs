@@ -17,6 +17,9 @@
 @import "partials/_vars.scss";
 @import "partials/_mixins.scss";
 
+// ANNOUNCEMENTS ON OUR HOME PAGE
+@import "announcement.scss";
+
 // master.scss
 .panel {
   img {
