@@ -13,7 +13,7 @@ There can be situations where you'd like to explicitly generate Amazon S3 access
 First, create a new bucket (if not already created):
 
 ```
-cf create-service dingo-s3 basic mybucket
+cf create-service dingo-s3 essential mybucket
 ```
 
 Next, create a Service Key:

@@ -78,8 +78,8 @@ The output will look similar to:
 Getting services in org users-org / space users-space as admin...
 OK
 
-name           service    plan    bound apps          last operation
-users-bucket   dingo-s3   basic   users-application   create succeeded
+name           service    plan        bound apps          last operation
+users-bucket   dingo-s3   essential   users-application   create succeeded
 ```
 
 You can only discover the Amazon S3 bucket name once the service instance has been bound to at least one application.

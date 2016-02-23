@@ -60,7 +60,7 @@ OK
 
 service          plans                     description
 app-autoscaler   bronze, gold              Scales bound applications in response to load
-dingo-s3         basic*                    Amazon S3 is storage for the Internet.
+dingo-s3         essential*                Amazon S3 is storage for the Internet.
 p-mysql          100mb-dev                 MySQL service for application development and testing
 redis            shared-vm, dedicated-vm   Redis service to provide a key-value store
 
@@ -70,7 +70,7 @@ redis            shared-vm, dedicated-vm   Redis service to provide a key-value 
 To confirm that you and your users can create & delete buckets:
 
 ```
-cf create-service dingo-s3 basic test-bucket
+cf create-service dingo-s3 essential test-bucket
 ```
 
 If there are any issues with Internet access or specifically https://aws.amazon.com access, or if your AWS credentials are not sufficient, then this command will fail.

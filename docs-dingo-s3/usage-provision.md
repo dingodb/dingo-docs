@@ -9,7 +9,7 @@ Dingo S3 allows all Pivotal Cloud Foundry users to create and use Amazon S3 buck
 You can create a new Amazon S3 bucket using the `cf create-service` (or `cf cs` alias):
 
 ```
-cf create-service dingo-s3 basic myapp-bucket
+cf create-service dingo-s3 essential myapp-bucket
 ```
 
 You can then share the bucket with one or more applications within the same Cloud Foundry "space".
