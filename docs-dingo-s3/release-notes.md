@@ -2,6 +2,6 @@
 title: Release Notes
 ---
 
-## <a id="0-1-X"></a>0.1.X
+## <a id="1-0-0"></a>1.0.0
 
-- Initial WIP tile
+- Initial public release
