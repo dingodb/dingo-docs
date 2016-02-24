@@ -74,4 +74,4 @@ resources:
     email: {{docker-hub-email}}
     username: {{docker-hub-username}}
     password: {{docker-hub-password}}
-    repository: dingodb/dingo-docs-pipeline
+    repository: dingotiles/dingo-docs-pipeline

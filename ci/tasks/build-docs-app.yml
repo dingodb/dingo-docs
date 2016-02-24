@@ -1,6 +1,6 @@
 ---
 platform: linux
-image: docker:///dingodb/dingo-docs-pipeline
+image: docker:///dingotiles/dingo-docs-pipeline
 
 inputs:
 - name: docs
