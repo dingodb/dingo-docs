@@ -3,7 +3,7 @@ groups:
 - name: deploy
   jobs:
   - deploy
-- name: image
+- name: ci
   jobs:
   - build-task-image
 
@@ -18,8 +18,8 @@ jobs:
     file: docs/ci/tasks/build-docs-app.yml
   - put: docs-web-app
     params:
-      manifest: docs-app/docs/docs-book/final_app/manifest.yml
-      path: docs-app/docs/docs-book/final_app
+      manifest: docs-app/docs-book/final_app/manifest.yml
+      path: docs-app/docs-book/final_app
       current_app_name: docs
 
 - name: build-task-image
