@@ -3,6 +3,7 @@ groups:
 - name: deploy
   jobs:
   - deploy-prod
+  - deploy-postgresql
 - name: ci
   jobs:
   - build-task-image
