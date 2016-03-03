@@ -8,3 +8,4 @@ The community of Dingo S3 users have created some example applications that can 
 | --- | --- |
 | ruby/rails | [rails-s3-upload-thru-example](https://github.com/dingotiles/rails-s3-upload-thru-example) |
 | node.js | [node-s3-upload-example](https://github.com/dingotiles/node-s3-upload-example) |
+| java | [spring-s3-upload-example](https://github.com/dingotiles/spring-s3-upload-example) |
