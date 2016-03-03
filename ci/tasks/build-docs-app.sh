@@ -23,15 +23,12 @@ bundle package
 cat >manifest.yml <<EOF
 ---
 applications:
-- name: docs
+- name: ${app_name}
   memory: 256M
   instances: 1
-  host: docs
   buildpack: ruby_buildpack
   domain: dingotiles.com
-  hosts:
-  - www
-  - docs
+  hosts: ${app_hosts}
 EOF
 
 cat manifest.yml

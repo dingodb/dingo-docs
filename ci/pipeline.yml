@@ -16,11 +16,33 @@ jobs:
   - {get: docs, resource: docs-prod, trigger: true}
   - task: build-docs-app
     file: docs-ci/ci/tasks/build-docs-app.yml
+    config:
+      params:
+        app_name: docs
+        app_hosts: "[www,docs]"
   - put: docs-web-app
     params:
       manifest: docs-app/docs-book/final_app/manifest.yml
       path: docs-app/docs-book/final_app
       current_app_name: docs
+
+- name: deploy-postgresql
+  public: false
+  serial: true
+  plan:
+  - {get: docs-ci}
+  - {get: docs, resource: docs-postgresql, trigger: true}
+  - task: build-docs-app
+    file: docs-ci/ci/tasks/build-docs-app.yml
+    config:
+      params:
+        app_name: docs-postgresql
+        app_hosts: "[pg,postgresql]"
+  - put: docs-web-app
+    params:
+      manifest: docs-app/docs-book/final_app/manifest.yml
+      path: docs-app/docs-book/final_app
+      current_app_name: docs-postgresql
 
 - name: build-task-image
   public: true
@@ -44,6 +66,16 @@ resources:
   source:
     uri: git@github.com:dingotiles/dingo-docs.git
     branch: master
+    private_key: {{github-key}}
+    paths:
+      - docs-book/**/*
+      - docs-layout-repo/**/*
+      - docs-dingo-s3/*
+- name: docs-prod
+  type: git
+  source:
+    uri: git@github.com:dingotiles/dingo-docs.git
+    branch: postgresql
     private_key: {{github-key}}
     paths:
       - docs-book/**/*

@@ -9,5 +9,9 @@ inputs:
 outputs:
 - name: docs-app
 
+params:
+  app_name:
+  app_hosts:
+
 run:
   path: docs-ci/ci/tasks/build-docs-app.sh
