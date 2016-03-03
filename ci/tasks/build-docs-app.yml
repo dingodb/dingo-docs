@@ -3,10 +3,11 @@ platform: linux
 image: docker:///dingotiles/dingo-docs-pipeline
 
 inputs:
+- name: docs-ci
 - name: docs
 
 outputs:
 - name: docs-app
 
 run:
-  path: docs/ci/tasks/build-docs-app.sh
+  path: docs-ci/ci/tasks/build-docs-app.sh

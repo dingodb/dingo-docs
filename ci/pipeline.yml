@@ -2,20 +2,20 @@
 groups:
 - name: deploy
   jobs:
-  - deploy
+  - deploy-prod
 - name: ci
   jobs:
   - build-task-image
 
 jobs:
-- name: deploy
+- name: deploy-prod
   public: false
   serial: true
   plan:
-  - get: docs
-  - {get: docs-contents, trigger: true}
+  - {get: docs-ci}
+  - {get: docs, resource: docs-prod, trigger: true}
   - task: build-docs-app
-    file: docs/ci/tasks/build-docs-app.yml
+    file: docs-ci/ci/tasks/build-docs-app.yml
   - put: docs-web-app
     params:
       manifest: docs-app/docs-book/final_app/manifest.yml
@@ -33,17 +33,17 @@ jobs:
       build: docs-docker-image/ci/ci_image
 
 resources:
-- name: docs
+- name: docs-ci
   type: git
   source:
     uri: git@github.com:dingotiles/dingo-docs.git
-    branch: {{docs-branch}}
+    branch: master
     private_key: {{github-key}}
-- name: docs-contents
+- name: docs-prod
   type: git
   source:
     uri: git@github.com:dingotiles/dingo-docs.git
-    branch: {{docs-branch}}
+    branch: master
     private_key: {{github-key}}
     paths:
       - docs-book/**/*
@@ -65,7 +65,7 @@ resources:
   type: git
   source:
     uri: git@github.com:dingotiles/dingo-docs.git
-    branch: {{docs-branch}}
+    branch: master
     private_key: {{github-key}}
     paths: [ci/ci_image/*]
 - name: docker-image
