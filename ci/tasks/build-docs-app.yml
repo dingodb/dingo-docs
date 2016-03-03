@@ -5,5 +5,8 @@ image: docker:///dingotiles/dingo-docs-pipeline
 inputs:
 - name: docs
 
+outputs:
+- name: docs-app
+
 run:
   path: docs/ci/tasks/build-docs-app.sh

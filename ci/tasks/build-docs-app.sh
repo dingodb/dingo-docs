@@ -3,7 +3,9 @@
 set -e # fail fast
 set -x # show commands
 
-cd docs/docs-book
+git clone docs docs-app
+
+cd docs-app/docs-book
 sed -i "s/ruby '2.0.0'//g" Gemfile
 cat Gemfile
 bundle update --local
