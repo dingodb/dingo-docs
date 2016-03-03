@@ -71,7 +71,7 @@ resources:
       - docs-book/**/*
       - docs-layout-repo/**/*
       - docs-dingo-s3/*
-- name: docs-prod
+- name: docs-postgresql
   type: git
   source:
     uri: git@github.com:dingotiles/dingo-docs.git
