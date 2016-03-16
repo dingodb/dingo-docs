@@ -12,6 +12,10 @@ sections:
     name: dingodb/docs-dingo-s3
   directory: dingo-s3
   subnav_template: dingo_s3_subnav.erb
+- repository:
+    name: dingodb/docs-dingo-postgresql
+  directory: dingo-postgresql
+  subnav_template: dingo_postgresql_subnav.erb
 
 
 template_variables:
