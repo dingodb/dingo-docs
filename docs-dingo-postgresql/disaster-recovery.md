@@ -20,6 +20,7 @@ In the future of Dingo PostgreSQL we want to allow user's to resolve their own d
 
 For now, a Pivotal Cloud Foundry operator will be required to help recover from user disasters. But the great news is that it is possible to recover from disasters.
 
+* [Recover a user's deleted service instance](recover-user-deleted-service.html)
 
 ## Complete disasters
 
