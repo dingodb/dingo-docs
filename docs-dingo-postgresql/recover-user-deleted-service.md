@@ -55,3 +55,28 @@ The first line includes `patroni-broker.cluster.remove-node.perform`. The subseq
 In the first line, locate `"instance-id":"6e101b27-ee1b-4f4d-a032-4401a3709ec3"`. This is the original Pivotal Cloud Foundry GUID for the service instance that was deleted by the user.
 
 This `instance-id` GUID is how we will locate the archived backups from which you will restore to a new database.
+
+## <a id="confirm-backups-location"></a>Confirm backups location
+
+NOTE: the backup location is pre-determinable; see end of section.
+
+Search the logs again for the `instance-id` GUID (`6e101b27-ee1b-4f4d-a032-4401a3709ec3` in example above).
+
+You will see the `backup>` and `patroni>` lines where [wal-e](https://github.com/wal-e/wal-e) uploaded regular base backups and frequent write-ahead log (WAL) segments to an offsite object store.
+
+```
+Mar 16 19:11:47 14ddd22e-719e-4aca-b318-7f291c97fbba docker/cf-c8ce128e-7b4c-4fe7-a533-e9379356f906:  patroni> upload: tmp/sysids/sysid to s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/sysids/sysid
+Mar 16 19:11:48 14ddd22e-719e-4aca-b318-7f291c97fbba docker/cf-c8ce128e-7b4c-4fe7-a533-e9379356f906:  patroni>         DETAIL: Uploading "pg_xlog/000000010000000000000001" to "s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/wal_005/000000010000000000000001.lzo".
+Mar 16 19:11:48 14ddd22e-719e-4aca-b318-7f291c97fbba docker/cf-c8ce128e-7b4c-4fe7-a533-e9379356f906:  patroni>         STRUCTURED: time=2016-03-17T02:11:48.811154-00 pid=231 action=push-wal key=s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/wal_005/000000010000000000000001.lzo prefix=backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/ seg=000000010000000000000001 state=begin
+Mar 16 19:11:49 14ddd22e-719e-4aca-b318-7f291c97fbba docker/cf-c8ce128e-7b4c-4fe7-a533-e9379356f906:  backup>         DETAIL: Uploading to s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/basebackups_005/base_000000010000000000000002_00000040/extended_version.txt.
+Mar 16 19:11:50 14ddd22e-719e-4aca-b318-7f291c97fbba docker/cf-c8ce128e-7b4c-4fe7-a533-e9379356f906:  backup>         DETAIL: Uploading to "s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/basebackups_005/base_000000010000000000000002_00000040/tar_partitions/part_00000000.tar.lzo".
+...
+```
+
+From these logs we can find the location of the backups `s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal`.
+
+In this example, it is an Amazon S3 bucket `our-postgresql-backups`, under the `/backups/SERVICE_GUID/wal` folder.
+
+The location of backups is actually pre-determinable. When you installed the Dingo PostgreSQL tile you provided the object store credentials and bucket name. So reading the logs above is really to confirm that the backup is available.
+
+_If you don't see any `DETAIL: Uploading to` lines then you have a big problem - there is no backup for this lost service instance._
