@@ -8,7 +8,7 @@ This section documents how to recreate the database and recover it from the arch
 
 NOTE: Future versions of Dingo PostgreSQL will continuously improve the recovery user story - ultimately it will be placed in the hands of the user themselves, and not require operator/administrator privileges as it does now.
 
-## <a id="disaster-problem">The disaster
+## <a id="disaster-problem"></a>The disaster
 
 The disaster is that a user accidentally deleted a service instance and they want it restored.
 
