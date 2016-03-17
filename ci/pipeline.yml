@@ -79,7 +79,7 @@ resources:
     paths:
       - docs-book/**/*
       - docs-layout-repo/**/*
-      - docs-dingo-s3/*
+      - docs-dingo-postgresql/*
 
 - name: docs-web-app
   type: cf
