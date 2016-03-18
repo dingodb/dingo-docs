@@ -24,6 +24,15 @@ Or perhaps they deleted the entire space:
 cf delete-space important-space-and-all-databases
 ```
 
+## <a id="questions-for-user"></a>Questions for the user
+
+When the user requests to have their service recovered, please ask them for:
+
+* the organization & space into which they wish to have it recreated
+* the service name
+* the desired service plan for recreated service
+* the application(s) is was bound it
+
 ## <a id="discover-lost-metadata"></a>Discover lost metadata
 
 When a user submits an urgent distressed "I've deleted my Dingo PostgreSQL database, please help!" there are some metadata challenges to overcome before you can help them.
@@ -36,7 +45,7 @@ Prior to the user deleting their service instance, you might have been able to l
 CF_TRACE=true cf service important-db
 ```
 
-`CF_TRACE=true` would have shown you all the API results - the internal metadata - for the service instance.
+`CF_TRACE=true` would have shown you all the API results - the internal metadata - for the service instance. You could learn its service GUID, the space GUID and the organization GUID.
 
 But, the user deleted the service instance. So that data is gone.
 
@@ -80,3 +89,25 @@ In this example, it is an Amazon S3 bucket `our-postgresql-backups`, under the `
 The location of backups is actually pre-determinable. When you installed the Dingo PostgreSQL tile you provided the object store credentials and bucket name. So reading the logs above is really to confirm that the backup is available.
 
 _If you don't see any `DETAIL: Uploading to` lines then you have a big problem - there is no backup for this lost service instance._
+
+## <a id="recreate-database"></a>Recreate database
+
+Now recreate the Dingo PostgreSQL database on behalf of the user, into the same organization/space.
+
+Login to Pivotal Cloud Foundry as an admin and target the user's organization/space:
+
+```
+cf target -o org -s important-space-and-all-databases
+```
+
+If the user wants you to rebind the service to an application(s) then confirm that they exist in this space:
+
+```
+cf applications
+```
+
+Regardless what service plan the user requests, initially recreate the service with the `solo` plan. This makes it easier to find a single Docker container and stop it.
+
+```
+cf create-service important-db
+```
