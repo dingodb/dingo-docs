@@ -233,3 +233,55 @@ Mar 17 18:05:20 0.cell_z1-partition-cac94a070a81fd8f3931.dingo-postgresql-98b09c
 ```
 
 By stopping the Docker container you have stopped the new PostgreSQL database from continually writing to its archive. This will allow you to replace its archive with the contents from the previous service instance - the archive you are trying to recover.
+
+## <a id="cloning-backups"></a>Cloning backups
+
+This section documents Amazon S3 CLI commands, as it is the only supported object store in the current version of Dingo PostgreSQL.
+
+The new service instance, with its new GUID, has a new target for its object store backups. To restore the old archive backups, you will need to clone them from the original archive to the new archive.
+
+Search the logs by the service GUID `78218ded-7d88-4d69-bd44-6f478c300134` to get the target object store/bucket/folder:
+
+```
+patroni>         DETAIL: Uploading "pg_xlog/000000010000000000000004" to "s3://dingo-postgresql-backups-vsphere/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/wal_005/000000010000000000000004.lzo".
+```
+
+The target is `s3://dingo-postgresql-backups-vsphere/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal`.
+
+Our objective is to sync the original `/wal` folder into the target `/wal` folder above; then restart the Docker container to have it restore itself from the backup.
+
+```
+apt-get install -y awscli jq
+```
+
+You can use the Docker container's own environment variables to use the `aws` CLI:
+
+```
+container=cf-52167ceb-bd3d-4bff-8699-a239d21c5379
+env $(_docker inspect $container | jq -r ".[0].Config.Env[]" | grep "^AWS_" | xargs) aws s3 ls
+```
+
+Setup the source (user's backups) and target (new service instance):
+
+```
+source=s3://dingo-postgresql-backups-vsphere/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal
+target=s3://dingo-postgresql-backups-vsphere/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal
+```
+
+*CONFIRM:* that you have the correct URIs for `$source` (the backup) and `$target` (the new backup). If you get this wrong then you will destroy their backup.
+
+To delete the temporary target backup folder, then replace with a copy of the user's backup:
+
+```
+env $(_docker inspect $container | jq -r ".[0].Config.Env[]" | grep "^AWS_" | xargs) aws s3 rm $target --recursive --region ap-southeast-1
+env $(_docker inspect $container | jq -r ".[0].Config.Env[]" | grep "^AWS_" | xargs) aws s3 sync $source $target --region ap-southeast-1
+```
+
+Pass the `--region` flag to the `aws s3` commands if necessary.
+
+The output will show each of the files being sync'd to the new folder:
+
+```
+copy: s3://dingo-postgresql-backups-vsphere/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/wal_005/000000010000000000000004.lzo to s3://dingo-postgresql-backups-vsphere/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/wal_005/000000010000000000000004.lzo
+copy: s3://dingo-postgresql-backups-vsphere/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/wal_005/00000001000000000000000B.lzo to s3://dingo-postgresql-backups-vsphere/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/wal_005/00000001000000000000000B.lzo
+```
