@@ -73,12 +73,39 @@ dingo-postgresql  solo, cluster             PostgreSQL with streaming archives.
 dingo-s3          essential                 Amazon S3 is storage for the Internet.
 ```
 
+### <a id="verification-create-service">Create service
+
 To confirm that you and your users can create & delete PostgreSQL database:
 
 ```
 cf create-service dingo-postgresql solo test-db-solo
 cf create-service dingo-postgresql cluster test-db-cluster
 ```
+
+### <a id="verification-confirm-backups">Confirm backups
+
+Review your operator's system logs for the launch of three Docker containers (one for the `solo` service instance, and two for the `cluster` service instance).
+
+For each of the two service instances there should be logs showing the successful upload of backups to your object store.
+
+```
+Mar 16 19:11:47 14ddd22e-719e-4aca-b318-7f291c97fbba docker/cf-c8ce128e-7b4c-4fe7-a533-e9379356f906:  patroni> upload: tmp/sysids/sysid to s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/sysids/sysid
+Mar 16 19:11:48 14ddd22e-719e-4aca-b318-7f291c97fbba docker/cf-c8ce128e-7b4c-4fe7-a533-e9379356f906:  patroni>         DETAIL: Uploading "pg_xlog/000000010000000000000001" to "s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/wal_005/000000010000000000000001.lzo".
+Mar 16 19:11:48 14ddd22e-719e-4aca-b318-7f291c97fbba docker/cf-c8ce128e-7b4c-4fe7-a533-e9379356f906:  patroni>         STRUCTURED: time=2016-03-17T02:11:48.811154-00 pid=231 action=push-wal key=s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/wal_005/000000010000000000000001.lzo prefix=backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/ seg=000000010000000000000001 state=begin
+Mar 16 19:11:49 14ddd22e-719e-4aca-b318-7f291c97fbba docker/cf-c8ce128e-7b4c-4fe7-a533-e9379356f906:  backup>         DETAIL: Uploading to s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/basebackups_005/base_000000010000000000000002_00000040/extended_version.txt.
+Mar 16 19:11:50 14ddd22e-719e-4aca-b318-7f291c97fbba docker/cf-c8ce128e-7b4c-4fe7-a533-e9379356f906:  backup>         DETAIL: Uploading to "s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/basebackups_005/base_000000010000000000000002_00000040/tar_partitions/part_00000000.tar.lzo".
+...
+```
+
+Confirm that uploads complete successfully and that there are no timeouts due to Internet access issues.
+
+A completed segment will include `state=complete`:
+
+```
+Mar 16 19:11:58 14ddd22e-719e-4aca-b318-7f291c97fbba docker/cf-c8ce128e-7b4c-4fe7-a533-e9379356f906:  patroni>         STRUCTURED: time=2016-03-17T02:11:58.209041-00 pid=253 action=push-wal key=s3://dingo-postgresql-backups-vsphere/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/wal_005/000000010000000000000002.00000028.backup.lzo prefix=backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/ rate=00 seg=000000010000000000000002.00000028.backup state=complete
+```
+
+### <a id="verification-delete-service">Delete service
 
 To destroy the test databases:
 
