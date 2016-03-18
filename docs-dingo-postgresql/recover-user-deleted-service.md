@@ -109,5 +109,92 @@ cf applications
 Regardless what service plan the user requests, initially recreate the service with the `solo` plan. This makes it easier to find a single Docker container and stop it.
 
 ```
-cf create-service important-db
+cf create-service dingo-postgresql95 solo important-db
+```
+
+## <a id="docker-host"></a>Docker host
+
+The new service instance will backed by a single Docker container running on one of the `cell` VMs. You will need to find that Docker container, stop it, replace its new backups with the backups from above, and restart it.
+
+Get the service's GUID:
+
+```
+cf service important-db --guid
+```
+
+The output might look like:
+
+```
+78218ded-7d88-4d69-bd44-6f478c300134
+```
+
+Search the syslog logs for the creation of this service, and identify which `cell` VM into which it was allocated. This sequence is a little elaborate at the moment, we acknowledge that, and will make it more awesome in future.
+
+Search for the service GUID in the logs.
+
+Find the creation of the Docker container, and then search the logs for all logs from that Docker container, say `docker/cf-52167ceb-bd3d-4bff-8699-a239d21c5379`.
+
+At the start of the Docker container logs is the announcement of the `public address` (public to the container, private to the rest of the world):
+
+```
+Mar 17 17:37:38 14ddd22e-719e-4aca-b318-7f291c97fbba docker/cf-52167ceb-bd3d-4bff-8699-a239d21c5379:  looking up public host:port from etcd -> 10.58.111.149:4001/v2/keys/postgresql-patroni/0.cell_z1-partition-cac94a070a81fd8f3931.default.dingo-postgresql-98b09c4b36af74181ee1.microbosh:cf-52167ceb-bd3d-4bff-8699-a239d21c5379:5432 (0)
+Mar 17 17:37:38 14ddd22e-719e-4aca-b318-7f291c97fbba docker/cf-52167ceb-bd3d-4bff-8699-a239d21c5379:  public address 10.58.111.150:32785
+```
+
+The `public address 10.58.111.150:32785` shows the hostname `10.58.111.150` for the Docker container.
+
+You will now switch to using the `bosh` CLI to locate and `ssh` into the Docker host.
+
+## <a id="bosh-ssh"></a>bosh ssh
+
+Behind the scenes of Pivotal Ops Manager is the open source orchestration tool [BOSH](https://bosh.io). Even if you've never used BOSH before, this guide will give you steps that will work for you.
+
+First, SSH into your Ops Manager VM, and provide the password if necessary:
+
+```
+ssh ubuntu@OPSMGR_IP
+```
+
+You need to find the `dingo-postgresql-xxxxxxxx` deployment running on BOSH and confirm which "bosh job" (a server instance) maps to `10.58.111.150` from above.
+
+```
+bosh deployments
+```
+
+This will output a table of deployments, including your `cf-xxxxxx` deployment for Pivotal Cloud Foundry itself.
+
+```
++---------------------------------------+-...
+| Name                                  |
++---------------------------------------+-...
+| cf-6cd776bba8e791d40f64               |
++---------------------------------------+-...
+| dingo-postgresql-98b09c4b36af74181ee1 |
++---------------------------------------+-...
+...
+```
+
+Next, confirm that `dingo-postgresql-98b09c4b36af74181ee1` contains a job with IP `10.58.111.150`:
+
+```
+bosh vms dingo-postgresql-98b09c4b36af74181ee1 | grep 10.58.111.150
+```
+
+If the last line of output looks like `| cell_xxxxx/123 | running | cell_xxxxx | 10.58.111.150` then we have found the job/instance.
+
+```
+Acting as user 'director' on deployment 'dingo-postgresql-98b09c4b36af74181ee1' on 'p-bosh-f93dc37aed3d3b4d03e9'
+| cell_z1-partition-cac94a070a81fd8f3931/0 | running | cell_z1-partition-cac94a070a81fd8f3931 | 10.58.111.150 |
+```
+
+To SSH into the `cell_z1-partition-cac94a070a81fd8f3931/0` job we need to download the BOSH deployment manifest (this file is created and managed by Pivotal OpsManager on behalf of the Dingo PostgreSQL tile).
+
+```
+bosh download manifest dingo-postgresql-98b09c4b36af74181ee1 dingo-postgresql.yml
+```
+
+To SSH into a job:
+
+```
+bosh -d dingo-postgresql.yml ssh cell_z1-partition-cac94a070a81fd8f3931/0
 ```
