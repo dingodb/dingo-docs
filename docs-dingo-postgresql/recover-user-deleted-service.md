@@ -112,7 +112,7 @@ Regardless what service plan the user requests, initially recreate the service w
 cf create-service dingo-postgresql95 solo important-db
 ```
 
-## <a id="docker-host"></a>Docker host
+## <a id="find-docker-host"></a>Find docker host
 
 The new service instance will backed by a single Docker container running on one of the `cell` VMs. You will need to find that Docker container, stop it, replace its new backups with the backups from above, and restart it.
 
@@ -198,3 +198,38 @@ To SSH into a job:
 ```
 bosh -d dingo-postgresql.yml ssh cell_z1-partition-cac94a070a81fd8f3931/0
 ```
+
+## <a id="docker-stop"></a>Stop docker container
+
+Inside the BOSH `cell_xxxxx` job, first change to root user and then setup the `_docker` helper alias:
+
+```
+alias _docker="/var/vcap/packages/docker/bin/docker --host unix:///var/vcap/sys/run/docker/docker.sock"
+_docker ps
+```
+
+The latter command shows the list of Docker containers on the current host machine:
+
+```
+CONTAINER ID        IMAGE                                COMMAND                  CREATED             STATUS              PORTS                     NAMES
+0abe124b987d        cfcommunity/postgresql-patroni:9.5   "/scripts/run.sh "       24 minutes ago      Up 24 minutes       0.0.0.0:32785->5432/tcp   cf-52167ceb-bd3d-4bff-8699-a239d21c5379
+9b35a273ae9a        cfcommunity/registrator:latest       "/bin/registrator -ho"   2 days ago          Up 2 days                                     registrator
+```
+
+NOTE: the `registrator` container is an internal component of Dingo PostgreSQL and is expected to be running at all times.
+
+From the [Find docker host](#find-docker-host) section above, the Docker container for our new service was called `cf-52167ceb-bd3d-4bff-8699-a239d21c5379`.
+
+Stop this Docker container:
+
+```
+_docker stop cf-52167ceb-bd3d-4bff-8699-a239d21c5379
+```
+
+In the system logs you might see:
+
+```
+Mar 17 18:05:20 0.cell_z1-partition-cac94a070a81fd8f3931.dingo-postgresql-98b09c4b36af74181ee1 docker.stderr.log:  time="2016-03-18T01:05:20.732631854Z" level=info msg="Container 0abe124b987d010de6c0e8079908210e89ca6562c3c08536bc118de0da2cef46 failed to exit within 10 seconds of SIGTERM - using the force"
+```
+
+By stopping the Docker container you have stopped the new PostgreSQL database from continually writing to its archive. This will allow you to replace its archive with the contents from the previous service instance - the archive you are trying to recover.
