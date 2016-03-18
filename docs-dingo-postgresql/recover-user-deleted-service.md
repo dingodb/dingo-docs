@@ -223,7 +223,8 @@ From the [Find docker host](#find-docker-host) section above, the Docker contain
 Stop this Docker container:
 
 ```
-_docker stop cf-52167ceb-bd3d-4bff-8699-a239d21c5379
+container=cf-52167ceb-bd3d-4bff-8699-a239d21c5379
+_docker stop $container
 ```
 
 In the system logs you might see:
@@ -257,7 +258,6 @@ apt-get install -y awscli jq
 You can use the Docker container's own environment variables to use the `aws` CLI:
 
 ```
-container=cf-52167ceb-bd3d-4bff-8699-a239d21c5379
 env $(_docker inspect $container | jq -r ".[0].Config.Env[]" | grep "^AWS_" | xargs) aws s3 ls
 ```
 
@@ -284,4 +284,20 @@ The output will show each of the files being sync'd to the new folder:
 ```
 copy: s3://dingo-postgresql-backups-vsphere/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/wal_005/000000010000000000000004.lzo to s3://dingo-postgresql-backups-vsphere/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/wal_005/000000010000000000000004.lzo
 copy: s3://dingo-postgresql-backups-vsphere/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/wal_005/00000001000000000000000B.lzo to s3://dingo-postgresql-backups-vsphere/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/wal_005/00000001000000000000000B.lzo
+```
+
+## <a id="reinitialize-etcd"></a>Reinitialize ETCD
+
+The new service instance's backup has been replaced by the old service instance's backup. But it has a different PostgreSQL System ID in it; and the wrong value is currently being cached in ETCD.
+
+```
+service_id=6e101b27-ee1b-4f4d-a032-4401a3709ec3
+export $(_docker inspect $container | jq -r ".[0].Config.Env[]" | grep ETCD_HOST_PORT)
+curl $ETCD_HOST_PORT/v2/keys/service/$service_id/initialize -XDELETE
+```
+
+Finally, restart the Docker container.
+
+```
+_docker start $container
 ```
