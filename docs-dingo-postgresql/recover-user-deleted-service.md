@@ -244,10 +244,10 @@ The new service instance, with its new GUID, has a new target for its object sto
 Search the logs by the service GUID `78218ded-7d88-4d69-bd44-6f478c300134` to get the target object store/bucket/folder:
 
 ```
-patroni>         DETAIL: Uploading "pg_xlog/000000010000000000000004" to "s3://dingo-postgresql-backups-vsphere/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/wal_005/000000010000000000000004.lzo".
+patroni>         DETAIL: Uploading "pg_xlog/000000010000000000000004" to "s3://our-postgresql-backups/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/wal_005/000000010000000000000004.lzo".
 ```
 
-The target is `s3://dingo-postgresql-backups-vsphere/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal`.
+The target is `s3://our-postgresql-backups/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal`.
 
 Our objective is to sync the original `/wal` folder into the target `/wal` folder above; then restart the Docker container to have it restore itself from the backup.
 
@@ -264,8 +264,8 @@ env $(_docker inspect $container | jq -r ".[0].Config.Env[]" | grep "^AWS_" | xa
 Setup the source (user's backups) and target (new service instance):
 
 ```
-source=s3://dingo-postgresql-backups-vsphere/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal
-target=s3://dingo-postgresql-backups-vsphere/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal
+source=s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal
+target=s3://our-postgresql-backups/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal
 ```
 
 *CONFIRM:* that you have the correct URIs for `$source` (the backup) and `$target` (the new backup). If you get this wrong then you will destroy their backup.
@@ -282,8 +282,13 @@ Pass the `--region` flag to the `aws s3` commands if necessary.
 The output will show each of the files being sync'd to the new folder:
 
 ```
-copy: s3://dingo-postgresql-backups-vsphere/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/wal_005/000000010000000000000004.lzo to s3://dingo-postgresql-backups-vsphere/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/wal_005/000000010000000000000004.lzo
-copy: s3://dingo-postgresql-backups-vsphere/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/wal_005/00000001000000000000000B.lzo to s3://dingo-postgresql-backups-vsphere/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/wal_005/00000001000000000000000B.lzo
+copy: s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/basebackups_005/base_000000010000000000000002_00000040/extended_version.txt to s3://our-postgresql-backups/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/basebackups_005/base_000000010000000000000002_00000040/extended_version.txt
+copy: s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/wal_005/000000010000000000000006.lzo to s3://our-postgresql-backups/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/wal_005/000000010000000000000006.lzo
+copy: s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/sysids/sysid to s3://our-postgresql-backups/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/sysids/sysid
+copy: s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/basebackups_005/base_000000010000000000000002_00000040_backup_stop_sentinel.json to s3://our-postgresql-backups/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/basebackups_005/base_000000010000000000000002_00000040_backup_stop_sentinel.json
+copy: s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/wal_005/000000010000000000000007.lzo to s3://our-postgresql-backups/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/wal_005/000000010000000000000007.lzo
+copy: s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/wal_005/000000010000000000000002.00000028.backup.lzo to s3://our-postgresql-backups/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/wal_005/000000010000000000000002.00000028.backup.lzo
+copy: s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/wal_005/000000010000000000000002.lzo to s3://our-postgresql-backups/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/wal_005/000000010000000000000002.lzo
 ```
 
 ## <a id="reinitialize-etcd"></a>Reinitialize ETCD
@@ -293,11 +298,30 @@ The new service instance's backup has been replaced by the old service instance'
 ```
 service_id=6e101b27-ee1b-4f4d-a032-4401a3709ec3
 export $(_docker inspect $container | jq -r ".[0].Config.Env[]" | grep ETCD_HOST_PORT)
-curl $ETCD_HOST_PORT/v2/keys/service/$service_id/initialize -XDELETE
+curl $ETCD_HOST_PORT/v2/keys/service/${service_id}\?recursive=true -XDELETE
 ```
+
+## <a id="flush-local-db"></a>Flush local data
+
+If the Docker container was started now it would resume with its local database rather than pull down the backup.
+
+```
+host_data_dir=$(_docker inspect $container | jq -r ".[0].Mounts[] | select(.Destination == \"/data\") | .Source")
+rm -rf $host_data_dir/*
+```
+
+## <a id="restart-and-test"></a>Restart and test
 
 Finally, restart the Docker container.
 
 ```
 _docker start $container
+```
+
+Watch the system logs to observe a fresh database being created and restored from the S3 backup.
+
+As the container starts up, the following log line should be observed:
+
+```
+restore_leader_if_missing> preparing patroni to restore this container from wal-e backups
 ```
