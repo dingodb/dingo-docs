@@ -74,17 +74,17 @@ Search the logs again for the `instance-id` GUID (`6e101b27-ee1b-4f4d-a032-4401a
 You will see the `backup>` and `patroni>` lines where [wal-e](https://github.com/wal-e/wal-e) uploaded regular base backups and frequent write-ahead log (WAL) segments to an offsite object store.
 
 ```
-Mar 16 19:11:47 14ddd22e-719e-4aca-b318-7f291c97fbba docker/cf-c8ce128e-7b4c-4fe7-a533-e9379356f906:  patroni> upload: tmp/sysids/sysid to s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/sysids/sysid
-Mar 16 19:11:48 14ddd22e-719e-4aca-b318-7f291c97fbba docker/cf-c8ce128e-7b4c-4fe7-a533-e9379356f906:  patroni>         DETAIL: Uploading "pg_xlog/000000010000000000000001" to "s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/wal_005/000000010000000000000001.lzo".
-Mar 16 19:11:48 14ddd22e-719e-4aca-b318-7f291c97fbba docker/cf-c8ce128e-7b4c-4fe7-a533-e9379356f906:  patroni>         STRUCTURED: time=2016-03-17T02:11:48.811154-00 pid=231 action=push-wal key=s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/wal_005/000000010000000000000001.lzo prefix=backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/ seg=000000010000000000000001 state=begin
-Mar 16 19:11:49 14ddd22e-719e-4aca-b318-7f291c97fbba docker/cf-c8ce128e-7b4c-4fe7-a533-e9379356f906:  backup>         DETAIL: Uploading to s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/basebackups_005/base_000000010000000000000002_00000040/extended_version.txt.
-Mar 16 19:11:50 14ddd22e-719e-4aca-b318-7f291c97fbba docker/cf-c8ce128e-7b4c-4fe7-a533-e9379356f906:  backup>         DETAIL: Uploading to "s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/basebackups_005/base_000000010000000000000002_00000040/tar_partitions/part_00000000.tar.lzo".
+Mar 16 19:11:47 14ddd22e-719e-4aca-b318-7f291c97fbba docker/cf-c8ce128e-7b4c-4fe7-a533-e9379356f906:  patroni> upload: tmp/sysids/sysid to s3://our-dingo-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/sysids/sysid
+Mar 16 19:11:48 14ddd22e-719e-4aca-b318-7f291c97fbba docker/cf-c8ce128e-7b4c-4fe7-a533-e9379356f906:  patroni>         DETAIL: Uploading "pg_xlog/000000010000000000000001" to "s3://our-dingo-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/wal_005/000000010000000000000001.lzo".
+Mar 16 19:11:48 14ddd22e-719e-4aca-b318-7f291c97fbba docker/cf-c8ce128e-7b4c-4fe7-a533-e9379356f906:  patroni>         STRUCTURED: time=2016-03-17T02:11:48.811154-00 pid=231 action=push-wal key=s3://our-dingo-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/wal_005/000000010000000000000001.lzo prefix=backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/ seg=000000010000000000000001 state=begin
+Mar 16 19:11:49 14ddd22e-719e-4aca-b318-7f291c97fbba docker/cf-c8ce128e-7b4c-4fe7-a533-e9379356f906:  backup>         DETAIL: Uploading to s3://our-dingo-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/basebackups_005/base_000000010000000000000002_00000040/extended_version.txt.
+Mar 16 19:11:50 14ddd22e-719e-4aca-b318-7f291c97fbba docker/cf-c8ce128e-7b4c-4fe7-a533-e9379356f906:  backup>         DETAIL: Uploading to "s3://our-dingo-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/basebackups_005/base_000000010000000000000002_00000040/tar_partitions/part_00000000.tar.lzo".
 ...
 ```
 
-From these logs we can find the location of the backups `s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal`.
+From these logs we can find the location of the backups `s3://our-dingo-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal`.
 
-In this example, it is an Amazon S3 bucket `our-postgresql-backups`, under the `/backups/SERVICE_GUID/wal` folder.
+In this example, it is an Amazon S3 bucket `our-dingo-postgresql-backups`, under the `/backups/SERVICE_GUID/wal` folder.
 
 The location of backups is actually pre-determinable. When you installed the Dingo PostgreSQL tile you provided the object store credentials and bucket name. So reading the logs above is really to confirm that the backup is available.
 
@@ -201,7 +201,7 @@ bosh -d dingo-postgresql.yml ssh cell_z1-partition-cac94a070a81fd8f3931/0
 
 ## <a id="docker-stop"></a>Stop docker container
 
-Inside the BOSH `cell_xxxxx` job, first change to root user and then setup the `_docker` helper alias:
+Inside the BOSH `cell_xxxxx` job, setup the `_docker` helper alias:
 
 ```
 alias _docker="/var/vcap/packages/docker/bin/docker --host unix:///var/vcap/sys/run/docker/docker.sock"
@@ -244,10 +244,16 @@ The new service instance, with its new GUID, has a new target for its object sto
 Search the logs by the service GUID `78218ded-7d88-4d69-bd44-6f478c300134` to get the target object store/bucket/folder:
 
 ```
-patroni>         DETAIL: Uploading "pg_xlog/000000010000000000000004" to "s3://our-postgresql-backups/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/wal_005/000000010000000000000004.lzo".
+patroni>         DETAIL: Uploading "pg_xlog/000000010000000000000004" to "s3://our-dingo-postgresql-backups/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/wal_005/000000010000000000000004.lzo".
 ```
 
-The target is `s3://our-postgresql-backups/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal`.
+The target is `s3://our-dingo-postgresql-backups/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal`.
+
+Set an environment variable for later:
+
+```
+target=s3://our-dingo-postgresql-backups/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal
+```
 
 Our objective is to sync the original `/wal` folder into the target `/wal` folder above; then restart the Docker container to have it restore itself from the backup.
 
@@ -261,19 +267,30 @@ You can use the Docker container's own environment variables to use the `aws` CL
 env $(_docker inspect $container | jq -r ".[0].Config.Env[]" | grep "^AWS_" | xargs) aws s3 ls
 ```
 
-Setup the source (user's backups) and target (new service instance):
+Setup the source (user's backups):
 
 ```
-source=s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal
-target=s3://our-postgresql-backups/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal
+source=s3://our-dingo-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal
 ```
 
 *CONFIRM:* that you have the correct URIs for `$source` (the backup) and `$target` (the new backup). If you get this wrong then you will destroy their backup.
 
-To delete the temporary target backup folder, then replace with a copy of the user's backup:
+```
+echo $source
+echo $target
+```
+
+To delete the temporary target backup folder:
 
 ```
 env $(_docker inspect $container | jq -r ".[0].Config.Env[]" | grep "^AWS_" | xargs) aws s3 rm $target --recursive --region ap-southeast-1
+```
+
+This should show about 6 files being deleted.
+
+To then replace with a copy of the user's backup:
+
+```
 env $(_docker inspect $container | jq -r ".[0].Config.Env[]" | grep "^AWS_" | xargs) aws s3 sync $source $target --region ap-southeast-1
 ```
 
@@ -282,13 +299,13 @@ Pass the `--region` flag to the `aws s3` commands if necessary.
 The output will show each of the files being sync'd to the new folder:
 
 ```
-copy: s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/basebackups_005/base_000000010000000000000002_00000040/extended_version.txt to s3://our-postgresql-backups/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/basebackups_005/base_000000010000000000000002_00000040/extended_version.txt
-copy: s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/wal_005/000000010000000000000006.lzo to s3://our-postgresql-backups/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/wal_005/000000010000000000000006.lzo
-copy: s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/sysids/sysid to s3://our-postgresql-backups/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/sysids/sysid
-copy: s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/basebackups_005/base_000000010000000000000002_00000040_backup_stop_sentinel.json to s3://our-postgresql-backups/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/basebackups_005/base_000000010000000000000002_00000040_backup_stop_sentinel.json
-copy: s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/wal_005/000000010000000000000007.lzo to s3://our-postgresql-backups/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/wal_005/000000010000000000000007.lzo
-copy: s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/wal_005/000000010000000000000002.00000028.backup.lzo to s3://our-postgresql-backups/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/wal_005/000000010000000000000002.00000028.backup.lzo
-copy: s3://our-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/wal_005/000000010000000000000002.lzo to s3://our-postgresql-backups/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/wal_005/000000010000000000000002.lzo
+copy: s3://our-dingo-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/basebackups_005/base_000000010000000000000002_00000040/extended_version.txt to s3://our-dingo-postgresql-backups/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/basebackups_005/base_000000010000000000000002_00000040/extended_version.txt
+copy: s3://our-dingo-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/wal_005/000000010000000000000006.lzo to s3://our-dingo-postgresql-backups/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/wal_005/000000010000000000000006.lzo
+copy: s3://our-dingo-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/sysids/sysid to s3://our-dingo-postgresql-backups/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/sysids/sysid
+copy: s3://our-dingo-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/basebackups_005/base_000000010000000000000002_00000040_backup_stop_sentinel.json to s3://our-dingo-postgresql-backups/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/basebackups_005/base_000000010000000000000002_00000040_backup_stop_sentinel.json
+copy: s3://our-dingo-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/wal_005/000000010000000000000007.lzo to s3://our-dingo-postgresql-backups/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/wal_005/000000010000000000000007.lzo
+copy: s3://our-dingo-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/wal_005/000000010000000000000002.00000028.backup.lzo to s3://our-dingo-postgresql-backups/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/wal_005/000000010000000000000002.00000028.backup.lzo
+copy: s3://our-dingo-postgresql-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/wal_005/000000010000000000000002.lzo to s3://our-dingo-postgresql-backups/backups/ca5a7d15-1422-4408-a00d-93194350a106/wal/wal_005/000000010000000000000002.lzo
 ```
 
 ## <a id="reinitialize-etcd"></a>Reinitialize ETCD
@@ -298,7 +315,15 @@ The new service instance's backup has been replaced by the old service instance'
 ```
 service_id=6e101b27-ee1b-4f4d-a032-4401a3709ec3
 export $(_docker inspect $container | jq -r ".[0].Config.Env[]" | grep ETCD_HOST_PORT)
-curl $ETCD_HOST_PORT/v2/keys/service/${service_id}\?recursive=true -XDELETE
+curl $ETCD_HOST_PORT/v2/keys/service/${service_id} | jq .
+```
+
+The results from the last two commands show the internal data about the Patroni/PostgreSQL/Docker containers in this cluster (currently one `solo` container).
+
+The system ID in ETCD (under `/initialize`) is for the original database; not for the backed up database. So delete it in ETCD and the restoration process will recreate it from the backup:
+
+```
+curl $ETCD_HOST_PORT/v2/keys/service/${service_id}/initialize -XDELETE
 ```
 
 ## <a id="flush-local-db"></a>Flush local data
@@ -307,7 +332,7 @@ If the Docker container was started now it would resume with its local database 
 
 ```
 host_data_dir=$(_docker inspect $container | jq -r ".[0].Mounts[] | select(.Destination == \"/data\") | .Source")
-rm -rf $host_data_dir/*
+sudo rm -rf $host_data_dir/*
 ```
 
 ## <a id="restart-and-test"></a>Restart and test
