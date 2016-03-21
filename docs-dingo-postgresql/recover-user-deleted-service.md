@@ -324,6 +324,7 @@ The system ID in ETCD (under `/initialize`) is for the original database; not fo
 
 ```
 curl $ETCD_HOST_PORT/v2/keys/service/${service_id}/initialize -XDELETE
+curl $ETCD_HOST_PORT/v2/keys/service/${service_id}/optime/leader -XDELETE
 ```
 
 ## <a id="flush-local-db"></a>Flush local data
