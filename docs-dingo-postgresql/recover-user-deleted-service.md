@@ -351,3 +351,10 @@ As the container starts up, the following log line should be observed:
 ```
 restore_leader_if_missing> preparing patroni to restore this container from wal-e backups
 ```
+
+Once you've observed the WAL files being fetched from the target backup, and the database starting up successfully, you can then bind the Pivotal Cloud Foundry service instance to the user's application and check that it works as expected.
+
+```
+cf bind-service their-app important-db
+cf restart their-app
+```
