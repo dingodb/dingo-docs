@@ -38,7 +38,7 @@ jobs:
     config:
       params:
         app_name: docs-postgresql
-        app_hosts: "[pg,postgresql]"
+        app_hosts: "[alpha,pg,postgresql]"
   - put: docs-web-app
     params:
       manifest: docs-app/docs-book/final_app/manifest.yml
