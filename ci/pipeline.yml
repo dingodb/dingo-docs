@@ -17,10 +17,9 @@ jobs:
   - {get: docs, resource: docs-prod, trigger: true}
   - task: build-docs-app
     file: docs-ci/ci/tasks/build-docs-app.yml
-    config:
-      params:
-        app_name: docs
-        app_hosts: "[www,docs]"
+    params:
+      app_name: docs
+      app_hosts: "[www,docs]"
   - put: docs-web-app
     params:
       manifest: docs-app/docs-book/final_app/manifest.yml
@@ -35,10 +34,9 @@ jobs:
   - {get: docs, resource: docs-postgresql, trigger: true}
   - task: build-docs-app
     file: docs-ci/ci/tasks/build-docs-app.yml
-    config:
-      params:
-        app_name: docs-postgresql
-        app_hosts: "[alpha,pg,postgresql]"
+    params:
+      app_name: docs-postgresql
+      app_hosts: "[alpha,pg,postgresql]"
   - put: docs-web-app
     params:
       manifest: docs-app/docs-book/final_app/manifest.yml
