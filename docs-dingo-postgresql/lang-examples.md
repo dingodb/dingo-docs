@@ -7,12 +7,30 @@ The community of Cloud Foundry & PostgreSQL users have created some example appl
 | Language | Source Code |
 | --- | --- |
 | ruby/rails | TODO |
-| node.js | TODO |
+| node.js | [Ghost blogging platform](https://github.com/dingotiles/ghost-for-cloudfoundry) |
 | java | TODO |
 
 ## Node.js
 
-https://www.npmjs.org/package/cfenv ([source code](https://github.com/cloudfoundry-community/node-cfenv))
+Use https://www.npmjs.org/package/cfenv ([source code](https://github.com/cloudfoundry-community/node-cfenv)) to discover service binding credentials to Dingo PostgreSQL.
+
+Assuming you have bound a service with `pg` in its name:
+
+```
+var env = process.env.NODE_ENV || 'development';
+var production = env == 'production';
+
+var appEnv = {};
+var sqlCredentials = {};
+if (production) {
+  var cfEnv = require("cfenv");
+  var appEnv = cfEnv.getAppEnv();
+  var sqlCredentials = appEnv.getService(/pg/).credentials;
+}
+console.log(sqlCredentials);
+```
+
+The `appEnv.getService(/pg/)` command will look for the first binding whose service name matches the regular expression `/pg/`.
 
 ## Ruby on Rails
 
