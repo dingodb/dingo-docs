@@ -1,6 +1,9 @@
 ---
 breadcrumb: <%=vars.book_title%>
 ---
+
+<%= partial '_announcement_dingo_s3.html.md.erb' %>
+
 <div class="main-container">
   <div class="main">
     <h2 class="title-details" style="text-align: center; padding-top: 1.5em; padding-bottom: 0.5em; font-size: 2em;">
@@ -8,6 +11,8 @@ breadcrumb: <%=vars.book_title%>
     </h2>
   </div>
 </div>
+
+<h1>How Dingo S3 Works</h1>
 
 <div class="main">
   <p>Most applications running on Pivotal Cloud Foundry require somewhere to upload & retrieve files/objects/blobs. It is an anti-pattern to use a shared file system; and as such Pivotal Cloud Foundry installations do not offer one. Instead, it is best to offer a bucket service/blob store/object store.</p>
@@ -39,6 +44,7 @@ breadcrumb: <%=vars.book_title%>
     </a>
   </li>
 </ul>
+
 <div class="main docs-column-main">
   <div class="docs-subsection">
     <h3><a class="title" href="/dingo-s3/">General Information</a></h3>
