@@ -14,6 +14,8 @@ The community of Cloud Foundry & PostgreSQL users have created some example appl
 
 Use https://www.npmjs.org/package/cfenv ([source code](https://github.com/cloudfoundry-community/node-cfenv)) to discover service binding credentials to Dingo PostgreSQL.
 
+See the example application [Ghost blogging platform](https://github.com/dingotiles/ghost-for-cloudfoundry) (modified from Ghost v0.7.8 release).
+
 Assuming you have bound a service with `pg` in its name:
 
 ```
