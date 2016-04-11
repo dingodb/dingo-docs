@@ -45,6 +45,8 @@ The `credentials` section contains the following keys:
   "superuser_username": "SUPERUSERNAME",
   "superuser_password": "SUPERPASSWORD",
   "superuser_uri": "postgres://SUPERUSERNAME:SUPERPASSWORD@10.58.111.151:33003/postgres",
-  "superuser_jdbcUrl": "jdbc:postgresql://10.58.111.151:33003/postgres?username=SUPERUSERNAME\u0026password=SUPERPASSWORD",
+  "superuser_jdbcUrl": "jdbc:postgresql://10.58.111.151:33003/postgres?username=SUPERUSERNAME\u0026password=SUPERPASSWORD"
 }
 ```
+
+Only use the superuser credentials when specifically necessary. If used for general database client connections then there is a risk of bypassing the connection pool limits and accidentally preventing the cluster's replication for functioning, which will adversely prevent high availability failover in future.
