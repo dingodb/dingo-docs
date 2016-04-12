@@ -36,7 +36,7 @@ jobs:
     file: docs-ci/ci/tasks/build-docs-app.yml
     params:
       app_name: docs-postgresql
-      app_hosts: "[alpha,pg,postgresql]"
+      app_hosts: "[alpha,beta,pg,postgresql]"
   - put: docs-web-app
     params:
       manifest: docs-app/docs-book/final_app/manifest.yml
