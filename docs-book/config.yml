@@ -30,7 +30,7 @@ template_variables:
 
   support_url: https://slack.dingotiles.com
 
-  domain_name: www.dingotiles.com
+  domain_name: beta.dingotiles.com
 
 
   product_link:
