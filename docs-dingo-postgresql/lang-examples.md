@@ -6,9 +6,23 @@ The community of Cloud Foundry & PostgreSQL users have created some example appl
 
 | Language | Source Code |
 | --- | --- |
-| ruby/rails | TODO |
-| node.js | [Ghost blogging platform](https://github.com/dingotiles/ghost-for-cloudfoundry) |
-| java | TODO |
+| Java/Spring | [Spring Music](https://github.com/scottfrederick/spring-music) |
+| Node.js | [Ghost blogging platform](https://github.com/dingotiles/ghost-for-cloudfoundry) |
+
+## Java/Spring
+
+[Spring Music](https://github.com/scottfrederick/spring-music) is sample application for using database services on Cloud Foundry with Spring Framework.
+
+```
+git clone https://github.com/scottfrederick/spring-music
+cd spring-music
+./gradlew assemble
+cf push
+cf cs dingo-postgresql cluster spring-music-pg
+cf bs spring-music spring-music-pg
+cf restart spring-music
+```
+
 
 ## Node.js
 
