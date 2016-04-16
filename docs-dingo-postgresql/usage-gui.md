@@ -1,18 +1,18 @@
 ---
-title: Install Admin GUI for Dingo PostgreSQL
+title: Install Admin GUI for Dingo PostgreSQL ™
 ---
 
 There are many web-based admin GUIs for PostgreSQL and in this section we document how to install a few of them.
 
 ## <a id="phppgadmin"></a>phpPgAdmin
 
-[phpPgAdmin](http://phppgadmin.sourceforge.net/doku.php) has a [`phppgadmin-cf` fork](https://github.com/cloudfoundry-community/phppgadmin-cf) maintained by [@ArthurHlt](https://github.com/ArthurHlt) from Orange that makes it easy to run on Pivotal Cloud Foundry and bind to one or more Dingo PostgreSQL in the same space.
+[phpPgAdmin](http://phppgadmin.sourceforge.net/doku.php) has a [`phppgadmin-cf` fork](https://github.com/cloudfoundry-community/phppgadmin-cf) maintained by [@ArthurHlt](https://github.com/ArthurHlt) from Orange that makes it easy to run on Pivotal Cloud Foundry and bind to one or more Dingo PostgreSQL ™ in the same space.
 
 ### <a id="phppgadmin-deploy"></a>Deploy
 
 [`phppgadmin-cf`](https://github.com/cloudfoundry-community/phppgadmin-cf) is ready to be deployed to your Pivotal Cloud Foundry.
 
-First, target the org/space where your application and Dingo PostgreSQL database are running. This is required so that phppgadmin can bind to the same service instance.
+First, target the org/space where your application and Dingo PostgreSQL ™ database are running. This is required so that phppgadmin can bind to the same service instance.
 
 ```
 cf target -o org -s prod
@@ -27,7 +27,7 @@ cd phppgadmin-cf-cf-ready
 cf push
 ```
 
-The running application does not yet have access to your Dingo PostgreSQL service instance.
+The running application does not yet have access to your Dingo PostgreSQL ™ service instance.
 
 Bind each service instance and restart:
 
@@ -69,7 +69,7 @@ Click on the service instance of interest and you will be prompted to login. Use
 
 ![phppgadmin-login](images/phppgadmin/login.png)
 
-Your Dingo PostgreSQL service instance contains a single database (called `postgres` in example below). Click the database name (`postgres`).
+Your Dingo PostgreSQL ™ service instance contains a single database (called `postgres` in example below). Click the database name (`postgres`).
 
 ![phppgadmin-select-db-postgres](images/phppgadmin/select-db-postgres.png)
 

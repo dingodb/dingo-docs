@@ -18,7 +18,7 @@ If screen sharing is required to help you and your team get started, we like to 
 
 ## User Support
 
-Hopefully we've documented everything you'll need to know about creating, binding and using each Dingo PostgreSQL database; and where our documentation ends, hopefully the Internet can also help find an answer to any open source PostgreSQL questions.
+Hopefully we've documented everything you'll need to know about creating, binding and using each Dingo PostgreSQL ™ database; and where our documentation ends, hopefully the Internet can also help find an answer to any open source PostgreSQL questions.
 
 If there is any documentation missing, we would love to know and then we'll write more!
 

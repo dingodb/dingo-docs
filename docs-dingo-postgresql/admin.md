@@ -1,5 +1,5 @@
 ---
-title: Administering Dingo PostgreSQL
+title: Administering Dingo PostgreSQL ™
 ---
 
 ## Logs
@@ -12,7 +12,7 @@ cf service <service-name> --guid
 
 ## <a id="logs-service-id"></a>Search logs for service instance
 
-Search your system logs for the service instance GUID and you will see Dingo PostgreSQL setting up routing and provision Docker containers.
+Search your system logs for the service instance GUID and you will see Dingo PostgreSQL ™ setting up routing and provision Docker containers.
 
 Example snippet from logs for a newly provisioned service instance registering a new port on the Dingo router:
 

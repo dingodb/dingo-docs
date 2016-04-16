@@ -6,7 +6,7 @@ title: Import existing SQL database backup
 
 ## <a id="clean-up-sql"></a>Clean up SQL
 
-Sometimes SQL backups include the commands to recreate the owner information. This information will not be correct when migrating from old database to new Dingo PostgreSQL database. So, strip out all `ALTER... OWNER TO` commands:
+Sometimes SQL backups include the commands to recreate the owner information. This information will not be correct when migrating from old database to new Dingo PostgreSQL ™ database. So, strip out all `ALTER... OWNER TO` commands:
 
 ```
 grep -v "^ALTER.*OWNER TO.*$" database.sql > database.noowner.sql

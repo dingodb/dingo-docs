@@ -2,7 +2,7 @@
 title: Provision &amp; bind new PostgreSQL service
 ---
 
-Dingo PostgreSQL allows all Pivotal Cloud Foundry users to create and use PostgreSQL within their applications. Applications can then use any PostgreSQL library/SDK or JDBC library to read & write with their database.
+Dingo PostgreSQL ™ allows all Pivotal Cloud Foundry users to create and use PostgreSQL within their applications. Applications can then use any PostgreSQL library/SDK or JDBC library to read & write with their database.
 
 ## <a id="provision"></a>Provision & bind
 

@@ -6,7 +6,7 @@ If a user accidentally deletes their service instance, it is a disaster to them.
 
 This section documents how to recreate the database and recover it from the archive backups.
 
-NOTE: Future versions of Dingo PostgreSQL will continuously improve the recovery user story - ultimately it will be placed in the hands of the user themselves, and not require operator/administrator privileges as it does now.
+NOTE: Future versions of Dingo PostgreSQL ™ will continuously improve the recovery user story - ultimately it will be placed in the hands of the user themselves, and not require operator/administrator privileges as it does now.
 
 ## <a id="disaster-problem"></a>The disaster
 
@@ -35,7 +35,7 @@ When the user requests to have their service recovered, please ask them for:
 
 ## <a id="discover-lost-metadata"></a>Discover lost metadata
 
-When a user submits an urgent distressed "I've deleted my Dingo PostgreSQL database, please help!" there are some metadata challenges to overcome before you can help them.
+When a user submits an urgent distressed "I've deleted my Dingo PostgreSQL ™ database, please help!" there are some metadata challenges to overcome before you can help them.
 
 As at writing, Pivotal Cloud Foundry thoroughly deletes its internal metadata for deleted service instances.
 
@@ -86,13 +86,13 @@ From these logs we can find the location of the backups `s3://our-dingo-postgres
 
 In this example, it is an Amazon S3 bucket `our-dingo-postgresql-backups`, under the `/backups/SERVICE_GUID/wal` folder.
 
-The location of backups is actually pre-determinable. When you installed the Dingo PostgreSQL tile you provided the object store credentials and bucket name. So reading the logs above is really to confirm that the backup is available.
+The location of backups is actually pre-determinable. When you installed the Dingo PostgreSQL ™ tile you provided the object store credentials and bucket name. So reading the logs above is really to confirm that the backup is available.
 
 _If you don't see any `DETAIL: Uploading to` lines then you have a big problem - there is no backup for this lost service instance._
 
 ## <a id="recreate-database"></a>Recreate database
 
-Now recreate the Dingo PostgreSQL database on behalf of the user, into the same organization/space.
+Now recreate the Dingo PostgreSQL ™ database on behalf of the user, into the same organization/space.
 
 Login to Pivotal Cloud Foundry as an admin and target the user's organization/space:
 
@@ -187,7 +187,7 @@ Acting as user 'director' on deployment 'dingo-postgresql-98b09c4b36af74181ee1' 
 | cell_z1-partition-cac94a070a81fd8f3931/0 | running | cell_z1-partition-cac94a070a81fd8f3931 | 10.58.111.150 |
 ```
 
-To SSH into the `cell_z1-partition-cac94a070a81fd8f3931/0` job we need to download the BOSH deployment manifest (this file is created and managed by Pivotal OpsManager on behalf of the Dingo PostgreSQL tile).
+To SSH into the `cell_z1-partition-cac94a070a81fd8f3931/0` job we need to download the BOSH deployment manifest (this file is created and managed by Pivotal OpsManager on behalf of the Dingo PostgreSQL ™ tile).
 
 ```
 bosh download manifest dingo-postgresql-98b09c4b36af74181ee1 dingo-postgresql.yml
@@ -216,7 +216,7 @@ CONTAINER ID        IMAGE                                COMMAND                
 9b35a273ae9a        cfcommunity/registrator:latest       "/bin/registrator -ho"   2 days ago          Up 2 days                                     registrator
 ```
 
-NOTE: the `registrator` container is an internal component of Dingo PostgreSQL and is expected to be running at all times.
+NOTE: the `registrator` container is an internal component of Dingo PostgreSQL ™ and is expected to be running at all times.
 
 From the [Find docker host](#find-docker-host) section above, the Docker container for our new service was called `cf-52167ceb-bd3d-4bff-8699-a239d21c5379`.
 
@@ -237,7 +237,7 @@ By stopping the Docker container you have stopped the new PostgreSQL database fr
 
 ## <a id="cloning-backups"></a>Cloning backups
 
-This section documents Amazon S3 CLI commands, as it is the only supported object store in the current version of Dingo PostgreSQL.
+This section documents Amazon S3 CLI commands, as it is the only supported object store in the current version of Dingo PostgreSQL ™.
 
 The new service instance, with its new GUID, has a new target for its object store backups. To restore the old archive backups, you will need to clone them from the original archive to the new archive.
 

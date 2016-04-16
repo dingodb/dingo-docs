@@ -13,7 +13,7 @@ AND city.name = 'Gotham';
 
 In addition to basic location awareness, PostGIS offers many features rarely found in other competing spatial databases such as Oracle Locator/Spatial and SQL Server. Refer to [PostGIS Feature List](http://postgis.net/features/) for more details.
 
-PostGIS dependencies are installed and PostGIS extension is available for Dingo PostgreSQL service instances.
+PostGIS dependencies are installed and PostGIS extension is available for Dingo PostgreSQL ™ service instances.
 
 ## Available extensions
 
