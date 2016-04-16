@@ -11,6 +11,8 @@ The community of Cloud Foundry & PostgreSQL users have created some example appl
 
 ## Java/Spring
 
+Cloud Foundry documentation includes a section on [Configure Service Connections for Spring](http://docs.cloudfoundry.org/buildpacks/java/spring-service-bindings.html).
+
 [Spring Music](https://github.com/scottfrederick/spring-music) is sample application for using database services on Cloud Foundry with Spring Framework.
 
 ```
