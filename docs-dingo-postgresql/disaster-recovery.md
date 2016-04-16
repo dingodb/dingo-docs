@@ -16,9 +16,9 @@ When installing Dingo PostgreSQL™ you will specify which object store to use. 
 
 If a user accidentally deletes their service instance, it is a disaster to them. When a user accidentally writes or deletes data from their database, it is a disaster to them.
 
-In the future of Dingo PostgreSQL™ we want to allow user's to resolve their own disasters. It is our design philosophy for platform-as-a-service, such as Pivotal Cloud Foundry, that all database-orientated admin features be made available to end users - they in turn can decide who will do administration for their databases.
+In the future of Dingo PostgreSQL™ we want to allow user's to resolve their own disasters. It is our design philosophy for platform-as-a-service, such as Pivotal Cloud Foundry&reg;, that all database-orientated admin features be made available to end users - they in turn can decide who will do administration for their databases.
 
-For now, a Pivotal Cloud Foundry operator will be required to help recover from user disasters. But the great news is that it is possible to recover from disasters.
+For now, a Pivotal Cloud Foundry&reg; operator will be required to help recover from user disasters. But the great news is that it is possible to recover from disasters.
 
 * [Recover a user's deleted service instance](recover-user-deleted-service.html)
 

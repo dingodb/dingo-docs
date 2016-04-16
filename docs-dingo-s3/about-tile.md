@@ -2,7 +2,7 @@
 title: Dingo S3™ tile and Amazon S3
 ---
 
-If your Pivotal Cloud Foundry has access to the Internet, or at a minimum has access to Amazon Web Services (AWS) APIs, then you are strongly recommended to consider using Amazon S3 for all your applications' object storage needs.
+If your Pivotal Cloud Foundry&reg; has access to the Internet, or at a minimum has access to Amazon Web Services (AWS) APIs, then you are strongly recommended to consider using Amazon S3 for all your applications' object storage needs.
 
 To make this simple, and to make it low overhead and fast for 100s and 1000s of your developers, we created Dingo S3™.
 

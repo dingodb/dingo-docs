@@ -4,7 +4,7 @@ title: Installing to Pivotal Ops Manager
 
 ## <a id="requirements"></a>Requirements
 
-* Pivotal Cloud Foundry
+* Pivotal Cloud Foundry&reg;
 * AWS account
 * Internet access to Amazon AWS
 * Amazon S3 bucket for all PostgreSQL backups and write-ahead log (WAL) segments

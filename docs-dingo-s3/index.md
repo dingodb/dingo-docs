@@ -1,8 +1,8 @@
 ---
-title: Overview of Dingo S3™ for Pivotal Cloud Foundry
+title: Overview of Dingo S3™ for Pivotal Cloud Foundry&reg;
 ---
 
-Most applications running on Pivotal Cloud Foundry require somewhere to upload & retrieve files/objects/blobs. It is an anti-pattern to use a shared file system; and as such Pivotal Cloud Foundry installations do not offer one. Instead, it is best to offer a bucket service/blob store/object store.
+Most applications running on Pivotal Cloud Foundry&reg; require somewhere to upload & retrieve files/objects/blobs. It is an anti-pattern to use a shared file system; and as such Pivotal Cloud Foundry&reg; installations do not offer one. Instead, it is best to offer a bucket service/blob store/object store.
 
 Amazon Simple Storage Service (Amazon S3), provides developers and IT teams with secure, durable, highly-scalable object storage.
 

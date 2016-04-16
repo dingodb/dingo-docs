@@ -21,7 +21,7 @@ sections:
 template_variables:
   title: Dingo Tiles
   book_title: Dingo Tiles
-  hero_text: Amplify and extend Pivotal Cloud Foundry to make all your developers and admins crazy happy
+  hero_text: Amplify and extend Pivotal Cloud Foundry&reg; to make all your developers and admins crazy happy
   book_title_short: Dingo Tiles
   # title: Dingo Tiles Documentation
   # book_title: Dingo Tiles Documentation

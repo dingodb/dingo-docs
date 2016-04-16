@@ -1,14 +1,14 @@
 ---
-title: Overview of Dingo PostgreSQL™ for Pivotal Cloud Foundry
+title: Overview of Dingo PostgreSQL™ for Pivotal Cloud Foundry&reg;
 ---
 
 ![tile](images/dingo-postgresql-tile.png)
 
-Nearly all applications running on Pivotal Cloud Foundry require a SQL database or require a NoSQL/JSON database. The best open source database for both use cases is [PostgreSQL](http://www.postgresql.org/).
+Nearly all applications running on Pivotal Cloud Foundry&reg; require a SQL database or require a NoSQL/JSON database. The best open source database for both use cases is [PostgreSQL](http://www.postgresql.org/).
 
 The Dingo PostgreSQL™ tile brings highly-available, disaster recoverable PostgreSQL clusters to everyone in your organization. New staff on their first day will find it simple to get started. Expert developers and PostgreSQL admins will find each service instance is a dedicated database cluster with support for custom extensions, and other superuser-only features.
 
-It is easier to use Dingo PostgreSQL™ for Pivotal Cloud Foundry than not to:
+It is easier to use Dingo PostgreSQL™ for Pivotal Cloud Foundry&reg; than not to:
 
 ```
 cf create-service dingo-postgresql cluster my-first-db

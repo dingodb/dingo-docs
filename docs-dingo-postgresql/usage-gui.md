@@ -6,11 +6,11 @@ There are many web-based admin GUIs for PostgreSQL and in this section we docume
 
 ## <a id="phppgadmin"></a>phpPgAdmin
 
-[phpPgAdmin](http://phppgadmin.sourceforge.net/doku.php) has a [`phppgadmin-cf` fork](https://github.com/cloudfoundry-community/phppgadmin-cf) maintained by [@ArthurHlt](https://github.com/ArthurHlt) from Orange that makes it easy to run on Pivotal Cloud Foundry and bind to one or more Dingo PostgreSQL™ in the same space.
+[phpPgAdmin](http://phppgadmin.sourceforge.net/doku.php) has a [`phppgadmin-cf` fork](https://github.com/cloudfoundry-community/phppgadmin-cf) maintained by [@ArthurHlt](https://github.com/ArthurHlt) from Orange that makes it easy to run on Pivotal Cloud Foundry&reg; and bind to one or more Dingo PostgreSQL™ in the same space.
 
 ### <a id="phppgadmin-deploy"></a>Deploy
 
-[`phppgadmin-cf`](https://github.com/cloudfoundry-community/phppgadmin-cf) is ready to be deployed to your Pivotal Cloud Foundry.
+[`phppgadmin-cf`](https://github.com/cloudfoundry-community/phppgadmin-cf) is ready to be deployed to your Pivotal Cloud Foundry&reg;.
 
 First, target the org/space where your application and Dingo PostgreSQL™ database are running. This is required so that phppgadmin can bind to the same service instance.
 

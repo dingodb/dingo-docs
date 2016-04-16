@@ -37,7 +37,7 @@ When the user requests to have their service recovered, please ask them for:
 
 When a user submits an urgent distressed "I've deleted my Dingo PostgreSQL™ database, please help!" there are some metadata challenges to overcome before you can help them.
 
-As at writing, Pivotal Cloud Foundry thoroughly deletes its internal metadata for deleted service instances.
+As at writing, Pivotal Cloud Foundry&reg; thoroughly deletes its internal metadata for deleted service instances.
 
 Prior to the user deleting their service instance, you might have been able to look up information about the service instance:
 
@@ -61,7 +61,7 @@ Mar 16 23:10:19 0.router-partition-cac94a070a81fd8f3931.dingo-postgresql-98b09c4
 
 The first line includes `patroni-broker.cluster.remove-node.perform`. The subsequent three lines show `/var/vcap/sys/run/router/haproxy.cfg` being updated (to remove the routed port from the configuration file).
 
-In the first line, locate `"instance-id":"6e101b27-ee1b-4f4d-a032-4401a3709ec3"`. This is the original Pivotal Cloud Foundry GUID for the service instance that was deleted by the user.
+In the first line, locate `"instance-id":"6e101b27-ee1b-4f4d-a032-4401a3709ec3"`. This is the original Pivotal Cloud Foundry&reg; GUID for the service instance that was deleted by the user.
 
 This `instance-id` GUID is how we will locate the archived backups from which you will restore to a new database.
 
@@ -94,7 +94,7 @@ _If you don't see any `DETAIL: Uploading to` lines then you have a big problem -
 
 Now recreate the Dingo PostgreSQL™ database on behalf of the user, into the same organization/space.
 
-Login to Pivotal Cloud Foundry as an admin and target the user's organization/space:
+Login to Pivotal Cloud Foundry&reg; as an admin and target the user's organization/space:
 
 ```
 cf target -o org -s important-space-and-all-databases
@@ -161,7 +161,7 @@ You need to find the `dingo-postgresql-xxxxxxxx` deployment running on BOSH and 
 bosh deployments
 ```
 
-This will output a table of deployments, including your `cf-xxxxxx` deployment for Pivotal Cloud Foundry itself.
+This will output a table of deployments, including your `cf-xxxxxx` deployment for Pivotal Cloud Foundry&reg; itself.
 
 ```
 +---------------------------------------+-...
@@ -352,7 +352,7 @@ As the container starts up, the following log line should be observed:
 restore_leader_if_missing> preparing patroni to restore this container from wal-e backups
 ```
 
-Once you've observed the WAL files being fetched from the target backup, and the database starting up successfully, you can then bind the Pivotal Cloud Foundry service instance to the user's application and check that it works as expected.
+Once you've observed the WAL files being fetched from the target backup, and the database starting up successfully, you can then bind the Pivotal Cloud Foundry&reg; service instance to the user's application and check that it works as expected.
 
 ```
 cf bind-service their-app important-db

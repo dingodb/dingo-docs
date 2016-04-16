@@ -30,8 +30,8 @@ Today, there is a Dingobot waiting to give you a download link for the Dingo S3â
 
     We have also written up guides to [Provisioning &amp; Binding](usage-provision.html), have [example applications](lang-examples.html), and [links to AWS SDKs](lang-s3-sdk.html) for many languages.
 
-6. Come back to Slack any time to ask for help or advice about our products or Pivotal Cloud Foundry in general.
+6. Come back to Slack any time to ask for help or advice about our products or Pivotal Cloud Foundry&reg; in general.
 
-7. Please suggest improvements, or make suggestions for other Pivotal Cloud Foundry products that you would like us to create for you.
+7. Please suggest improvements, or make suggestions for other Pivotal Cloud Foundry&reg; products that you would like us to create for you.
 
 7. Our Sales team will follow up to ensure you are very happy and to arrange payment for the Dingo S3â„¢ product.

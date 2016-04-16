@@ -4,7 +4,7 @@ title: Installing to Pivotal Ops Manager
 
 ## <a id="requirements"></a>Requirements
 
-* Pivotal Cloud Foundry
+* Pivotal Cloud Foundry&reg;
 * 512M in the `system` organization
 * AWS account
 * AWS credentials with full S3/IAM privileges (see <a href="#iam-user">Setup AWS IAM user</a>)
