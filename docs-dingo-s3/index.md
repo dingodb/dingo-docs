@@ -15,3 +15,30 @@ Once Dingo S3 is installed then every developer is enabled to go fast - create n
 Dingo S3 makes Amazon S3 safe and secure across all organizations. Each application is only able to access the single S3 bucket it is bound to.
 
 Any application written in any programming language can bind to an Amazon S3 bucket and communicate with its API. Many languages have libraries that make it even easier.
+
+<ul class="panels">
+  <li class="panel span3">
+    <a class="button" href="http://docs.pivotal.io/pivotalcf/getstarted/pcf-docs.html">
+      <h2 class="title-flashy" style="padding-top: 0em; padding-left: 0em; line-height: 0.7em; margin-top: 0em;">
+        <span class="title-deemph" style="font-size: 0.6em;">Get</span><br>
+        <span style="font-size: 0.8em;">Pivotal CF</span>
+      </h2>
+    </a>
+  </li>
+  <li class="panel span3">
+    <a class="button" href="/dingo-s3/download.html">
+      <h3 class="title-flashy" style="padding-top: 0em; padding-left: 0em; line-height: 0.7em; margin-top: 0em;">
+        <span class="title-deemph" style="font-size: 0.6em;">Download</span><br>
+        <span style="font-size: 0.8em;">Dingo S3</span>
+      </h3>
+    </a>
+  </li>
+  <li class="panel span3">
+    <a class="button" href="/dingo-s3/usage-provision.html">
+      <h3 class="title-flashy" style="padding-top: 0em; padding-left: 0em; line-height: 0.7em; margin-top: 0em;">
+        <span class="title-deemph" style="font-size: 0.6em;">Create buckets</span><br>
+        <span style="font-size: 0.8em;">Amazon S3</span>
+      </h3>
+    </a>
+  </li>
+</ul>

@@ -1,1 +1,1 @@
-r302 '/', '/dingo-postgresql/'
+#r302 '/', '/dingo-postgresql/'
