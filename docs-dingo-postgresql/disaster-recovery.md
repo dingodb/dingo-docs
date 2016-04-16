@@ -8,7 +8,7 @@ Please, practice each of these disasters in a controlled environment before they
 
 ## What can be recovered?
 
-At the core of all disaster recovery is the streaming archives of all databases to a object store like Amazon S3.
+At the core of all disaster recovery is the PostgreSQL [continuous archives](http://www.postgresql.org/docs/9.5/static/continuous-archiving.html) of all databases to an object store like Amazon S3.
 
 When installing Dingo PostgreSQL™ you will specify which object store to use. Every time any user creates a new Dingo PostgreSQL™ service instance it will automatically create a base backup, and every 10 minutes or less a new write-ahead log (WAL) will be uploaded. This means that the worst case for data loss should be 10 minutes of data for each database.
 
