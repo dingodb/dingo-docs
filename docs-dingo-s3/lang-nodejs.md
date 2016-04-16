@@ -1,3 +1,3 @@
 ---
-title: Binding Node.js application to Dingo S3
+title: Binding Node.js application to Dingo S3 ™
 ---
