@@ -11,7 +11,7 @@ cat Gemfile
 bundle update --local
 bundle install --binstubs
 
-./bin/bookbinder bind local
+./bin/bookbinder bind local --verbose
 cd final_app
 
 sed -i "s/ruby '2.0.0'//g" Gemfile
