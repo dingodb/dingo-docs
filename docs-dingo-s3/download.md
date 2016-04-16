@@ -6,9 +6,9 @@ Today, there is a Dingobot waiting to give you a download link for the Dingo S3 
 
 1. Go to https://slack.dingotiles.com/ to get a FREE invite to our **Dingo Tiles - Ask for Help** Slack account.
 2. Say hello! Some of us live all around the world and fingers crossed there is someone who will say hello back!
-3. Type `/download` to talk to the Dingobot and request a download URL. You can do this in any channel.
+3. Type `/download-s3` to talk to the Dingobot and request a download URL. You can do this in any channel.
 
-    ![donwload](images/dingobot-download.png)
+    ![download](images/dingobot-download.png)
 
     Privately, only you will see the following:
 
@@ -20,7 +20,7 @@ Today, there is a Dingobot waiting to give you a download link for the Dingo S3 
 
     ![public](images/dingobot-download-public.png)
 
-    The URL is valid for a few minutes. If you need a new URL, you can type `/download` again.
+    The URL is valid for a few minutes. If you need a new URL, you can type `/download-s3` again.
 
 4. We are very happy to help you (we like screensharing via [Zoom](https://zoom.us)) to get the Dingo S3 tile installed and connected to your AWS account.
 
