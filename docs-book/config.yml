@@ -19,13 +19,13 @@ sections:
 
 
 template_variables:
-  title: Dingo Tiles
-  book_title: Dingo Tiles
+  title: Dingo Tiles™
+  book_title: Dingo Tiles™
   hero_text: Amplify and extend Pivotal Cloud Foundry&reg; to make all your developers and admins crazy happy
-  book_title_short: Dingo Tiles
-  # title: Dingo Tiles Documentation
-  # book_title: Dingo Tiles Documentation
-  # hero_text: Learn how to use Dingo Tiles to make your developers go fast
+  book_title_short: Dingo Tiles™
+  # title: Dingo Tiles™ Documentation
+  # book_title: Dingo Tiles™ Documentation
+  # hero_text: Learn how to use Dingo Tiles™ to make your developers go fast
   # book_title_short: Dingo Docs
 
   support_url: https://slack.dingotiles.com

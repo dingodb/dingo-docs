@@ -4,7 +4,7 @@ title: Download Dingo S3™
 
 Today, there is a Dingobot waiting to give you a download link for the Dingo S3™ tile. We want to welcome you into our "Ask for help" Slack channel, get your download link, and say Hello!
 
-1. Go to https://slack.dingotiles.com/ to get a FREE invite to our **Dingo Tiles - Ask for Help** Slack account.
+1. Go to https://slack.dingotiles.com/ to get a FREE invite to our **Dingo Tiles™ - Ask for Help** Slack account.
 2. Say hello! Some of us live all around the world and fingers crossed there is someone who will say hello back!
 3. Type `/download-s3` to talk to the Dingobot and request a download URL. You can do this in any channel.
 

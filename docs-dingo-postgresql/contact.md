@@ -2,7 +2,7 @@
 title: Contact Us
 ---
 
-Hopefully this page will provide you with a suitable option for contacting the Dingo Tiles team.
+Hopefully this page will provide you with a suitable option for contacting the Dingo Tiles™ team.
 
 ## Sales
 
@@ -22,10 +22,10 @@ Hopefully we've documented everything you'll need to know about creating, bindin
 
 If there is any documentation missing, we would love to know and then we'll write more!
 
-Please jump on [Slack](https://slack.dingotiles.com) to find a member of the Dingo Tiles team.
+Please jump on [Slack](https://slack.dingotiles.com) to find a member of the Dingo Tiles™ team.
 
 ## Administrator Support
 
 As an administrator there are many ways you can help your users to be successful. Please contact us with any questions you have so we can help you to help your users.
 
-Please jump on [Slack](https://slack.dingotiles.com) to find a member of the Dingo Tiles team.
+Please jump on [Slack](https://slack.dingotiles.com) to find a member of the Dingo Tiles™ team.
