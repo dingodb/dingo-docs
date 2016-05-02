@@ -8,7 +8,7 @@ TODO: blocked on implementing support for Service Keys https://trello.com/c/V1x9
 
 ## Service keys
 
-There can be situations where you'd like to explicitly generate Amazon S3 access credentials without binding them to an application. Pivotal Cloud Foundry v1.6+ supports [Service Keys](http://docs.cloudfoundry.org/devguide/services/service-keys.html).
+There can be situations where you'd like to explicitly generate Amazon S3 access credentials without binding them to an application. Pivotal Cloud Foundry&reg; v1.6+ supports [Service Keys](http://docs.cloudfoundry.org/devguide/services/service-keys.html).
 
 First, create a new bucket (if not already created):
 

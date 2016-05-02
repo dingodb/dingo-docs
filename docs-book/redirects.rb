@@ -1,1 +1,1 @@
-# r302 '/bosh/bosh-errands.html', '/bosh/jobs.html'
+#r302 '/', '/dingo-postgresql/'

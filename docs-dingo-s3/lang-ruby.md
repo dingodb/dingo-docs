@@ -1,3 +1,3 @@
 ---
-title: Binding Ruby application to Dingo S3
+title: Binding Ruby application to Dingo S3™
 ---

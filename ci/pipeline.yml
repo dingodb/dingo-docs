@@ -3,7 +3,7 @@ groups:
 - name: deploy
   jobs:
   - deploy-prod
-  - deploy-postgresql
+  - deploy-alpha
 - name: ci
   jobs:
   - build-task-image
@@ -26,17 +26,17 @@ jobs:
       path: docs-app/docs-book/final_app
       current_app_name: docs
 
-- name: deploy-postgresql
+- name: deploy-alpha
   public: false
   serial: true
   plan:
   - {get: docs-ci}
-  - {get: docs, resource: docs-postgresql, trigger: true}
+  - {get: docs, resource: docs-alpha, trigger: true}
   - task: build-docs-app
     file: docs-ci/ci/tasks/build-docs-app.yml
     params:
       app_name: docs-postgresql
-      app_hosts: "[alpha,pg,postgresql]"
+      app_hosts: "[alpha,beta,pg,postgresql]"
   - put: docs-web-app
     params:
       manifest: docs-app/docs-book/final_app/manifest.yml
@@ -70,16 +70,16 @@ resources:
       - docs-book/**/*
       - docs-layout-repo/**/*
       - docs-dingo-s3/*
-- name: docs-postgresql
+- name: docs-alpha
   type: git
   source:
     uri: git@github.com:dingotiles/dingo-docs.git
-    branch: postgresql
+    branch: alpha
     private_key: {{github-key}}
     paths:
       - docs-book/**/*
       - docs-layout-repo/**/*
-      - docs-dingo-s3/*
+      - docs-dingo-postgresql/*
 
 - name: docs-web-app
   type: cf

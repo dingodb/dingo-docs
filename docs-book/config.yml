@@ -12,21 +12,25 @@ sections:
     name: dingodb/docs-dingo-s3
   directory: dingo-s3
   subnav_template: dingo_s3_subnav.erb
+- repository:
+    name: dingodb/docs-dingo-postgresql
+  directory: dingo-postgresql
+  subnav_template: dingo_postgresql_subnav.erb
 
 
 template_variables:
-  title: Dingo Tiles
-  book_title: Dingo Tiles
-  hero_text: Amplify and extend Pivotal Cloud Foundry to make all your developers and admins crazy happy
-  book_title_short: Dingo Tiles
-  # title: Dingo Tiles Documentation
-  # book_title: Dingo Tiles Documentation
-  # hero_text: Learn how to use Dingo Tiles to make your developers go fast
+  title: Dingo Tiles™
+  book_title: Dingo Tiles™
+  hero_text: Amplify and extend Pivotal Cloud Foundry&reg; to make all your developers and admins crazy happy
+  book_title_short: Dingo Tiles™
+  # title: Dingo Tiles™ Documentation
+  # book_title: Dingo Tiles™ Documentation
+  # hero_text: Learn how to use Dingo Tiles™ to make your developers go fast
   # book_title_short: Dingo Docs
 
   support_url: https://slack.dingotiles.com
 
-  domain_name: www.dingotiles.com
+  domain_name: beta.dingotiles.com
 
 
   product_link:

@@ -36,6 +36,14 @@
   font-size: .5em;
 }
 
+.title-tile {
+  @media (min-width: $bp-wide) {
+    padding-left: 2em;
+    float: right;
+  }
+}
+
+
 .ftux {
   font-family: $font-primary;
   font-weight: 500;

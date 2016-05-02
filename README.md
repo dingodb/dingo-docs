@@ -1,4 +1,4 @@
-# Documentation for Dingo Tiles
+# Documentation for Dingo Tiles™
 
 ## Adding documentation pages
 

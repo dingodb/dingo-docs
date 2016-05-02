@@ -1,8 +1,8 @@
 ---
-title: Example applications for Dingo S3
+title: Example applications for Dingo S3™
 ---
 
-The community of Dingo S3 users have created some example applications that can bind to Dingo S3 service credentials, and use AWS S3 libraries to create/fetch files.
+The community of Dingo S3™ users have created some example applications that can bind to Dingo S3™ service credentials, and use AWS S3 libraries to create/fetch files.
 
 | Language | Source Code |
 | --- | --- |

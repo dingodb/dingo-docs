@@ -1,14 +1,14 @@
 ---
-title: Download Dingo S3
+title: Download Dingo S3™
 ---
 
-Today, there is a Dingobot waiting to give you a download link for the Dingo S3 tile. We want to welcome you into our "Ask for help" Slack channel, get your download link, and say Hello!
+Today, there is a Dingobot waiting to give you a download link for the Dingo S3™ tile. We want to welcome you into our "Ask for help" Slack channel, get your download link, and say Hello!
 
-1. Go to https://slack.dingotiles.com/ to get a FREE invite to our **Dingo Tiles - Ask for Help** Slack account.
+1. Go to https://slack.dingotiles.com/ to get a FREE invite to our **Dingo Tiles™ - Ask for Help** Slack account.
 2. Say hello! Some of us live all around the world and fingers crossed there is someone who will say hello back!
-3. Type `/download` to talk to the Dingobot and request a download URL. You can do this in any channel.
+3. Type `/download-s3` to talk to the Dingobot and request a download URL. You can do this in any channel.
 
-    ![donwload](images/dingobot-download.png)
+    ![download](images/dingobot-download.png)
 
     Privately, only you will see the following:
 
@@ -20,9 +20,9 @@ Today, there is a Dingobot waiting to give you a download link for the Dingo S3 
 
     ![public](images/dingobot-download-public.png)
 
-    The URL is valid for a few minutes. If you need a new URL, you can type `/download` again.
+    The URL is valid for a few minutes. If you need a new URL, you can type `/download-s3` again.
 
-4. We are very happy to help you (we like screensharing via [Zoom](https://zoom.us)) to get the Dingo S3 tile installed and connected to your AWS account.
+4. We are very happy to help you (we like screensharing via [Zoom](https://zoom.us)) to get the Dingo S3™ tile installed and connected to your AWS account.
 
     We have also written up an [Installation](installation.html) guide.
 
@@ -30,8 +30,8 @@ Today, there is a Dingobot waiting to give you a download link for the Dingo S3 
 
     We have also written up guides to [Provisioning &amp; Binding](usage-provision.html), have [example applications](lang-examples.html), and [links to AWS SDKs](lang-s3-sdk.html) for many languages.
 
-6. Come back to Slack any time to ask for help or advice about our products or Pivotal Cloud Foundry in general.
+6. Come back to Slack any time to ask for help or advice about our products or Pivotal Cloud Foundry&reg; in general.
 
-7. Please suggest improvements, or make suggestions for other Pivotal Cloud Foundry products that you would like us to create for you.
+7. Please suggest improvements, or make suggestions for other Pivotal Cloud Foundry&reg; products that you would like us to create for you.
 
-7. Our Sales team will follow up to ensure you are very happy and to arrange payment for the Dingo S3 product.
+7. Our Sales team will follow up to ensure you are very happy and to arrange payment for the Dingo S3™ product.

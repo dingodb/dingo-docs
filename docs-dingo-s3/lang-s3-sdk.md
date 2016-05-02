@@ -4,7 +4,7 @@ title: Amazon S3 SDKs
 
 ## AWS SDKs
 
-Amazon Web Services (AWS) sponsor the development of software development kits (SDKs) for many languages that are available for your Pivotal Cloud Foundry.
+Amazon Web Services (AWS) sponsor the development of software development kits (SDKs) for many languages that are available for your Pivotal Cloud Foundry&reg;.
 
 [![aws-sdk-java](images/aws_sdk_java.png)](https://aws.amazon.com/sdk-for-java/)
 AWS SDK for Java
