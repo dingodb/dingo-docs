@@ -21,6 +21,7 @@ bosh -n delete deployment dingo-postgresql
 Login to your cf and run `cf curl /v2/services`. You will return a JSON structure with data about every service that is registered to cf. Note down the `.metadata.guid` for the dingo-postgresql service.
 
 Example:
+
 ```
 {
   "resources": [
