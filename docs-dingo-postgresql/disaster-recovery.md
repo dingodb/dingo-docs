@@ -27,3 +27,5 @@ For now, a Pivotal Cloud Foundry&reg; operator will be required to help recover 
 Infrastructure and software is not fault proof. Servers, disks, and software systems all fail eventually.
 
 Humans are not fault proof. History lesson: One of the original authors of Dingo PostgreSQL™ accidentally destroyed an entire PostgreSQL platform - over a hundred PostgreSQL databases - prior to the implementation of recoverable backups for that platform. Never again. Dingo PostgreSQL™ has recoverable archives built into every database - it is a core design goal.
+
+* [Recover from complete disasters](recover-from-complete-disaster.html)
