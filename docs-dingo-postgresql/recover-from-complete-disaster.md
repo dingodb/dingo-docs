@@ -77,7 +77,7 @@ properties:
 
 ```
 
-## <a id="redeploy"></a>Redeploy
+## <a id="run-errand"></a>Run disaster-recovery Errand
 
 Finally run the errand to recover all services registered in cf.
 `bosh run errand disaster-recovery`
