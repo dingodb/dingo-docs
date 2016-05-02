@@ -77,7 +77,11 @@ properties:
 
 ```
 
+Incase you are using PCF OpsManager to deploy Dingo Postgresql™ you simply need to enter the service_guid into the 'Disaster Recovery' section of the tile settings.
+
 ## <a id="run-errand"></a>Run disaster-recovery Errand
 
 Finally run the errand to recover all services registered in cf.
 `bosh run errand disaster-recovery`
+
+If you are using PCF OpsManager you will need to target the same Bosh that OpsManager is using and download the deployment manifest before you can run the errand.
