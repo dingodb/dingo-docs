@@ -67,6 +67,7 @@ resources:
     private_key: {{github-key}}
     paths:
       - docs-book/**/*
+      - docs-book/config.yml
       - docs-layout-repo/**/*
       - docs-dingo-s3/*
       - docs-dingo-postgresql/*
