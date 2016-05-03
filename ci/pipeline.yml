@@ -3,7 +3,6 @@ groups:
 - name: deploy
   jobs:
   - deploy-prod
-  - deploy-alpha
 - name: ci
   jobs:
   - build-task-image
@@ -19,29 +18,29 @@ jobs:
     file: docs-ci/ci/tasks/build-docs-app.yml
     params:
       app_name: docs
-      app_hosts: "[www,docs]"
+      app_hosts: "[www]"
   - put: docs-web-app
     params:
       manifest: docs-app/docs-book/final_app/manifest.yml
       path: docs-app/docs-book/final_app
       current_app_name: docs
 
-- name: deploy-alpha
-  public: false
-  serial: true
-  plan:
-  - {get: docs-ci}
-  - {get: docs, resource: docs-alpha, trigger: true}
-  - task: build-docs-app
-    file: docs-ci/ci/tasks/build-docs-app.yml
-    params:
-      app_name: docs-postgresql
-      app_hosts: "[alpha,beta,pg,postgresql]"
-  - put: docs-web-app
-    params:
-      manifest: docs-app/docs-book/final_app/manifest.yml
-      path: docs-app/docs-book/final_app
-      current_app_name: docs-postgresql
+# - name: deploy-alpha
+#   public: false
+#   serial: true
+#   plan:
+#   - {get: docs-ci}
+#   - {get: docs, resource: docs-alpha, trigger: true}
+#   - task: build-docs-app
+#     file: docs-ci/ci/tasks/build-docs-app.yml
+#     params:
+#       app_name: docs-postgresql
+#       app_hosts: "[alpha,beta,pg,postgresql]"
+#   - put: docs-web-app
+#     params:
+#       manifest: docs-app/docs-book/final_app/manifest.yml
+#       path: docs-app/docs-book/final_app
+#       current_app_name: docs-postgresql
 
 - name: build-task-image
   public: true
