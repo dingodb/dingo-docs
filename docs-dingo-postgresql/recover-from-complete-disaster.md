@@ -18,20 +18,23 @@ bosh -n delete deployment dingo-postgresql
 
 ## <a id="reinstall"></a>Restore the deployment
 
-First you need to ensure the restoration of the deployment by redeploying it via OpsManager or BOSH. Refer to the [installation](installation.html) guide for instructions.
+First you need to ensure the restoration of the deployment by redeploying Dingo PostgreSQL™ via OpsManager or BOSH. Refer to the [installation](installation.html) guide for instructions.
 
 ## <a id="run-errand"></a>Run disaster-recovery Errand
 
 Once the deployment has been restored run the errand to recover all services registered in cf.
+
 ```
 bosh run errand disaster-recovery
 ```
+
 This errand will check cf to find out which services should be present and recreate them from backups.
-NOTE: when using OpsManager you must target the same BOSH and use the same manifest that is being used by OpsManager.
+
+NOTE: When using OpsManager you must target the same BOSH and use the same manifest that is being used by OpsManager.
 The simplest way to do this is to ssh into the server that has OpsManager deployed. The `bosh` command should already be installed and configured correctly. You can find the deployment manifests being used under `/var/tempest/workspaces/default/deployments`.
 
 ## <a id="configuring-disaster-recovery"></a>Configuring disaster-recovery
-If you are not using OpsManager to deploy Dingo Postgresql™ you will need to add the following properties to the BOSH deployment manifest.yml for the errand to run properly:
+If you are not using OpsManager to deploy Dingo PostgreSQL™ you will need to add the following properties to the BOSH deployment manifest.yml for the errand to run properly:
 
 ```
 ---
