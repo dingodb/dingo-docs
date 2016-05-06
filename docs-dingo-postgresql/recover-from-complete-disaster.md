@@ -18,7 +18,7 @@ bosh -n delete deployment dingo-postgresql
 
 ## <a id="reinstall"></a>Restore the deployment
 
-First you need to ensure the restoration of the deployment either by redeploying it via OpsManager. Refer to the [installation](instalattion.html) guide for instructions.
+First you need to ensure the restoration of the deployment either by redeploying it via OpsManager. Refer to the [installation](installation) guide for instructions.
 
 ## <a id="run-errand"></a>Run disaster-recovery Errand
 
