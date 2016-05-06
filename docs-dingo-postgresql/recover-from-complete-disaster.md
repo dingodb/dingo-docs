@@ -16,53 +16,19 @@ Perhaps the deployment was accidentally deleted via bosh:
 bosh -n delete deployment dingo-postgresql
 ```
 
-## <a id="cf-service_guid"></a>Retreive the service_guid
+## <a id="reinstall"></a>Restore the deployment
 
-Login to your cf and run `cf curl /v2/services`. You will return a JSON structure with data about every service that is registered to cf. Note down the `.metadata.guid` for the dingo-postgresql service.
+First you need to ensure the restoration of the deployment either by redeploying it via OpsManager. Refer to the [installation](instalattion.html) guide for instructions.
 
-Example:
+## <a id="run-errand"></a>Run disaster-recovery Errand
 
-```
-{
-  "resources": [
-    {
-      "metadata": {
-        "guid": "01c6d2a7-f14d-4a3d-88ca-6c92d4b45cbb",
-        "url": "/v2/services/01c6d2a7-f14d-4a3d-88ca-6c92d4b45cbb",
-        "created_at": "2016-04-22T04:27:28Z",
-        "updated_at": "2016-04-29T21:47:05Z"
-      },
-      "entity": {
-        "label": "dingo-postgresql",
-        "provider": null,
-        "url": null,
-        "description": "Dedicated PostgreSQL 9.5",
-        "long_description": null,
-        "version": null,
-        "info_url": null,
-        "active": true,
-        "bindable": true,
-        "unique_id": "beb5973c-e1b2-11e5-a736-c7c0b526363d",
-        "extra": "{\"displayName\":\"Dingo PostgreSQL\"}"
-      },
-      "tags": [
-        "postgresql95",
-        "postgresql"
-      ],
-      "requires": [],
-      "documentation_url": null,
-      "service_broker_guid": "baec6039-a932-42dc-b86c-4fea98522f9a",
-      "plan_updateable": false,
-      "service_plans_url": "/v2/services/01c6d2a7-f14d-4a3d-88ca-6c92d4b45cbb/service_plans"
-    }
-  ]
-}
-```
+Once the deployment has been restored run the errand to recover all services registered in cf.
+`bosh run errand disaster-recovery`
+This errand will check pcf to find out which services should be present and recreate them from backups.
 
-in this case the service_guid is: `01c6d2a7-f14d-4a3d-88ca-6c92d4b45cbb`.
-
-## <a id="redeploy"></a>Redeploy
-Redeploy Dingo Postgresql™ with the correct service_guid and cf properties set in the deployment manifest:
+## <a id="configuring-disaster-recovery"></a>Configuring disaster-recovery
+If you are not using OpsManager to deploy Dingo Postgresql™ you will need to add some properties to the BOSH deployment manifest.yml for the errand to run properly.
+Add the following properties to the manifest:
 
 ```
 ---
@@ -74,15 +40,26 @@ properties:
     password: admin
 
   servicebroker:
-    service_guid: 01c6d2a7-f14d-4a3d-88ca-6c92d4b45cbb
+    service_id: beb5973c-e1b2-11e5-a736-c7c0b526363d
 
 ```
 
-Incase you are using PCF OpsManager to deploy Dingo Postgresql™ you simply need to enter the service_guid into the 'Disaster Recovery' section of the tile settings.
+using the correct credentials for the cf you are using.
 
-## <a id="run-errand"></a>Run disaster-recovery Errand
+The `servicebroker.service_id` key should equal the unique id specified in the manifest under `broker.services.id` for the dingo-postgresql plan.
 
-Finally run the errand to recover all services registered in cf.
-`bosh run errand disaster-recovery`
+## <a id="non-cf-services"></a>Restoring non-cf services
 
-If you are using PCF OpsManager you will need to target the same Bosh that OpsManager is using and download the deployment manifest before you can run the errand.
+Alternatively, if you want to restore database clusters that were not provisioned via cf you can also specify an array of service_instance_ids to be restored.
+In that case add the following properties to the deployment manifest.yml
+
+```
+---
+properties:
+  restore:
+    service_instance_id:
+    - id-1
+    - id-2
+```
+
+By running the same disaster-recovery errand these instances will be restored with data from the latest backups.
