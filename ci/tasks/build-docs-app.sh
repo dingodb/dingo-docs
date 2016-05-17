@@ -31,5 +31,11 @@ applications:
   hosts: ${app_hosts}
 EOF
 
+if [[ "${no_hostname}" != "false" ]]; then
+cat >>manifest.yml <<EOF
+  no-hostname: true
+EOF
+fi
+
 cat manifest.yml
 pwd

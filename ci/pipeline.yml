@@ -19,6 +19,7 @@ jobs:
     params:
       app_name: docs
       app_hosts: "[www]"
+      no_hostname: true
   - put: docs-web-app
     params:
       manifest: docs-app/docs-book/final_app/manifest.yml
