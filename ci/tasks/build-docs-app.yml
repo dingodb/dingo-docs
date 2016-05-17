@@ -12,7 +12,6 @@ outputs:
 params:
   app_name:
   app_hosts:
-  no_hostname: false
 
 run:
   path: docs-ci/ci/tasks/build-docs-app.sh
