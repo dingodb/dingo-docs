@@ -8,7 +8,7 @@ Hopefully this page will provide you with a suitable option for contacting the D
 
 Our sales team is available around the world.
 
-Please email us at [sales@dingotiles.com](mailto:sales@dingotiles.com) to kick off a conversation to see if we can be helpful to you.
+Please email us at [dingo-sales@starkandwayne.com](mailto:dingo-sales@starkandwayne.com) to kick off a conversation to see if we can be helpful to you.
 
 ## Getting Started Support
 
