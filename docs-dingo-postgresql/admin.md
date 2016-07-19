@@ -16,20 +16,20 @@ When a user creates a new Dingo PostgreSQL cluster, two containers running Postg
 
 Over time, as an administrator, you might wish to move the nodes from their original cells to different/bigger/emptier cells. As an administrator you can do this using the same `cf` command line tool that users used to create their cluster.
 
-As an overview, you will run the `cf update-service` command and provide the `cell-guids` parameter to dictate which cells the nodes should be moved to:
+As an overview, you will run the `cf update-service` command and provide the `cells` parameter to dictate which cells the nodes should be moved to:
 
 ```
 cf target -o your-users-org -s your-users-space
-cf update-service your-users-dingo-pg -p '{"cell-guids": ["10.1.10.20", "10.1.20.20"]}'
+cf update-service your-users-dingo-pg -p '{"cells": ["10.1.10.20", "10.1.20.20"]}'
 ```
 
-*Currently, the `cell-guids` are the IPs of the cells, though this may change in future.*
+*Currently, the `cells` are the IPs of the cells, though this may change in future.*
 
 This process will be performed with minimal downtime (the time to failover the current leader/master to one of the new replicas).
 
 The internal process for moving a two-node cluster will be:
 
-* create two new nodes on the specified `"cell-guids"` (that is, grow the cluster from two to four nodes)
+* create two new nodes on the specified `"cells"` (that is, grow the cluster from two to four nodes)
 * wait until the new nodes are healthy replicas of the current leader
 * remove the original nodes, whilst failing over the current leader to one of the new replicas
 * update the routing mesh to reference the new leader node
@@ -69,7 +69,7 @@ Since you are manually selecting cells, remember to select cells that are in two
 To move the cluster to the two cells above, using their `guid`:
 
 ```
-cf update-service your-users-dingo-pg -p '{"cell-guids": ["10.244.21.7", "10.244.22.3"]}'
+cf update-service your-users-dingo-pg -p '{"cells": ["10.244.21.7", "10.244.22.3"]}'
 ```
 
 This is a long-running asynchronous process and the command above will return successfully before the entire orchestration has completed. To poll for completion, run either:
