@@ -2,7 +2,7 @@
 title: Release Notes
 ---
 
-## <a id="v0.9"></a> v0.9
+## <a id="v0.9"></a>v0.9
 
 This version was created for the platform administrators, who we love dearly.
 
@@ -48,6 +48,6 @@ cf service their-db --uuid
 
 Alternately, you can use the `cf curl /v2/service_instances` or similar commands to discover service instances and their UUIDs.
 
-## <a id="v0.8"></a> v0.8
+## <a id="v0.8"></a>v0.8
 
 First version made available on [Pivotal Network](https://network.pivotal.io/products/dingo-postgresql-for-pcf).
