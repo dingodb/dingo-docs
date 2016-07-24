@@ -6,9 +6,11 @@ title: Release Notes
 
 This version was created for the platform administrators, who we love dearly.
 
-### To upgrade
+### Upgrade requirements
 
 You will be required to upgrade the number of cells (see "Resource Config") to 2 each ("Cell - Availability Zone 1" and "Cell - Availability Zone 2"). See below for discussion.
+
+### Notes
 
 This edition includes a rewrite of the scheduling planner for cluster changes (new clusters and updated clusters). It both fixes a bug in placing new nodes in different availability zones, and implements "moving" nodes to different cells.
 
