@@ -8,14 +8,15 @@ repo_link_enabled: false
 feedback_enabled: false
 
 sections:
-- repository:
-    name: dingodb/docs-dingo-s3
+- repository: {name: dingotiles/docs-dingo-s3}
   directory: dingo-s3
   subnav_template: dingo_s3_subnav.erb
-- repository:
-    name: dingodb/docs-dingo-postgresql
+- repository: {name: dingotiles/docs-dingo-postgresql}
   directory: dingo-postgresql
   subnav_template: dingo_postgresql_subnav.erb
+- repository: {name: dingotiles/docs-dingo-secrets}
+  directory: dingo-secrets
+  subnav_template: dingo_secrets_subnav.erb
 
 
 template_variables:

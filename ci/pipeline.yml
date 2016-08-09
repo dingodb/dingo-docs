@@ -70,6 +70,7 @@ resources:
       - docs-book/config.yml
       - docs-layout-repo/**/*
       - docs-dingo-s3/*
+      - docs-dingo-secrets/*
       - docs-dingo-postgresql/*
 - name: docs-alpha
   type: git
