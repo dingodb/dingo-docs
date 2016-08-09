@@ -1,44 +1,27 @@
 ---
-title: Overview of Dingo Secrets™ for Pivotal Cloud Foundry&reg;
+title: Dingo Secrets™ tile and Hashicorp Vault
 ---
 
-Most applications running on Pivotal Cloud Foundry&reg; require somewhere to upload & retrieve files/objects/blobs. It is an anti-pattern to use a shared file system; and as such Pivotal Cloud Foundry&reg; installations do not offer one. Instead, it is best to offer a vault service/blob store/object store.
+Dingo Secrets tile for Pivotal Cloud Foundry provides all developers' applications a tool for managing their secrets.
 
-Amazon Simple Storage Service (Amazon Secrets), provides developers and IT teams with secure, durable, highly-scalable object storage.
+Dingo Secrets packages and deploys [Hashicorp Vault](https://www.vaultproject.io/).
 
-The Dingo Secrets™ tile offers a vault/blob/object store service to applications, backed by the legendary Amazon Simple Storage Service (Amazon Secrets). Amazon Secrets provides developers and IT teams with secure, durable, highly-scalable object storage.
+Vault secures, stores, and tightly controls access to tokens, passwords, certificates, API keys, and other secrets in modern computing. Vault handles leasing, key revocation, key rolling, and auditing. Through a unified API, users can access an encrypted Key/Value store and network encryption-as-a-service, or generate AWS IAM/STS credentials, SQL/NoSQL databases, X.509 certificates, SSH credentials, and more.
 
-[![dingo-secrets-architecture](/dingo-secrets/images/architecture.png)](/dingo-secrets/about-tile.html)
+Features include:
 
-Once Dingo Secrets™ is installed then every developer is enabled to go fast - create new Secrets vaults on demand, or create them within CI pipelines, and discard when no longer necessary.
+* Secret storage
+* Key rolling
+* Audit logs
 
-Dingo Secrets™ makes Amazon Secrets safe and secure across all organizations. Each application is only able to access the single Secrets vault it is bound to.
+Every Dingo Secrets service instance gets its own policy, its own credentials/root token, and its own area in the secret path hierarchy.
 
-Any application written in any programming language can bind to an Dingo Secrets vault and communicate with its API. Many languages have libraries that make it even easier.
+Example credentials from a service binding within an application:
 
-<ul class="panels">
-  <li class="panel span3">
-    <a class="button" href="http://docs.pivotal.io/pivotalcf/getstarted/pcf-docs.html">
-      <h2 class="title-flashy" style="padding-top: 0em; padding-left: 0em; line-height: 0.7em; margin-top: 0em;">
-        <span class="title-deemph" style="font-size: 0.6em;">Get</span><br>
-        <span style="font-size: 0.8em;">Pivotal CF</span>
-      </h2>
-    </a>
-  </li>
-  <li class="panel span3">
-    <a class="button" href="/dingo-secrets/download.html">
-      <h3 class="title-flashy" style="padding-top: 0em; padding-left: 0em; line-height: 0.7em; margin-top: 0em;">
-        <span class="title-deemph" style="font-size: 0.6em;">Download</span><br>
-        <span style="font-size: 0.8em;">Dingo Secrets™</span>
-      </h3>
-    </a>
-  </li>
-  <li class="panel span3">
-    <a class="button" href="/dingo-secrets/usage-provision.html">
-      <h3 class="title-flashy" style="padding-top: 0em; padding-left: 0em; line-height: 0.7em; margin-top: 0em;">
-        <span class="title-deemph" style="font-size: 0.6em;">Create vaults</span><br>
-        <span style="font-size: 0.8em;">Amazon Secrets</span>
-      </h3>
-    </a>
-  </li>
-</ul>
+```json
+{
+ "root": "secret/cc0d9c34-0d83-4666-9b09-07066d2c1b7b",
+ "token": "07eef997-7fa0-4b86-bc32-9d42279f82de",
+ "vault": "http://10.58.123.123:8200"
+}
+```
