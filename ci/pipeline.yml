@@ -25,22 +25,22 @@ jobs:
       path: docs-app/docs-book/final_app
       current_app_name: docs
 
-# - name: deploy-alpha
-#   public: false
-#   serial: true
-#   plan:
-#   - {get: docs-ci}
-#   - {get: docs, resource: docs-alpha, trigger: true}
-#   - task: build-docs-app
-#     file: docs-ci/ci/tasks/build-docs-app.yml
-#     params:
-#       app_name: docs-postgresql
-#       app_hosts: "[alpha,beta,pg,postgresql]"
-#   - put: docs-web-app
-#     params:
-#       manifest: docs-app/docs-book/final_app/manifest.yml
-#       path: docs-app/docs-book/final_app
-#       current_app_name: docs-postgresql
+- name: deploy-staging
+  public: false
+  serial: true
+  plan:
+  - {get: docs-ci}
+  - {get: docs, resource: docs-staging, trigger: true}
+  - task: build-docs-app
+    file: docs-ci/ci/tasks/build-docs-app.yml
+    params:
+      app_name: docs-staging
+      app_hosts: "[staging]"
+  - put: docs-web-app
+    params:
+      manifest: docs-app/docs-book/final_app/manifest.yml
+      path: docs-app/docs-book/final_app
+      current_app_name: docs-staging
 
 - name: build-task-image
   public: true
@@ -72,15 +72,18 @@ resources:
       - docs-dingo-s3/*
       - docs-dingo-secrets/*
       - docs-dingo-postgresql/*
-- name: docs-alpha
+- name: docs-staging
   type: git
   source:
     uri: git@github.com:dingotiles/dingo-docs.git
-    branch: alpha
+    branch: staging
     private_key: {{github-key}}
     paths:
       - docs-book/**/*
+      - docs-book/config.yml
       - docs-layout-repo/**/*
+      - docs-dingo-s3/*
+      - docs-dingo-secrets/*
       - docs-dingo-postgresql/*
 
 - name: docs-web-app
