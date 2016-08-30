@@ -25,6 +25,12 @@ After uploading the tile, please check the two "Archives" settings panes. The "R
 
 ![v0-10-0-s3-region-required](images/release-notes/v0-10-0-s3-region-required.png)
 
+If you forget this step, then the `sanity-test` errand will exit with an error similar to:
+
+```
+check-object-store> ERROR: require default.region or default.endpoint
+```
+
 ## v0.9.2
 
 Accidentally making a mistake with your AWS credentials or Amazon S3 buckets/regions no longer takes you into the pit of operations dispair. Instead, the `sanity-test` errand will immediately sanity test that your credentials work, that each bucket exists and that each bucket is in the region that you said it was in.
