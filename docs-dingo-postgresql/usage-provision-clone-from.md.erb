@@ -1,0 +1,30 @@
+---
+title: Provison new Service Instance from backups
+---
+
+Dingo PostgreSQL provides users with `cf create-service ... -c '{"clone-from":"NAME"}'` to recreate a deleted service instance or clone an existing service instance into a new service instance.
+
+To clone an existing service instance into a new service instance (`prod` and `staging` respectively in example below):
+
+```
+cf create-service dingo-postgresql cluster prod
+cf create-service dingo-postgresql cluster staging -c '{"clone-from":"prod"}'
+```
+
+To recreate a deleted service instance:
+
+```
+cf delete-service dingo-postgresql cluster prod
+cf create-service dingo-postgresql cluster prod -c '{"clone-from":"prod"}'
+```
+
+In each example, Dingo PostgreSQL looks thru the history of all service instances to find the backups for the most recent service instance named `prod` in the same Cloud Foundry organization/space.
+
+Provisioning a new service instance based on a cloned backup will take longer than provisioning a brand new service instance. The additional steps automatically performed are:
+
+* discovery of the most recent service instance that had the `clone-from` target name (`prod` in the examples above)
+* cloning/copying all the base backups and write-ahead logs (WAL) within the backup object storage service
+* start up the highly-available cluster of PostgreSQL servers
+* PostgreSQL leader server restores the most recent base backup and subsequent WAL files
+* PostgreSQL leader creates fresh base backup
+* PostgreSQL replica replicates from either leader or backups
