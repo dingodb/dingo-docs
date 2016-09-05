@@ -1,0 +1,138 @@
+---
+title: Usage tutorial
+---
+
+This page is a guided walk-thru of basic usage features:
+
+* Deploying sample Spring Music app to Cloud Foundry
+* Provisioning Dingo PostgreSQL database and binding to the sample Spring Music app
+* Interacting with Dingo PostgreSQL using service keys
+* Cloning the database into a separate Dingo PostgreSQL database
+* Deleting a database
+* Restoring a database from backups
+
+## Deploying sample Spring Music app to Cloud Foundry
+
+To download the Java/Spring application and build its deployment asset:
+
+```
+git clone https://github.com/cloudfoundry-samples/spring-music
+cd spring-music
+./gradlew assemble
+```
+
+To create a clean space to deploy this sample app (multiple times in this tutorial) and deploy it:
+
+```
+cf create-space dingo-pg-tutorial
+cf target -s dingo-pg-tutorial
+cf push spring-music
+```
+
+This will deploy the Spring Music app using an in-memory database. Whilst lightning fast... an in-memory database is only useful for the purposes of demonstration. Indeed, most applications that require a database will not run successfully until the database is provided at start time.
+
+## Provisioning Dingo PostgreSQL database and binding to the sample Spring Music app
+
+To add Dingo PostgreSQL to our application, we perform three standard Cloud Foundry actions:
+
+* provision a service instance (`cf create-service`) and wait for it to finish starting up (`cf service`)
+* bind the application to the service instance (`cf bind-service`)
+* restart the application to pass the service instance credentials (`cf restart` or `cf restage`)
+
+```
+cf create-service dingo-postgresql cluster music-db
+cf service music-db
+```
+
+Re-run `cf service music-db` until the Dingo PostgreSQL database cluster has successfully started running.
+
+```
+cf bind-service spring-music music-db
+cf restart music-db
+```
+
+## Interacting with Dingo PostgreSQL using service keys
+
+The `cf bind-service` command above is used to provide a single application with credentials to access the database cluster. If you want to interact with the database yourself then you can use `cf create-service-key` and `cf service-key`:
+
+```
+cf create-service-key music-db music-db-creds
+cf service-key music-db music-db-creds
+```
+
+The output will be in JSON format as below. There will be two URIs for connecting to your database - normal application access and superuser access.
+
+```json
+{...}
+```
+
+You can now interact directly with your Dingo PostgreSQL database:
+
+```
+uri=postgres://username:password@host:port/postgres
+psql $uri -c "show tables;"
+```
+
+## Cloning the database into a separate Dingo PostgreSQL database
+
+Dingo PostgreSQL allows you to create databases that are empty, or to create them as a clone of another database's latest archive. Currently the cloned database must be (now or previously) in the same "space" (which is `dingo-pg-tutorial` in this tutorial).
+
+First, trigger PostgreSQL to send a final WAL segment to the backend object store. This action requires the `superuser_uri` from the service key above:
+
+```
+superuser_uri=postgres://superuser:password@host:port/postgres
+psql $superuser_uri -c "select pg_switch_xlog();"
+```
+
+Next, when creating the new service instance of Dingo PostgreSQL, include the `clone-from` parameter:
+
+```
+cf create-service dingo-postgresql cluster music-db-clone -c '{"clone-from":"music-db"}'
+cf service music-db-clone
+```
+
+As before, re-run `cf service music-db-clone` until Cloud Foundry has been told the service instance has been successfully provisioned.
+
+Now create a separate Spring Music application to display the cloned database:
+
+```
+cf push spring-music-clone --no-start
+cf bind-service spring-music-clone music-db-clone
+cf start spring-music-clone
+```
+
+View the cloned application and confirm it has the same data as the original application.
+
+Independently edit the two applications' data to confirm that they are using independent databases.
+
+## Deleting a database
+
+When you are finished with your cloned database and its bound application you can quickly delete them:
+
+```
+cf unbind-service spring-music-clone music-db-clone
+cf delete-service music-db-clone
+cf delete spring-music-clone
+```
+
+If you create service keys for a database then you must delete them (`cf delete-service-key`) before deleting the service instance.
+
+## Restoring a database from backups
+
+A variation of creating a new service instance from a clone of the database archives is to restore a database if accidentally deleted.
+
+It is the same command as above, but you could re-use the service instance name `music-db-clone`:
+
+```
+cf create-service dingo-postgresql cluster music-db-clone -c '{"clone-from":"music-db-clone"}'
+cf service music-db-clone
+```
+
+## Cleanup
+
+When you're finished you can delete all service keys, service instances/databases and applications by deleting the space:
+
+```
+cf target -s another-space
+cf delete-space dingo-pg-tutorial
+```
