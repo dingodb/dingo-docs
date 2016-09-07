@@ -17,6 +17,20 @@ This page is a guided walk-thru of common administration activities and features
 
 The section "Destroy all VMs and recover" is a very important section. **It is highly recommended** that all administrators practise this tutorial at least once so they are familiar and confident with the disaster recovery proceedings.
 
+## Assumptions
+
+It is assumed that you are continuing this tutorial after doing [User tutorial](user-tutorial.html) and that there is a single `music-db` service instance running.
+
+If not, then:
+
+```
+cf create-service dingo-postgresql cluster music-db
+cf service music-db
+```
+
+Re-run `cf service music-db` until the Dingo PostgreSQL database cluster has successfully started running.
+
+
 ## View health of VMs
 
 As an administrator of Pivotal OpsManager, you can SSH into its VM and access the running Dingo PostgreSQL using the `bosh` CLI.
