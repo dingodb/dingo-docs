@@ -175,7 +175,7 @@ bosh login
 bosh deployment /var/tempest/workspaces/default/deployments/dingo-postgresql-*.yml
 name=$(bosh deployments | grep dingo-postgresql- | awk '{print $2}')
 echo $name
-bosh delete deployment $name
+bosh -n delete deployment $name
 bosh -n deploy
 bosh run errand disaster-recovery
 ```
