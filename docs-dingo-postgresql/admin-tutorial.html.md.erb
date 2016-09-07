@@ -176,11 +176,18 @@ bosh deployment /var/tempest/workspaces/default/deployments/dingo-postgresql-*.y
 name=$(bosh deployments | grep dingo-postgresql- | awk '{print $2}')
 echo $name
 bosh -n delete deployment $name
+```
+
+This will delete every VM and every persistent disk (technically the disks are orphaned).
+
+To recreate the cluster and recover all expected service instances:
+
+```
 bosh -n deploy
 bosh run errand disaster-recovery
 ```
 
-The errand will fetch the expected list of service instances from Pivotal Elastic Runtime/Cloud Foundry; and will recreate each one from its latest archive.
+This `disaster-recovery` errand will fetch the expected list of service instances from Pivotal Elastic Runtime/Cloud Foundry; and will recreate each one from its latest archive.
 
 ### Directly connect to etcd database
 
