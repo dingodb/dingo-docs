@@ -180,6 +180,12 @@ bosh -n delete deployment $name
 
 This will delete every VM and every persistent disk (technically the disks are orphaned).
 
+At this moment, Cloud Foundry and user's applications, still believe all the database service instances exist:
+
+```
+cf curl /v2/service_instances
+```
+
 To recreate the cluster and recover all expected service instances:
 
 ```
@@ -188,6 +194,11 @@ bosh run errand disaster-recovery
 ```
 
 This `disaster-recovery` errand will fetch the expected list of service instances from Pivotal Elastic Runtime/Cloud Foundry; and will recreate each one from its latest archive.
+
+For each item found in `cf curl /v2/service_instances`, a new database cluster is created. The original credentials, node count and size are all retrieved from the clusterdata object store bucket.
+
+As the database leader starts up, it recreates itself from the base backup and subsequent WAL segments.
+
 
 ### Directly connect to etcd database
 
