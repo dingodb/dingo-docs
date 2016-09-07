@@ -48,7 +48,7 @@ Re-run `cf service music-db` until the Dingo PostgreSQL database cluster has suc
 
 ```
 cf bind-service spring-music music-db
-cf restart music-db
+cf restart spring-music
 ```
 
 ## Interacting with Dingo PostgreSQL using service keys
@@ -63,14 +63,24 @@ cf service-key music-db music-db-creds
 The output will be in JSON format as below. There will be two URIs for connecting to your database - normal application access and superuser access.
 
 ```json
-{...}
+{
+ "host": "10.213.0.66",
+ "password": "PASSWORD",
+ "port": 30000,
+ "superuser_password": "SUPERPASSWORD",
+ "superuser_uri": "postgres://postgres:SUPERPASSWORD@10.213.0.66:30000/postgres",
+ "superuser_username": "postgres",
+ "uri": "postgres://appuser:PASSWORD@10.213.0.66:30000/postgres",
+ "username": "appuser"
+}
 ```
 
 You can now interact directly with your Dingo PostgreSQL database:
 
 ```
-uri=postgres://username:password@host:port/postgres
-psql $uri -c "show tables;"
+uri=postgres://appuser:PASSWORD@host:port/postgres
+psql $uri -c "show \dt;"
+psql $uri -c "select * from album;"
 ```
 
 ## Cloning the database into a separate Dingo PostgreSQL database
@@ -111,8 +121,8 @@ When you are finished with your cloned database and its bound application you ca
 
 ```
 cf unbind-service spring-music-clone music-db-clone
-cf delete-service music-db-clone
-cf delete spring-music-clone
+cf delete-service music-db-clone -f
+cf delete spring-music-clone -f
 ```
 
 If you create service keys for a database then you must delete them (`cf delete-service-key`) before deleting the service instance.
@@ -126,6 +136,14 @@ It is the same command as above, but you could re-use the service instance name 
 ```
 cf create-service dingo-postgresql cluster music-db-clone -c '{"clone-from":"music-db-clone"}'
 cf service music-db-clone
+```
+
+To confirm that its a restoration of the deleted database, deploy `spring-music-clone` app again, bind, and verify:
+
+```
+cf push spring-music-clone
+cf bind-service spring-music-clone music-db-clone
+cf restart spring-music-clone
 ```
 
 ## Cleanup

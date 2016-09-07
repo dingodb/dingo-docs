@@ -5,12 +5,16 @@ title: Admin tutorial
 This page is a guided walk-thru of common administration activities and features:
 
 * View health of VMs
+* Access PostgreSQL servers inside Docker containers
+* Destroy all VMs and recover from archives
+* Directly connect to etcd database
+* Directly interact with broker API
+* Locate the cell running leader node of a cluster
 * Scale up and out to create more capacity
 * Move a database to different VMs
 * Find syslog logs various scenarios
-* Destroy all VMs and recover from archives
 
-The last section a very important section. **It is highly recommended** that all administrators practise this tutorial at least once so they are familiar and confident with the disaster recovery proceedings.
+The section "Destroy all VMs and recover" is a very important section. **It is highly recommended** that all administrators practise this tutorial at least once so they are familiar and confident with the disaster recovery proceedings.
 
 ## View health of VMs
 
@@ -74,6 +78,13 @@ The output's right hand side will show the utilization of RAM `Memory Usage` and
 
 You are primarily focused on the health of the `cell` VMs. This is where PostgreSQL servers are running inside Docker containers.
 
+Convenience command to look up the deployment name and put into `$name` variable:
+
+```
+name=$(bosh deployments | grep dingo-postgresql- | awk '{print $2}')
+bosh vms $name
+```
+
 ## Access PostgreSQL servers inside Docker containers
 
 Use the `bosh` CLI to SSH into one of the `cell` VMs:
@@ -117,39 +128,160 @@ Once inside the Docker container, to view a hierarchical list of processes runni
 
 ```
 root@19b6bc04a2fe:~# ps axwf
-  PID TTY      STAT   TIME COMMAND
- 3377 ?        S<s    0:00 bash
- 3405 ?        R<+    0:00  \_ ps axwf
-    1 ?        S<s    0:00 dumb-init -c /scripts/run.sh
-   10 ?        S<     0:00 sudo PATH=/usr/lib/postgresql/9.5/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin -E -u postgres /scripts/postgres
-   73 ?        S<     0:00  \_ /bin/bash /scripts/postgres/start_pg.sh
-   87 ?        S<l   23:18      \_ python /patroni.py /patroni/postgres.yml
-   88 ?        S<     0:00      \_ /bin/bash /scripts/postgres/start_pg.sh
-   92 ?        S<     0:05      |   \_ sed -u s/^/T-3228-patroni> /
-  100 ?        S<     5:21      \_ /bin/bash /scripts/postgres/reinitialize_when_stalled.sh
- 3404 ?        S<     0:00      |   \_ sleep 2
-  101 ?        S<     2:39      \_ /bin/bash /scripts/postgres/self_advertize.sh
- 3372 ?        S<     0:00          \_ sleep 6
-   94 ?        S<     0:28 /bin/bash /scripts/postgres/regular_backup.sh
- 3219 ?        S<     0:00  \_ sleep 30
-   95 ?        S<     0:00 /bin/bash /scripts/postgres/regular_backup.sh
-  102 ?        S<     0:04  \_ sed -u s/^/T-3228-backup> /
-   98 ?        S<     3:51 /bin/bash /scripts/postgres/regular_backup.sh
- 3359 ?        S<     0:00  \_ sleep 5
-   99 ?        S<     0:00 /bin/bash /scripts/postgres/regular_backup.sh
-  107 ?        S<     0:00  \_ sed -u s/^/T-3228-backup> /
-20913 ?        S<     0:06 /usr/lib/postgresql/9.5/bin/postgres -D /data/postgres0 --listen_addresses=0.0.0.0 --port=5432 --hot_standby=on --listen_addresses=
-20964 ?        S<s    0:01  \_ postgres: checkpointer process
-20965 ?        S<s    0:00  \_ postgres: writer process
-20966 ?        S<s    0:01  \_ postgres: stats collector process
-20968 ?        S<s    0:20  \_ postgres: postgres postgres 127.0.0.1(50826) idle
-21018 ?        S<s    0:01  \_ postgres: wal sender process appuser 10.213.0.64(50234) streaming 3/EE000060
-21277 ?        S<s    0:00  \_ postgres: wal writer process
-21278 ?        S<s    0:00  \_ postgres: autovacuum launcher process
-21279 ?        S<s    0:00  \_ postgres: archiver process   last was 0000000C00000003000000ED
+  PID  COMMAND
+ 3377  bash
+ 3405   \_ ps axwf
+    1  dumb-init -c /scripts/run.sh
+   10  sudo PATH=/usr/lib/postgresql/9.5/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin -E -u postgres /scripts/postgres
+   73   \_ /bin/bash /scripts/postgres/start_pg.sh
+   87       \_ python /patroni.py /patroni/postgres.yml
+   88       \_ /bin/bash /scripts/postgres/start_pg.sh
+   92       |   \_ sed -u s/^/T-3228-patroni> /
+  100       \_ /bin/bash /scripts/postgres/reinitialize_when_stalled.sh
+ 3404       |   \_ sleep 2
+  101       \_ /bin/bash /scripts/postgres/self_advertize.sh
+ 3372           \_ sleep 6
+   94  /bin/bash /scripts/postgres/regular_backup.sh
+ 3219   \_ sleep 30
+   95  /bin/bash /scripts/postgres/regular_backup.sh
+  102   \_ sed -u s/^/T-3228-backup> /
+   98  /bin/bash /scripts/postgres/regular_backup.sh
+ 3359   \_ sleep 5
+   99  /bin/bash /scripts/postgres/regular_backup.sh
+  107   \_ sed -u s/^/T-3228-backup> /
+20913  /usr/lib/postgresql/9.5/bin/postgres -D /data/postgres0 --listen_addresses=0.0.0.0 --port=5432 --hot_standby=on --listen_addresses=
+20964   \_ postgres: checkpointer process
+20965   \_ postgres: writer process
+20966   \_ postgres: stats collector process
+20968   \_ postgres: postgres postgres 127.0.0.1(50826) idle
+21018   \_ postgres: wal sender process appuser 10.213.0.64(50234) streaming 3/EE000060
+21277   \_ postgres: wal writer process
+21278   \_ postgres: autovacuum launcher process
+21279   \_ postgres: archiver process   last was 0000000C00000003000000ED
 ```
 
 And there at the end is the `postgres` process and its child processes. The Docker container does not directly invoke `postgres`, rather it is a system called `patroni` that is responsible for initializing, configuring, and reconfiguring PostgreSQL.
+
+## Destroy all VMs and recover from archives
+
+This is a very important section. **It is highly recommended** that all administrators practise this tutorial at least once so they are familiar and confident with the disaster recovery proceedings.
+
+There will be down time (as every VM that is part of Dingo PostgreSQL will not be running nor in existence) but within a few minutes the system will be back running and all clusters will have been recreated from archives.
+
+Destroy the BOSH deployment and all its VMs...
+
+```
+bosh login
+bosh deployment /var/tempest/workspaces/default/deployments/dingo-postgresql-*.yml
+name=$(bosh deployments | grep dingo-postgresql- | awk '{print $2}')
+echo $name
+bosh delete deployment $name
+bosh -n deploy
+bosh run errand disaster-recovery
+```
+
+The errand will fetch the expected list of service instances from Pivotal Elastic Runtime/Cloud Foundry; and will recreate each one from its latest archive.
+
+### Directly connect to etcd database
+
+The backend for Dingo PostgreSQL is the etcd database. To determine an IP address to access it:
+
+```
+etcd_host=$(bosh vms $name | grep etcd | head -n 1 | awk '{print $11}')
+curl ${etcd_host}:4001/v2/keys
+```
+
+### Directly interact with broker API
+
+Access the service broker API (which includes an admin API just for you) via port 8889 on a router VM.
+
+First, look up the basic auth username/password from the deployment manifest:
+
+```
+grep servicebroker: -a4 /var/tempest/workspaces/default/deployments/dingo-postgresql-*.yml
+```
+
+Pull out the values and set into environment variables:
+
+```
+broker_username=<USERNAME>
+broker_password=<PASSWORD>
+broker_host=$(bosh vms $name | grep router | head -n 1 | awk '{print $11}')
+broker_uri="http://${broker_username}:${broker_password}@${broker_host}:8889"
+curl ${broker_uri}/v2/catalog
+```
+
+### Locate the cell running leader node of a cluster
+
+In addition to the standard Cloud Foundry Service Broker API (`GET /v2/catalog`, `PUT /v2/service_instance/:id`, etc), we have a growing admin API:
+
+```
+curl ${broker_uri}/admin/cells
+
+id=$(cf service music-db --guid)
+curl ${broker_uri}/admin/service_instances/$id | jq .
+```
+
+This JSON result will include admin credentials for the PostgreSQL database, the location of each node (a PostgreSQL server running in a container) and its role (leader or replica), and the current in-progress status:
+
+```json
+{
+  "nodes": [
+    {
+      "role": "master",
+      "state": "running",
+      "cell_guid": "10.213.0.62",
+      "node_id": "1b98bc5a-d56c-4c8f-b89c-e4900d8bbc92"
+    },
+    {
+      "role": "replica",
+      "state": "running",
+      "cell_guid": "10.213.0.65",
+      "node_id": "fe477a10-b5d0-4e3b-92e3-1bdc77ab3787"
+    }
+  ],
+  "service_instance_name": "",
+  "info": {
+    "last_message": "Scheduling Completed",
+    "completed_steps": 4,
+    "steps": 4,
+    "status": "success"
+  },
+  "allocated_port": 30003,
+  "instance_id": "badca97f-25c8-4d53-8c39-d541e0acf2e4",
+  "service_id": "beb5973c-e1b2-11e5-a736-c7c0b526363d",
+  "plan_id": "1545e30e-6dc3-11e5-826a-6c4008a663f0",
+  "organization_guid": "46293a7b-22d4-475f-bcb4-c6fd07971ea9",
+  "space_guid": "36ca64ea-f496-4458-bc1a-c426e125c763",
+  "admin_credentials": {
+    "password": "PASSWORD",
+    "username": "pgadmin"
+  },
+  "superuser_credentials": {
+    "password": "PASSWORD",
+    "username": "postgres"
+  },
+  "app_credentials": {
+    "password": "PASSWORD",
+    "username": "appuser"
+  }
+}
+```
+
+This endpoint is very handy to determine which cell/VM is running the leader node. The following will return the IP address for the Cell VM that is running the leader node of a cluster:
+
+```
+curl ${broker_uri}/admin/service_instances/$id | jq -r ".nodes[] | select(.role == \"master\") | .cell_guid"
+```
+
+To look up the BOSH job name using this IP address:
+
+```
+cell=$(curl ${broker_uri}/admin/service_instances/$id | jq -r ".nodes[] | select(.role == \"master\") | .cell_guid")
+bosh vms $name | grep $cell | awk '{print $2}'
+```
+
+This can then be passed to `bosh ssh`.
 
 ## Scale up and out to create more capacity
 
@@ -158,7 +290,3 @@ And there at the end is the `postgres` process and its child processes. The Dock
 
 
 ## Find syslog logs various scenarios
-
-## Destroy all VMs and recover from archives
-
-This is a very important section. **It is highly recommended** that all administrators practise this tutorial at least once so they are familiar and confident with the disaster recovery proceedings.

@@ -1,0 +1,46 @@
+---
+title: Pre-tutorial preparation
+---
+
+When preparing for the tutorials, it can be desirable to delete all running containers/service instances.
+
+To clean out the Cloud Foundry database of service instances:
+
+```
+cf purge-service-offering dingo-postgresql
+cf update-service-broker dingo-postgresql USER PASS URL
+cf enable-service-access dingo-postgresql
+```
+
+To clean out Dingo PostgreSQL of all running containers/service instances:
+
+```
+bosh --ca-cert /var/tempest/workspaces/default/root_ca_certificate target OPS-MANAGER-DIRECTOR-IP
+bosh login
+
+bosh deployment /var/tempest/workspaces/default/deployments/dingo-postgresql-*.yml
+name=$(bosh deployments | grep dingo-postgresql- | awk '{print $2}')
+echo $name
+bosh delete deployment $name
+bosh -n deploy
+```
+
+If you want to be very bold, empty out the object storage buckets. This makes it easier to spot newly created backup items during the tutorials.
+
+```
+sudo apt-get install awscli
+aws configure
+```
+
+To find the names of the buckets being used:
+
+```
+grep bucket /var/tempest/workspaces/default/deployments/dingo-postgresql-*.yml
+```
+
+Then for the two buckets in the deployment:
+
+```
+aws s3 rm s3://our-dingo-postgresql-wal-backups --recursive
+aws s3 rm s3://our-dingo-postgresql-clusterdata --recursive
+```
