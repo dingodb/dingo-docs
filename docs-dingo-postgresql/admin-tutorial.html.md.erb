@@ -6,6 +6,7 @@ This page is a guided walk-thru of common administration activities and features
 
 * View health of VMs
 * Access PostgreSQL servers inside Docker containers
+* Demonstrate high availability of Dingo PostgreSQL cluster
 * Destroy all VMs and recover from archives
 * Directly connect to etcd database
 * Directly interact with broker API
@@ -162,6 +163,42 @@ root@19b6bc04a2fe:~# ps axwf
 
 And there at the end is the `postgres` process and its child processes. The Docker container does not directly invoke `postgres`, rather it is a system called `patroni` that is responsible for initializing, configuring, and reconfiguring PostgreSQL.
 
+## Demonstrate high availability of Dingo PostgreSQL cluster
+
+Whilst on the same BOSH VM above, we can emulate the loss of the cell by stopping all the processes (including Docker containers).
+
+Change to root user and ask `monit` to stop everything:
+
+```
+sudo su -
+monit stop all
+monit summary
+ps axwf
+```
+
+All the docker containers running PostgreSQL have stopped on this VM (as well as all the subsystems).
+
+If you refresh the application, it will eventually resume working after the replica container (on another VM) assumes the mantle of leader.
+
+At anytime, you can ask the cluster's leader for its list of replicas:
+
+```
+psql $uri -c "select * from pg_stat_replication;"
+```
+
+To restart the subsystems and Docker containers on the VM:
+
+```
+monit restart all
+```
+
+Eventually the Docker containers will recreate their PostgreSQL servers as healthy replicas. To confirm that the leader-cum-replica has rejoined its cluster:
+
+```
+psql $uri -c "select * from pg_stat_replication;"
+```
+
+
 ## Destroy all VMs and recover from archives
 
 This is a very important section. **It is highly recommended** that all administrators practise this tutorial at least once so they are familiar and confident with the disaster recovery proceedings.
@@ -200,7 +237,7 @@ For each item found in `cf curl /v2/service_instances`, a new database cluster i
 As the database leader starts up, it recreates itself from the base backup and subsequent WAL segments.
 
 
-### Directly connect to etcd database
+## Directly connect to etcd database
 
 The backend for Dingo PostgreSQL is the etcd database. To determine an IP address to access it:
 
@@ -209,7 +246,7 @@ etcd_host=$(bosh vms $name | grep etcd | head -n 1 | awk '{print $11}')
 curl ${etcd_host}:4001/v2/keys
 ```
 
-### Directly interact with broker API
+## Directly interact with broker API
 
 Access the service broker API (which includes an admin API just for you) via port 8889 on a router VM.
 
