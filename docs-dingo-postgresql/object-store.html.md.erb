@@ -1,0 +1,88 @@
+---
+title: Secure Object Store
+---
+
+## Setup a Secure Object Store with Amazon S3
+
+1. In the AWS web console, use the black bar at the top to navigate to Services
+\> **IAM**. The Dashboard on the left has a **Users** section.  Choose **Users**
+and a list of existing users for your account appears.
+
+2. Let's add a new user to your AWS account.  Click on the big blue button
+labeled **Create New Users**.  Give the user a name like `dingo-postgresql` and
+keep the checkbox "Generate an access key for each user" checked before you
+click **Create** in the bottom right.
+
+  **NOTE**: **Make sure you save the secret key somewhere secure**, like
+  1Password.  Amazon will be unable to give you the **Secret Key ID**
+  if you misplace it -- your only recourse at that point is to generate a new
+  set of keys and start over.
+
+3. Now let's create the S3 bucket.  Navigate to Services > **S3**, then choose
+the blue **Create Bucket** button.
+
+  > Amazon S3 bucket names are globally unique, regardless of the AWS Region in
+which you create the bucket [1][Using Buckets].
+
+4. The S3 bucket name needs to be unique and should comply with DNS naming
+conventions[2][Bucket Restrictions].  The best region is one closest to your
+datacenter.
+
+  Once a bucket is created the [website endpoint][Website Endpoints]
+looks like this:
+
+  ```
+  http://bucket-name.s3-website.region.amazonaws.com/
+  ```
+
+  Replace the `bucket-name` and `region` to get your URL.  Check the
+[website endpoint][Website Endpoints] page for a reference of the region URL
+portion.
+
+5. Next we will create a custom IAM policy for the S3 user.  Browse to Services
+\> **IAM**, then in the Dashboard select **Users**.  Find the `dingo-postgresql`
+user and select that user.  Take note of the _User ARN_ value, we're going to
+use it in the policy we create.  It will look something like this:
+
+  ```
+  arn:aws:iam::693782881333:user/dingo-postgresql
+  ```
+
+6. Then in the bottom half of the Summary panel, you can see some tabs, click on
+the **Permissions** tab.  Click on **Inline Policies** to show the additional
+text.  We're going to create a custom User Policy here, use the link
+**click here** to get started.
+
+7. Now on the _Manage User Permissions_ page choose the 2nd option to setup a
+**Custom Policy** and click on **Select**.  A new _Review Policy_ form will
+appear.
+
+8. Give the Policy a name like **SecureS3Policy**.  And in the _Policy Document_
+field add the following, substituting the _User ARN_ value and bucket name for
+your values.
+
+  ```
+  {
+    "Statement": [
+      {
+        "Effect"   : "Allow",
+        "Action"   : "s3:ListAllMyBuckets",
+        "Resource" : "arn:aws:iam:xxxxxxxxxxxx:user/zzzzz"
+      },
+      {
+        "Effect"   : "Allow",
+        "Action"   : "s3:*",
+        "Resource" : [
+          "arn:aws:s3:::your-bucket-name",
+          "arn:aws:s3:::your-bucket-name/*"
+        ]
+      }
+    ]
+  }
+  ```
+
+[//]: # (Links, please keep in alphabetical order)
+
+[Bucket Restrictions]: http://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html
+[Using Buckets]:       http://docs.aws.amazon.com/AmazonS3/latest/dev/UsingBucket.html
+[Website Endpoints]:   http://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteEndpoints.html
