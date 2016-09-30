@@ -22,22 +22,22 @@ click **Create** in the bottom right.
 the blue **Create Bucket** button.
 
   > Amazon S3 bucket names are globally unique, regardless of the AWS Region in
-which you create the bucket [1][Using Buckets].
+  which you create the bucket [1][Using Buckets].
 
 4. The S3 bucket name needs to be unique and should comply with DNS naming
 conventions[2][Bucket Restrictions].  The best region is one closest to your
 datacenter.
 
   Once a bucket is created the [website endpoint][Website Endpoints]
-looks like this:
+  looks like this:
 
   ```
   http://bucket-name.s3-website.region.amazonaws.com/
   ```
 
   Replace the `bucket-name` and `region` to get your URL.  Check the
-[website endpoint][Website Endpoints] page for a reference of the region URL
-portion.
+  [website endpoint][Website Endpoints] page for a reference of the region URL
+  portion.
 
 5. Next we will create a custom IAM policy for the S3 user.  Browse to Services
 \> **IAM**, then in the Dashboard select **Users**.  Find the `dingo-postgresql`
