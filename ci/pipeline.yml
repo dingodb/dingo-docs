@@ -18,7 +18,7 @@ jobs:
     file: docs-ci/ci/tasks/build-docs-app.yml
     params:
       app_name: docs
-      app_hosts: "[www]"
+      routes: "[dingotiles.com,www.dingotiles.com]"
   - put: docs-web-app
     params:
       manifest: docs-app/docs-book/final_app/manifest.yml
@@ -35,7 +35,7 @@ jobs:
     file: docs-ci/ci/tasks/build-docs-app.yml
     params:
       app_name: docs-staging
-      app_hosts: "[staging]"
+      routes: "[staging.dingotiles.com]"
   - put: docs-web-app
     params:
       manifest: docs-app/docs-book/final_app/manifest.yml

@@ -27,8 +27,7 @@ applications:
   memory: 256M
   instances: 1
   buildpack: ruby_buildpack
-  domain: dingotiles.com
-  hosts: ${app_hosts}
+  routes: ${routes}
 EOF
 
 cat manifest.yml
