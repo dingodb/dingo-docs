@@ -2,6 +2,73 @@
 title: Release Notes
 ---
 
+## v0.10.1
+
+### Optional syslog
+
+Syslog configuration is now actually optional. Previously, the form allowed you to not configure a syslog `host:port` endpoint but we didn't actually think to... test it? That was awkward. So, now we both made it more explicit that you're choosing to not ship logs to a syslog endpoint (the default "Local" option), and we actually help deploy Dingo PostgreSQL correctly so that it is ok with your decision. Previously, if you didn't configure "Remote Syslog", then the `cell_z1` and `cell_z2` servers would not start up successfully, with Docker daemon having been misconfigured on how it should be shipping logs. No more. Thanks to Ming Ling from Pivotal for helping to debug this.
+
+### dpg support tool
+
+We've introduced a support tool `dpg` to help inspect the cluster, discover running service instances and which Cloud Foundry org/space they belong to, and more. `dpg` is installed and pre-configured for your platform administration pleasure on the `router/0` VM's `root` user:
+
+```
+bosh ssh router/0
+sudo su -
+dpg ls
+```
+
+To see help, run dpg without arguments.
+
+Example commands to test drive the support tool:
+
+```
+dpg
+dpg target
+dpg ls
+```
+
+The first column are the Cloud Foundry service instance IDs, referenced as INSTANCE_ID in the dpg help above.
+
+```
+dgp status INSTANCE_ID
+```
+
+To create or delete service instances without Cloud Foundry API/CLI:
+
+```
+dpg create my-first-cluster
+dpg ls
+dpg raw /service/my-first-cluster
+dpg raw /service/my-first-cluster/members
+```
+
+Once the cluster is up and running:
+
+```
+dpg superuser-psql my-first-cluster
+```
+
+This will provide a psql interactive console:
+
+```
+psql (9.4.5, server 9.5.3)
+WARNING: psql major version 9.4, server major version 9.5.
+         Some psql features might not work.
+Type "help" for help.
+
+postgres=#
+```
+
+Continuing with example commands:
+
+```
+dpg wale-backup-list my-first-cluster
+dpg delete my-first-cluster
+```
+
+NOTE: my-first-cluster will be a long UUID/GUID for values provided by Cloud Foundry; and a value prefixed by T- when created by the sanity-test errand (which can be deleted if you see them).
+
 ## v0.10.0
 
 ### New feature - "clone from"
