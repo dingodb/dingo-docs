@@ -13,9 +13,9 @@ The simple known fields for MySQL backups are as below:
 * Port: `22`
 * Username: `dingo`
 * Destination directory: `/var/vcap/storage/elastic-runtime-mysql`
-* Cron Schedule: `@every 1d`
+* Cron Schedule: `@daily`
 
-For **Cron Schedule** specify backup frequency, using [cron parser syntax](https://godoc.org/github.com/robfig/cron). This syntax is similar to traditional cron. It also supports expressions like `@every 1d` to back up once per day.
+For **Cron Schedule** specify backup frequency, using [cron parser syntax](https://godoc.org/github.com/robfig/cron). This syntax is similar to traditional cron. It also supports expressions like `@daily` to back up once per day.
 
 ### <a id="discovery-hostname-ip"></a>Hostname
 
@@ -46,7 +46,6 @@ It should also not have any `"` in it. Delete these.
 ## <a id="provided-configuration"></a>Provided configuration
 
 ![elastic-runtime-remote-host-backup-filled](images/elastic-runtime-mysql-remote-host-filled.png)
-
 
 Finally, press **Save**. You can now **Apply Changes** to update Elastic Runtime.
 
