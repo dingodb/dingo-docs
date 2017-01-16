@@ -1,0 +1,53 @@
+---
+title: Backing up Elastic Runtime MySQL
+---
+
+## <a id="required-configuration"></a>Required configuration
+
+![elastic-runtime-remote-host-backup](images/elastic-runtime-mysql-remote-host-empty.png)
+
+## <a id="discovering-configuration"></a>Discovering Storage Backup configuration
+
+The simple known fields for MySQL backups are as below:
+
+* Port: `22`
+* Username: `dingo`
+* Destination directory: `/var/vcap/storage/elastic-runtime-mysql`
+* Cron Schedule: `@every 1d`
+
+For **Cron Schedule** specify backup frequency, using [cron parser syntax](https://godoc.org/github.com/robfig/cron). This syntax is similar to traditional cron. It also supports expressions like `@every 1d` to back up once per day.
+
+### <a id="discovery-hostname-ip"></a>Hostname
+
+From the dashboard, click on the **Dingo Backup Storage** to open it.
+
+Click on the **Status** tab.
+
+![tile-credentials](images/backup-storage-status.png)
+
+Copy the **Backup Storage** IP address into the **Hostname:** field for Elastic Runtime above.
+
+### <a id="discovering-private-key"></a>Private key
+
+Click on the **Credentials** tab.
+
+![tile-credentials](images/backup-storage-credentials.png)
+
+Click on **Link to Credential** next to **Ssh User Key**.
+
+![ssh-user-credentials](images/ssh-user-credentials.png)
+
+Copy the `"private_key_pem"` value into the **Private Key** field for Elastic Runtime above.
+
+The resulting Private Key should have no `\n` strings in it. Replace all of them with a new line.
+
+It should also not have any `"` in it. Delete these.
+
+## <a id="provided-configuration"></a>Provided configuration
+
+![elastic-runtime-remote-host-backup-filled](images/elastic-runtime-mysql-remote-host-filled.png)
+
+
+Finally, press **Save**. You can now **Apply Changes** to update Elastic Runtime.
+
+## <a id="trust-but-verify"></a>Trust but Verify
