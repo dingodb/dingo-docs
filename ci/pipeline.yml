@@ -71,6 +71,7 @@ resources:
       - docs-layout-repo/**/*
       - docs-dingo-s3/*
       - docs-dingo-secrets/*
+      - docs-dingo-backup-storage/*
       - docs-dingo-postgresql/*
 - name: docs-staging
   type: git
