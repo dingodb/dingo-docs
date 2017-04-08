@@ -1,0 +1,31 @@
+---
+title: Example applications for Dingo Redis
+---
+
+The community of Cloud Foundry & Redis users have created some example applications that can bind to Dingo Redis service credentials.
+
+| Language | Source Code |
+| --- | --- |
+| Java/Spring | [Spring Music](https://github.com/scottfrederick/spring-music) |
+| Node.js | - |
+| Ruby on Rails | - |
+
+## Java/Spring
+
+Cloud Foundry documentation includes a section on [Configure Service Connections for Spring](http://docs.cloudfoundry.org/buildpacks/java/spring-service-bindings.html).
+
+[Spring Music](https://github.com/scottfrederick/spring-music) is sample application for using database services on Cloud Foundry with Spring Framework.
+
+```
+git clone https://github.com/scottfrederick/spring-music
+cd spring-music
+./gradlew assemble
+cf push
+cf cs dingo-redis cluster spring-music-redis
+cf bs spring-music spring-music-redis
+cf restart spring-music
+```
+
+## Node.js
+
+## Ruby on Rails
