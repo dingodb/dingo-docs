@@ -1,0 +1,87 @@
+---
+title: Installing to Pivotal Ops Manager
+---
+
+## <a id="requirements"></a>Requirements
+
+* Pivotal Ops Manager&reg;
+* Pivotal Cloud Foundry&reg;
+
+## <a id="upload-tile"></a>Upload tile
+
+See [Downloads](download.html) for instructions for downloading the latest tile.
+
+Click "Import a Product" on the left hand side of your Ops Manager dashboard. Select the `dingo-redis-x.y.z.pivotal` file to upload.
+
+The "Dingo Redis" product will appear in the "Available Products" list. Click "Add" to move it to the Installation Dashboard.
+
+The first time you upload/install the tile it will appear with a red lower border. This means it is not yet ready to be installed - there are mandatory configuration that you will need to provide.
+
+Notably, the Amazon S3 API credentials to allow automatic backups of every database.
+
+## <a id="installation"></a>Installation
+
+Return to the Ops Manager dashboard via the "< Installation Dashboard" link at the top left.
+
+The Dingo Redis tile is now green and is ready to be installed.
+
+Press "Apply Changes".
+
+## <a id="verification"></a>Verification
+
+The `dingo-redis` service should be available to all users after installation. Observe it in the marketplace:
+
+```
+cf marketplace
+```
+
+The output will look like:
+
+```
+Getting services from marketplace in org system / space dingo-redis as admin...
+OK
+
+service      plans            description
+dingo-redis  solo             Redis key-value store
+```
+
+### <a id="verification-create-service"></a>Create service
+
+To confirm that you and your users can create & delete Redis database:
+
+```
+cf create-service dingo-redis solo test-db-solo
+cf create-service dingo-redis cluster test-db-cluster
+```
+
+### <a id="verification-confirm-backups"></a>Confirm backups
+
+Review your operator's system logs for the launch of three Docker containers (one for the `solo` service instance, and two for the `cluster` service instance).
+
+For each of the two service instances there should be logs showing the successful upload of backups to your object store.
+
+```
+Mar 16 19:11:47 14ddd22e-719e-4aca-b318-7f291c97fbba docker/cf-c8ce128e-7b4c-4fe7-a533-e9379356f906:  patroni> upload: tmp/sysids/sysid to s3://our-redis-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/sysids/sysid
+Mar 16 19:11:48 14ddd22e-719e-4aca-b318-7f291c97fbba docker/cf-c8ce128e-7b4c-4fe7-a533-e9379356f906:  patroni>         DETAIL: Uploading "pg_xlog/000000010000000000000001" to "s3://our-redis-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/wal_005/000000010000000000000001.lzo".
+Mar 16 19:11:48 14ddd22e-719e-4aca-b318-7f291c97fbba docker/cf-c8ce128e-7b4c-4fe7-a533-e9379356f906:  patroni>         STRUCTURED: time=2016-03-17T02:11:48.811154-00 pid=231 action=push-wal key=s3://our-redis-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/wal_005/000000010000000000000001.lzo prefix=backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/ seg=000000010000000000000001 state=begin
+Mar 16 19:11:49 14ddd22e-719e-4aca-b318-7f291c97fbba docker/cf-c8ce128e-7b4c-4fe7-a533-e9379356f906:  backup>         DETAIL: Uploading to s3://our-redis-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/basebackups_005/base_000000010000000000000002_00000040/extended_version.txt.
+Mar 16 19:11:50 14ddd22e-719e-4aca-b318-7f291c97fbba docker/cf-c8ce128e-7b4c-4fe7-a533-e9379356f906:  backup>         DETAIL: Uploading to "s3://our-redis-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/basebackups_005/base_000000010000000000000002_00000040/tar_partitions/part_00000000.tar.lzo".
+...
+```
+
+Confirm that uploads complete successfully and that there are no timeouts due to Internet access issues.
+
+A completed segment will include `state=complete`:
+
+```
+Mar 16 19:11:58 14ddd22e-719e-4aca-b318-7f291c97fbba docker/cf-c8ce128e-7b4c-4fe7-a533-e9379356f906:  patroni>         STRUCTURED: time=2016-03-17T02:11:58.209041-00 pid=253 action=push-wal key=s3://our-dingo-redis-backups/backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/wal_005/000000010000000000000002.00000028.backup.lzo prefix=backups/6e101b27-ee1b-4f4d-a032-4401a3709ec3/wal/ rate=00 seg=000000010000000000000002.00000028.backup state=complete
+```
+
+### <a id="verification-delete-service"></a>Delete service
+
+To destroy the test databases:
+
+```
+cf delete-service test-db-solo -f
+cf delete-service test-db-cluster -f
+```
