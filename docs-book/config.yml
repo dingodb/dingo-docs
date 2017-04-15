@@ -17,6 +17,9 @@ sections:
 - repository: {name: dingotiles/docs-dingo-secrets}
   directory: dingo-secrets
   subnav_template: dingo_secrets_subnav.erb
+- repository: {name: dingotiles/docs-dingo-redis}
+  directory: dingo-redis
+  subnav_template: dingo_redis_subnav.erb
 - repository: {name: dingotiles/docs-dingo-backup-storage}
   directory: dingo-backup-storage
   subnav_template: dingo_backup_storage_subnav.erb
