@@ -7,10 +7,11 @@ The community of Cloud Foundry & Redis users have created some example applicati
 | Language | Source Code |
 | --- | --- |
 | Java/Spring | [Spring Music](https://github.com/scottfrederick/spring-music) |
-| Node.js | - |
-| Ruby on Rails | - |
+| Ruby | [REST API in Ruby](https://github.com/dingotiles/dingo-redis-example-ruby-app) |
 
 ## Java/Spring
+
+![spring-music-dingo-redis](images/spring-music-dingo-redis.png)
 
 Cloud Foundry documentation includes a section on [Configure Service Connections for Spring](http://docs.cloudfoundry.org/buildpacks/java/spring-service-bindings.html).
 
@@ -21,11 +22,39 @@ git clone https://github.com/scottfrederick/spring-music
 cd spring-music
 ./gradlew assemble
 cf push
-cf cs dingo-redis cluster spring-music-redis
+cf cs dingo-redis ready spring-music-redis
 cf bs spring-music spring-music-redis
 cf restart spring-music
 ```
 
-## Node.js
-
 ## Ruby on Rails
+
+The general [Usage: Tutorial](usage-tutorial.html) documents a Ruby application.
+
+The snippet example to discover Redis credentials and setup the Redis client is:
+
+```ruby
+def redis_credentials
+  service_name = ENV['service_name'] || "redis"
+
+  if ENV['VCAP_SERVICES']
+    all_redis_credentials = CF::App::Credentials.find_all_by_all_service_tags(['redis'])
+    if all_redis_credentials && all_redis_credentials.first
+      return all_redis_credentials && all_redis_credentials.first
+    else
+      redis_service_credentials = CF::App::Credentials.find_by_service_name(service_name)
+      return redis_service_credentials
+    end
+  end
+  puts "ERROR: this application expects $VCAP_SERVICES to contain a 'redis' tagged service instance"
+  exit 1
+end
+
+def redis_client
+  @client ||= Redis.new(
+    host: redis_credentials['host'] || redis_credentials.fetch('hostname'),
+    port: redis_credentials.fetch('port'),
+    password: redis_credentials.fetch('password')
+  )
+end
+```

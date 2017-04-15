@@ -9,13 +9,13 @@ Dingo Redis allows all Pivotal Cloud Foundry&reg; users to create and use Redis 
 You can create a new Redis database using the `cf create-service` (or `cf cs` alias):
 
 ```
-cf create-service dingo-redis solo myapp-pg
+cf create-service dingo-redis ready myapp-redis
 ```
 
 You can then share the database with one or more applications within the same Cloud Foundry "space".
 
 ```
-cf bind-service myapp myapp-pg
+cf bind-service myapp myapp-redis
 ```
 
 Applications will have access to the connection credentials when they are next pushed, restarted or restaged.
