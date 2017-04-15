@@ -73,6 +73,8 @@ resources:
       - docs-dingo-secrets/*
       - docs-dingo-backup-storage/*
       - docs-dingo-postgresql/*
+      - docs-dingo-redis/*
+
 - name: docs-staging
   type: git
   source:
@@ -86,6 +88,7 @@ resources:
       - docs-dingo-s3/*
       - docs-dingo-secrets/*
       - docs-dingo-postgresql/*
+      - docs-dingo-redis/*
 
 - name: docs-web-app
   type: cf
