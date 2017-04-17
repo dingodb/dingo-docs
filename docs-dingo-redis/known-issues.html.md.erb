@@ -1,3 +1,7 @@
 ---
 title: Known Issues
 ---
+
+Very soon we will publish a centralized backup and restore facility for Dingo Redis and other similar Dingo Tiles (not including Dingo PostgreSQL which includes its own continuous archiving system). Dingo Redis will then be extended with the Dingo Tiles `bosh run errand disaster-recovery` super tool.
+
+Each Dingo Redis service instance is provisioned on-demand inside a dedicated Docker container. The service does not yet support the notion of "dedicated server" model of Redis. Please contact us to discuss if you have this specific requirement.
