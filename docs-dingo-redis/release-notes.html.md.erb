@@ -2,6 +2,10 @@
 title: Release Notes
 ---
 
+## v0.5.2
+
+Bug fix to `sanity-test` errand when in off-line mode. The Dingo Redis docker image was not being injected into the `sanity-test` VM before tests commenced.
+
 ## v0.5.1
 
 Dingo Redis can now be installed in offline mode. The tile bakes the specific Docker image version into the tile, and it is directly injected into each Docker Backend instance. No Docker Registry nor Internet access is required to installed Dingo Redis v0.5.1 and above.
