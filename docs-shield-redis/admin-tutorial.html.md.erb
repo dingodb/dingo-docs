@@ -3,3 +3,49 @@ title: Admin tutorial
 ---
 
 This page is a guided walk-thru of common administration activities and features.
+
+```
+shield create-backend dingo https://IP
+shield schedules -k
+```
+
+The first time you will be prompted for your username and password.
+
+![link-to-credentials](images/shield-auth-link-to-credentials.png)
+
+The output will look like:
+
+```
+Name   Summary  Frequency / Interval (UTC)
+====   =======  ==========================
+daily           daily 3am
+```
+
+```
+shield -k stores
+```
+
+This will show the configured storage option:
+
+```
+Name       Summary  Plugin  Configuration
+====       =======  ======  =============
+amazon-s3           s3      {
+                              "access_key_id": "AKIAIUSEM...",
+                              "secret_access_key": "dpGseV9D...",
+                              "s3_host": "s3.eu-central-1.amazonaws.com",
+                              "bucket": "backups...",
+                              "skip_ssl_validation": false,
+                              "prefix": "/dingo-shield/archives"
+                            }
+```
+
+```
+shield -k policies
+```
+
+```
+Name        Summary  Expires in
+====        =======  ==========
+short-term           90 days
+```
