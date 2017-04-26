@@ -1,0 +1,62 @@
+---
+title: Installing to Pivotal Ops Manager
+---
+
+## <a id="requirements"></a>Requirements
+
+* Pivotal Ops Manager&reg;
+* Pivotal Cloud Foundry&reg;
+
+## <a id="upload-tile"></a>Upload tile
+
+See [Downloads](download.html) for instructions for downloading the latest tile.
+
+Click "Import a Product" on the left hand side of your Ops Manager dashboard. Select the `dingo-shield-x.y.z.pivotal` file to upload.
+
+The "Dingo Shield" product will appear in the "Available Products" list. Click "Add" to move it to the Installation Dashboard.
+
+The first time you upload/install the tile it will appear with a red lower border. This means it is not yet ready to be installed - there are mandatory configuration that you will need to provide.
+
+Notably, the Amazon S3 API credentials to allow automatic backups of every database.
+
+## <a id="installation"></a>Installation
+
+Return to the Ops Manager dashboard via the "< Installation Dashboard" link at the top left.
+
+The Dingo Shield tile is now green and is ready to be installed.
+
+Press "Apply Changes".
+
+## <a id="verification"></a>Verification
+
+The `dingo-shield` service should be available to all users after installation. Observe it in the marketplace:
+
+```
+cf marketplace
+```
+
+The output will look like:
+
+```
+Getting services from marketplace in org system / space dingo-shield as admin...
+OK
+
+service      plans       description
+dingo-shield  ready       Shield 3.2
+```
+
+### <a id="verification-create-service"></a>Create service
+
+To confirm that you and your users can create & delete Shield database:
+
+```
+cf create-service dingo-shield ready test-shield
+```
+
+### <a id="verification-delete-service"></a>Delete service
+
+To destroy the test databases:
+
+```
+cf delete-service test-shield -f
+```

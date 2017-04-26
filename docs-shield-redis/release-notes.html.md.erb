@@ -1,0 +1,35 @@
+---
+title: Release Notes
+---
+
+## v0.5.4
+
+Apps Manager marketplace page is now populating correctly with logo and text.
+
+![apps-mgr](images/release-notes-0.5.4-dingo-shield32-marketplace.png)
+
+Note, may require manual `bosh run errand broker-registrar` to take effect.
+
+## v0.5.3
+
+New logo!
+
+![logo](images/release-notes-0.5.3-dingo-shield-tile.png)
+
+The number of Docker Backend servers is now configurable. Default deployment includes 4 Docker Backend servers for Shield containers to run.
+
+## v0.5.2
+
+Bug fix to `sanity-test` errand when in off-line mode. The Dingo Shield docker image was not being injected into the `sanity-test` VM before tests commenced.
+
+## v0.5.1
+
+Dingo Shield can now be installed in offline mode. The tile bakes the specific Docker image version into the tile, and it is directly injected into each Docker Backend instance. No Docker Registry nor Internet access is required to installed Dingo Shield v0.5.1 and above.
+
+Binding credentials now include both `host` and `hostname` keys containing the IP address.
+
+## v0.5
+
+Used in production since 2015, this is the initial release for Pivotal Network.
+
+This release does not yet include support for archives and disaster recovery. We definitely promise this is coming.
