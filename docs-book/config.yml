@@ -26,6 +26,9 @@ sections:
 - repository: {name: dingotiles/docs-dingo-shield}
   directory: dingo-shield
   subnav_template: dingo_shield_subnav.erb
+- repository: {name: dingotiles/docs-dingo-prometheus}
+  directory: dingo-prometheus
+  subnav_template: dingo_prometheus_subnav.erb
 
 template_variables:
   title: Dingo Tiles™

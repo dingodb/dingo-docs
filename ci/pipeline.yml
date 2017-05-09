@@ -83,6 +83,7 @@ resources:
         - docs-dingo-postgresql/*
         - docs-dingo-redis/*
         - docs-dingo-shield/*
+        - docs-dingo-prometheus/*
 
   - name: docs-staging
     type: git
@@ -99,6 +100,7 @@ resources:
         - docs-dingo-postgresql/*
         - docs-dingo-redis/*
         - docs-dingo-shield/*
+        - docs-dingo-prometheus/*
 
   - name: docs-web-app
     type: cf

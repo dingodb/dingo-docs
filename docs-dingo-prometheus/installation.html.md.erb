@@ -1,0 +1,34 @@
+---
+title: Installing Dingo Prometheus™ to Pivotal Ops Manager
+---
+
+## <a id="requirements"></a>Requirements
+
+* Pivotal Cloud Foundry&reg;
+
+## <a id="upload-tile"></a>Upload tile
+
+See [Downloads](download.html) for instructions for downloading the latest tile.
+
+Click "Import a Product" on the left hand side of your Ops Manager dashboard. Select the `dingo-prometheus-x.y.z.pivotal` file to upload.
+
+The Dingo Prometheus™ product will appear in the "Available Products" list. Click "Add" to move it to the Installation Dashboard.
+
+The first time you upload/install the tile it will appear with a red lower border. This means it is not yet ready to be installed - there are mandatory configuration that you will need to provide. Notably, the default Archiving configuration.
+
+![installation-prometheus-tile](images/installation-prometheus-tile.png)
+
+## <a id="configuration"></a>Configuration
+
+
+## <a id="installation"></a>Installation
+
+1. Return to the Ops Manager dashboard via the **< Installation Dashboard** link at the top left.
+
+2. The Dingo Prometheus™ tile is now green and is ready to be installed. Press **Apply Changes**.
+
+The install process generally requires several minutes to complete. The image shows the Changes Applied window that displays when the installation process successfully completes.
+
+![installation-prometheus-completed](images/installation-prometheus-completed.png)
+
+## <a id="verification"></a>Verification
