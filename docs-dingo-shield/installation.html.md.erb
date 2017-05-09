@@ -4,7 +4,12 @@ title: Installing Dingo Shield™ to Pivotal Ops Manager
 
 ## <a id="requirements"></a>Requirements
 
-* Pivotal Cloud Foundry&reg;
+* Pivotal Cloud Foundry&reg; >= 1.9
+* A Storage account to store the backup archives. Available options are:
+    * Amazon AWS S3
+    * A compatible Amazon AWS S3 system (like Ceph)
+    * Microsoft Azure
+    * Google Cloud Storage
 
 ## <a id="upload-tile"></a>Upload tile
 
@@ -24,6 +29,9 @@ There are two panels of configuration for Dingo Shield™ that are specific to t
 
 ### <a id="configuration-archiving"></a>Archiving
 
+Dingo Shield™ product needs an external Storage system to store the backup archives. It also needs to know when to backup the different targets and how long
+should maintain the backup archives.
+
 1. In Dingo Shield™ Settings, select **Archiving**.
 
     ![installation-shield-archiving](images/installation-shield-archiving.png)
@@ -40,11 +48,47 @@ There are two panels of configuration for Dingo Shield™ that are specific to t
 
 #### <a id="configuration-archiving-s3"></a>Amazon AWS S3 Bucket
 
-1. Select **Amazon S3 bucket**.
+If you want to use an Amazon AWS S3 Bucket to store your backup archives, perform the following steps:
+
+1. At the Amazon AWS console, navigate to the **S3** service and create a S3 Bucket:
+
+    ![installation-shield-s3-bucket](images/installation-shield-s3-bucket.png)
+
+2. Navigate to the **IAM** service and create an AWS IAM User with **Programmatic access** type:
+
+    ![installation-shield-s3-iam-user](images/installation-shield-s3-iam-user.png)
+
+    **NOTE**: **Make sure you save the Secret Access Key somewhere secure**, like 1Password. Amazon AWS will be unable to give you it again if you misplace it -- your only recourse at that point is to generate a new set of keys and start over.
+
+3. Select the user, take note of the **User ARN** value, then click on **Add permissions** and select **Attach existing policies directly**. Click on **Create policy** and then **Create Your Own Policy**. Give the Policy a name like **DingoShieldPolicy** and in the **Policy Document** field add the following, substituting the **User ARN** and **Bucket Name** values with
+your values:
+
+    ```
+    {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Effect": "Allow",
+                "Action": "s3:ListAllMyBuckets",
+                "Resource": "arn:aws:iam::xxxxxxxxxxxx:user/zzzzz"
+            },
+            {
+                "Effect": "Allow",
+                "Action": "s3:*",
+                "Resource": [
+                    "arn:aws:s3:::your-bucket-name",
+                    "arn:aws:s3:::your-bucket-name/*"
+                ]
+            }
+        ]
+    }
+    ```
+
+4. In Dingo Shield™ Settings, select **Amazon AWS S3 bucket**.
 
     ![installation-shield-archiving-s3](images/installation-shield-archiving-s3.png)
 
-2. Complete the following fields:
+5. Complete the following fields:
 
     | Field | Notes |
     | --- | --- |
@@ -55,15 +99,19 @@ There are two panels of configuration for Dingo Shield™ that are specific to t
 
     **NOTE**: Ensure that the Bucket has been created before clicking **Save**.
 
-3. Click **Save**.
+6. Click **Save**.
 
-#### <a id="configuration-archiving-s3-compatible"></a>S3 Compatible Bucket
+#### <a id="configuration-archiving-s3-compatible"></a>Amazon AWS S3 Compatible Bucket
 
-1. Select **S3 compatible bucket**.
+If you want to use a compatible AWS S3 Bucket (like Ceph) to store your backup archives, perform the following steps:
+
+1. At your compatible Amazon AWS S3 system, create a new user (and access keys) and a new Bucket.
+
+2. In Dingo Shield™ Settings, select **Amazon AWS S3 Compatible Bucket**.
 
     ![installation-shield-archiving-s3-compatible](images/installation-shield-archiving-s3-compatible.png)
 
-2. Complete the following fields:
+3. Complete the following fields:
 
     | Field | Notes |
     | --- | --- |
@@ -78,15 +126,25 @@ There are two panels of configuration for Dingo Shield™ that are specific to t
 
     **NOTE**: Ensure that the Bucket has been created before clicking **Save**.
 
-3. Click **Save**.
+4. Click **Save**.
 
-#### <a id="configuration-archiving-azure"></a>Azure Container
+#### <a id="configuration-archiving-azure"></a>Microsoft Azure Container
 
-1. Select **Azure container**.
+If you want to use a Microsoft Azure Container to store your backup archives, perform the following steps:
+
+1. At the Microsoft Azure Portal, navigate to the **Storage accounts tab**, and create aa Azure Storage Account:
+
+    ![installation-shield-azure-storage-account](images/installation-shield-azure-storage-account.png)
+
+2. After the storage account is created, select the new storage account from the dashboard, navigate to the **Blob Service** section of the storage account, then click on **Containers**, and create a Container, setting the **Access type** to **Private**:
+
+    ![installation-shield-azure-container](images/installation-shield-azure-container.png)
+
+3. In Dingo Shield™ Settings, select **Microsoft Azure Container**.
 
     ![installation-shield-archiving-azure](images/installation-shield-archiving-azure.png)
 
-2. Complete the following fields:
+4. Complete the following fields:
 
     | Field | Notes |
     | --- | --- |
@@ -98,21 +156,31 @@ There are two panels of configuration for Dingo Shield™ that are specific to t
 
 #### <a id="configuration-archiving-google"></a>Google Cloud Storage Bucket
 
-1. Select **Google Cloud Storage Bucket**.
+If you want to use a Google Cloud Storage Bucket to store your backup archives, perform the following steps:
+
+1. At the Google Cloud Platform dashboard, navigate to the **IAM & Admin ** - **Service Accounts** tab, and create a Google Cloud Service Account with `Storage Admin` privileges and furnish a new JSON private key:
+
+    ![installation-shield-google-service-account](images/installation-shield-google-service-account.png)
+
+2. At the Google Cloud Platform dashboard, under **Storage**, create a Google Cloud Storage Bucket:
+
+    ![installation-shield-google-bucket](images/installation-shield-google-bucket.png)
+
+3. In Dingo Shield™ Settings, select **Google Cloud Storage Bucket**.
 
     ![installation-shield-archiving-google](images/installation-shield-archiving-google.png)
 
-2. Complete the following fields:
+4. Complete the following fields:
 
     | Field | Notes |
     | --- | --- |
-    | Google Cloud Storage Service Account JSON Key | Specify the Google Cloud Storage Service Account JSON Key |
+    | Google Cloud Storage Service Account JSON Key | Enter the contents of the Google Cloud Storage Service Account JSON Key file |
     | Google Cloud Storage Bucket Name | Specify the shared Google Cloud Storage Bucket for all backup files |
     | Google Cloud Storage Bucket Path Prefix | Optionally, specify if all backup files should be stored under this common path prefix |
 
     **NOTE**: Ensure that the Bucket has been created before clicking **Save**.
 
-3. Click **Save**.
+5. Click **Save**.
 
 ### <a id="configuration-database"></a>Databases
 
