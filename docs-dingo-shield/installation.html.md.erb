@@ -38,7 +38,7 @@ There are two panels of configuration for Dingo Shield™ that are specific to t
 
 6. Choose the default **Central Archiving Storage** (where to store the backup archives).
 
-#### <a id="configuration-archiving-s3"></a>Amazon AWS S3 bucket
+#### <a id="configuration-archiving-s3"></a>Amazon AWS S3 Bucket
 
 1. Select **Amazon S3 bucket**.
 
@@ -51,13 +51,13 @@ There are two panels of configuration for Dingo Shield™ that are specific to t
     | AWS Access Key | Specify the Access Key for AWS S3 |
     | AWS Secret Access Key | Specify the Secret Access Key for AWS S3 |
     | AWS S3 Bucket Name | Specify the shared AWS S3 Bucket for all backup files |
-    | AWS S3 Bucket Path Prefix | Place all backup files under this common path prefix |
+    | AWS S3 Bucket Path Prefix | Optionally, specify if all backup files should be stored under this common path prefix |
 
     **NOTE**: Ensure that the Bucket has been created before clicking **Save**.
 
 3. Click **Save**.
 
-#### <a id="configuration-archiving-s3-compatible"></a>S3 compatible bucket
+#### <a id="configuration-archiving-s3-compatible"></a>S3 Compatible Bucket
 
 1. Select **S3 compatible bucket**.
 
@@ -73,14 +73,14 @@ There are two panels of configuration for Dingo Shield™ that are specific to t
     | S3 Access Key | Specify the Access Key for the S3 compatible API |
     | S3 Secret Access Key | Specify the Secret Access Key for the S3 compatible API |
     | S3 Bucket Name | Specify the shared S3 Bucket for all backup files |
-    | S3 Bucket Path Prefix | Optionally, specify if all backup files should be store under this common path prefix |
-    | SOCKS5 proxy | Optionally, specify the defined SOCKS5 proxy to use for the S3 compatible API |
+    | S3 Bucket Path Prefix | Optionally, specify if all backup files should be stored under this common path prefix |
+    | SOCKS5 proxy | Optionally, specify the defined SOCKS5 proxy to use for the S3 compatible API connection |
 
     **NOTE**: Ensure that the Bucket has been created before clicking **Save**.
 
 3. Click **Save**.
 
-#### <a id="configuration-archiving-azure"></a>Azure container
+#### <a id="configuration-archiving-azure"></a>Azure Container
 
 1. Select **Azure container**.
 
@@ -95,6 +95,22 @@ There are two panels of configuration for Dingo Shield™ that are specific to t
     | Azure Storage Container Name | Specify the shared Azure Storage Container for all backup files |
 
     **NOTE**: Ensure that the Container has been created before clicking **Save**.
+
+#### <a id="configuration-archiving-google"></a>Google Cloud Storage Bucket
+
+1. Select **Google Cloud Storage Bucket**.
+
+    ![installation-shield-archiving-google](images/installation-shield-archiving-google.png)
+
+2. Complete the following fields:
+
+    | Field | Notes |
+    | --- | --- |
+    | Google Cloud Storage Service Account JSON Key | Specify the Google Cloud Storage Service Account JSON Key |
+    | Google Cloud Storage Bucket Name | Specify the shared Google Cloud Storage Bucket for all backup files |
+    | Google Cloud Storage Bucket Path Prefix | Optionally, specify if all backup files should be stored under this common path prefix |
+
+    **NOTE**: Ensure that the Bucket has been created before clicking **Save**.
 
 3. Click **Save**.
 
