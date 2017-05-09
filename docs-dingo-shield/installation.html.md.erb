@@ -1,5 +1,5 @@
 ---
-title: Installing to Pivotal Ops Manager
+title: Installing Dingo Shield™ to Pivotal Ops Manager
 ---
 
 ## <a id="requirements"></a>Requirements
@@ -22,6 +22,22 @@ The first time you upload/install the tile it will appear with a red lower borde
 
 There are two panels of configuration for Dingo Shield™ that are specific to this tile.
 
+### <a id="configuration-archiving"></a>Archiving options
+
+1. In Dingo Shield™ Settings, select **Archiving**.
+
+![installation-shield-archiving](images/installation-shield-archiving.png)
+
+2. Enter an **Environment** name for your Shield installation (ie: `production`).
+
+3. Enter a daemon **Name** for your Shield installation (ie: `pcf-shield`).
+
+4. Enter the default **Schedule** (when it should run which backup jobs).
+
+5. Enter the default **Retention Policy** in days (how long archived data is kept).
+
+6. Click **Save**.
+
 ### <a id="configuration-database"></a>Databases
 
 Dingo Shield™ product needs a database in order to store the archiving configuration.
@@ -40,11 +56,11 @@ If you want to use internal databases for your deployment, perform the following
 
 2. Select **Internal Databases (PostgreSQL NOT highly-available)**.
 
-![installation-shield-database-internal](images/installation-shield-database-internal.png)
+  ![installation-shield-database-internal](images/installation-shield-database-internal.png)
 
 3. Click **Save**.
 
-#### <a id="configuration-database-mysql">External MySQL Database
+#### <a id="configuration-database-mysql"></a>External MySQL Database
 
   **NOTE**: The exact procedure to create databases depends upon the database provider you select for your deployment. The following procedure uses AWS RDS as an example. You can configure a different database provider that provides MySQL support, such as Google Cloud SQL.
 
@@ -54,27 +70,27 @@ If you want to use external MySQL databases for your deployment, perform the fol
 
 1. Add the `ubuntu` account key pair from your IaaS deployment to your local SSH profile so you can access the Ops Manager VM. For example, in AWS, you add a key pair created in AWS:
 
-```
-ssh-add aws-keypair.pem
-```
+  ```
+  ssh-add aws-keypair.pem
+  ```
 
 2. SSH in to your Ops Manager using the Ops Manager FQDN and the username `ubuntu`:
 
-```
-ssh ubuntu@OPS_MANAGER_FQDN
-```
+  ```
+  ssh ubuntu@OPS_MANAGER_FQDN
+  ```
 
 3. Log in to your MySQL database instance using the appropriate hostname and user login values configured in your IaaS account. For example, to log in to your AWS RDS instance, run the following MySQL command:
 
-```
-mysql --host=RDSHOSTNAME --user=RDSUSERNAME --password=RDSPASSWORD
-```
+  ```
+  mysql --host=RDSHOSTNAME --user=RDSUSERNAME --password=RDSPASSWORD
+  ```
 
 4. Run the following MySQL commands to create databases for the Shield components that require a relational database:
 
-```
-CREATE database shielddb;
-```
+  ```
+  CREATE database shielddb;
+  ```
 
 5. Type `exit` to quit the MySQL client, and `exit` again to close your connection to the Ops Manager VM.
 
@@ -82,21 +98,23 @@ CREATE database shielddb;
 
 7. Select **External MySQL Database**.
 
-![installation-shield-database-mysql](images/installation-shield-database-mysql.png)
+  ![installation-shield-database-mysql](images/installation-shield-database-mysql.png)
 
 8. Complete the following fields:
 
-| Field | Notes |
-| --- | --- |
-| Hostname DNS Name | Specify the hostname of the database server |
-| TCP Port | Specify the port of the database server |
-| Username | Specify a unique username that can access this specific database on the database server. |
-| Password | Specify a password for the provided username |
-| Database Name | Specify the database name on the database server |
+  | Field | Notes |
+  | --- | --- |
+  | Hostname DNS Name | Specify the hostname of the database server |
+  | TCP Port | Specify the port of the database server |
+  | Username | Specify a unique username that can access this specific database on the database server. |
+  | Password | Specify a password for the provided username |
+  | Database Name | Specify the database name on the database server |
+
+  **NOTE**: Ensure that the Database has been created before clicking **Save**.
 
 9. Click **Save**.
 
-#### <a id="configuration-database-mysql">External PostgreSQL Database
+#### <a id="configuration-database-postgresql"></a>External PostgreSQL Database
 
   **NOTE**: The exact procedure to create databases depends upon the database provider you select for your deployment. The following procedure uses AWS RDS as an example. You can configure a different database provider that provides PostgreSQL support, such as Google Cloud SQL.
 
@@ -106,27 +124,27 @@ If you want to use external PostgreSQL databases for your deployment, perform th
 
 1. Add the `ubuntu` account key pair from your IaaS deployment to your local SSH profile so you can access the Ops Manager VM. For example, in AWS, you add a key pair created in AWS:
 
-```
-ssh-add aws-keypair.pem
-```
+  ```
+  ssh-add aws-keypair.pem
+  ```
 
 2. SSH in to your Ops Manager using the Ops Manager FQDN and the username `ubuntu`:
 
-```
-ssh ubuntu@OPS_MANAGER_FQDN
-```
+  ```
+  ssh ubuntu@OPS_MANAGER_FQDN
+  ```
 
 3. Log in to your PostgreSQL database instance using the appropriate hostname and user login values configured in your IaaS account. For example, to log in to your AWS RDS instance, run the following PostgreSQL command:
 
-```
-psql --host=RDSHOSTNAME --username=RDSUSERNAME --password
-```
+  ```
+  psql --host=RDSHOSTNAME --username=RDSUSERNAME --password
+  ```
 
 4. Run the following PostgreSQL commands to create databases for the Shield components that require a relational database:
 
-```
-CREATE database shielddb;
-```
+  ```
+  CREATE database shielddb;
+  ```
 
 5. Type `exit` to quit the PostgreSQL client, and `exit` again to close your connection to the Ops Manager VM.
 
@@ -134,39 +152,25 @@ CREATE database shielddb;
 
 2. Select **External PostgreSQL Database**.
 
-![installation-shield-database-postgresql](images/installation-shield-database-postgresql.png)
+  ![installation-shield-database-postgresql](images/installation-shield-database-postgresql.png)
 
 8. Complete the following fields:
 
-| Field | Notes |
-| --- | --- |
-| Hostname DNS Name | Specify the hostname of the database server |
-| TCP Port | Specify the port of the database server |
-| Username | Specify a unique username that can access this specific database on the database server. |
-| Password | Specify a password for the provided username |
-| Database Name | Specify the database name on the database server |
+  | Field | Notes |
+  | --- | --- |
+  | Hostname DNS Name | Specify the hostname of the database server |
+  | TCP Port | Specify the port of the database server |
+  | Username | Specify a unique username that can access this specific database on the database server. |
+  | Password | Specify a password for the provided username |
+  | Database Name | Specify the database name on the database server |
+
+  **NOTE**: Ensure that the Database has been created before clicking **Save**.
 
 9. Click **Save**.
 
-### <a id="configuration-archiving"></a>Archiving options
-
-1. In Dingo Shield™ Settings, select **Archiving**.
-
-![installation-shield-archiving](images/installation-shield-archiving.png)
-
-2. Enter an **Environment** name for your Shield installation (ie: `production`).
-
-3. Enter a daemon **Name** for your Shield installation (ie: `pcf-shield`).
-
-4. Enter the default *Schedule** (when it should run which backup jobs).
-
-5. Enter the default *Retention Policy** in days (how long archived data is kept).
-
-6. Click **Save**.
-
 ## <a id="installation"></a>Installation
 
-1. Return to the Ops Manager dashboard via the "< Installation Dashboard" link at the top left.
+1. Return to the Ops Manager dashboard via the **< Installation Dashboard** link at the top left.
 
 2. The Dingo Shield™ tile is now green and is ready to be installed. Press **Apply Changes**.
 
@@ -180,15 +184,15 @@ Dingo Shield™ Web UI should now be available at the `shield` hostname in your 
 
 1. The Dingo Shield™ Web UI is protected by a `username` and `password`. In Dingo Shield™ Credentials, look for the **Shield Credentials**:
 
-![installation-shield-credentials](images/installation-shield-credentials.png)
+  ![installation-shield-credentials](images/installation-shield-credentials.png)
 
 2. If you do not know the system domain for the deployment, then select **Pivotal Elastic Runtime > Settings > Domains** to locate the configured system domain.
 
 3. Open a browser and navigate to `shield.YOUR-SYSTEM-DOMAIN`. For example, if the system domain is `system.example.com`, then point your browser to `shield.system.example.com`.
 
-4. Log in using the Shield credentials for the Admin user. The Dingo Shield™ dashboard appears.
+4. Log in using the Shield credentials for the `admin` user. The Dingo Shield™ dashboard appears.
 
-![installation-shield-dashboard](images/installation-shield-dashboard.png)
+  ![installation-shield-dashboard](images/installation-shield-dashboard.png)
 
 ### <a id="verification-storages"></a>Confirm default Storage
 
@@ -196,7 +200,7 @@ Dingo Shield™ Web UI should now be available at the `shield` hostname in your 
 
 2. Confirm that there is a **default** storage:
 
-![installation-shield-default-storage](images/installation-shield-default-storage.png)
+  ![installation-shield-default-storage](images/installation-shield-default-storage.png)
 
 ### <a id="verification-rentention-policies"></a>Confirm default Retention Policy
 
@@ -204,7 +208,7 @@ Dingo Shield™ Web UI should now be available at the `shield` hostname in your 
 
 2. Confirm that there is a **default** retention policy:
 
-![installation-shield-default-retention-policy](images/installation-shield-default-retention-policy.png)
+  ![installation-shield-default-retention-policy](images/installation-shield-default-retention-policy.png)
 
 ### <a id="verification-schedules"></a>Confirm default Schedule
 
@@ -212,4 +216,4 @@ Dingo Shield™ Web UI should now be available at the `shield` hostname in your 
 
 2. Confirm that there is a **default** storage:
 
-![installation-shield-default-schedule](images/installation-shield-default-schedule.png)
+  ![installation-shield-default-schedule](images/installation-shield-default-schedule.png)
