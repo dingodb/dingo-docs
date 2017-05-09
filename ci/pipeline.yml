@@ -1,117 +1,126 @@
 ---
 groups:
-- name: deploy
-  jobs:
-  - deploy-prod
-- name: ci
-  jobs:
-  - build-task-image
+  - name: deploy
+    jobs:
+      - deploy-staging
+      - deploy-prod
+  - name: image
+    jobs:
+      - build-task-image
 
 jobs:
-- name: deploy-prod
-  public: false
-  serial: true
-  plan:
-  - {get: docs-ci}
-  - {get: docs, resource: docs-prod, trigger: true}
-  - task: build-docs-app
-    file: docs-ci/ci/tasks/build-docs-app.yml
-    params:
-      app_name: docs
-      routes: "[{route: dingotiles.com},{route: www.dingotiles.com}]"
-  - put: docs-web-app
-    params:
-      manifest: docs-app/docs-book/final_app/manifest.yml
-      path: docs-app/docs-book/final_app
-      current_app_name: docs
+  - name: deploy-staging
+    public: false
+    serial: true
+    plan:
+      - get: docs-ci
+      - get: docs
+        resource: docs-staging
+        trigger: true
+      - task: build-docs-app
+        file: docs-ci/ci/tasks/build-docs-app.yml
+        params:
+          app_name: docs-staging
+          routes: "[{route: staging.dingotiles.com}]"
+      - put: docs-web-app
+        params:
+          manifest: docs-app/docs-book/final_app/manifest.yml
+          path: docs-app/docs-book/final_app
+          current_app_name: docs-staging
 
-- name: deploy-staging
-  public: false
-  serial: true
-  plan:
-  - {get: docs-ci}
-  - {get: docs, resource: docs-staging, trigger: true}
-  - task: build-docs-app
-    file: docs-ci/ci/tasks/build-docs-app.yml
-    params:
-      app_name: docs-staging
-      routes: "[{route: staging.dingotiles.com}]"
-  - put: docs-web-app
-    params:
-      manifest: docs-app/docs-book/final_app/manifest.yml
-      path: docs-app/docs-book/final_app
-      current_app_name: docs-staging
+  - name: deploy-prod
+    public: false
+    serial: true
+    plan:
+      - get: docs-ci
+      - get: docs
+        resource: docs-prod
+        trigger: true
+      - task: build-docs-app
+        file: docs-ci/ci/tasks/build-docs-app.yml
+        params:
+          app_name: docs
+          routes: "[{route: dingotiles.com},{route: www.dingotiles.com}]"
+      - put: docs-web-app
+        params:
+          manifest: docs-app/docs-book/final_app/manifest.yml
+          path: docs-app/docs-book/final_app
+          current_app_name: docs
 
-- name: build-task-image
-  public: true
-  serial: true
-  plan:
-  - get: docs-docker-image
-    trigger: true
-  - put: docker-image
-    params:
-      build: docs-docker-image/ci/ci_image
+  - name: build-task-image
+    public: true
+    serial: true
+    plan:
+      - get: docs-docker-image
+        trigger: true
+      - put: docker-image
+        params:
+          build: docs-docker-image/ci/ci_image
+
+resource_types: []
 
 resources:
-- name: docs-ci
-  type: git
-  source:
-    uri: git@github.com:dingotiles/dingo-docs.git
-    branch: master
-    private_key: {{github-key}}
-- name: docs-prod
-  type: git
-  source:
-    uri: git@github.com:dingotiles/dingo-docs.git
-    branch: master
-    private_key: {{github-key}}
-    paths:
-      - docs-book/**/*
-      - docs-book/config.yml
-      - docs-layout-repo/**/*
-      - docs-dingo-s3/*
-      - docs-dingo-secrets/*
-      - docs-dingo-backup-storage/*
-      - docs-dingo-postgresql/*
-      - docs-dingo-redis/*
+  - name: docs-ci
+    type: git
+    source:
+      uri: git@github.com:dingotiles/dingo-docs.git
+      branch: master
+      private_key: {{github-key}}
 
-- name: docs-staging
-  type: git
-  source:
-    uri: git@github.com:dingotiles/dingo-docs.git
-    branch: staging
-    private_key: {{github-key}}
-    paths:
-      - docs-book/**/*
-      - docs-book/config.yml
-      - docs-layout-repo/**/*
-      - docs-dingo-s3/*
-      - docs-dingo-secrets/*
-      - docs-dingo-postgresql/*
-      - docs-dingo-redis/*
+  - name: docs-prod
+    type: git
+    source:
+      uri: git@github.com:dingotiles/dingo-docs.git
+      branch: master
+      private_key: {{github-key}}
+      paths:
+        - docs-book/**/*
+        - docs-book/config.yml
+        - docs-layout-repo/**/*
+        - docs-dingo-s3/*
+        - docs-dingo-secrets/*
+        - docs-dingo-backup-storage/*
+        - docs-dingo-postgresql/*
+        - docs-dingo-redis/*
 
-- name: docs-web-app
-  type: cf
-  source:
-    api: https://api.run.pivotal.io
-    skip_cert_check: false
-    username: {{cf-username}}
-    password: {{cf-password}}
-    organization: {{cf-org}}
-    space: {{cf-space}}
+  - name: docs-staging
+    type: git
+    source:
+      uri: git@github.com:dingotiles/dingo-docs.git
+      branch: staging
+      private_key: {{github-key}}
+      paths:
+        - docs-book/**/*
+        - docs-book/config.yml
+        - docs-layout-repo/**/*
+        - docs-dingo-s3/*
+        - docs-dingo-secrets/*
+        - docs-dingo-postgresql/*
+        - docs-dingo-redis/*
 
+  - name: docs-web-app
+    type: cf
+    source:
+      api: https://api.run.pivotal.io
+      skip_cert_check: false
+      username: {{cf-username}}
+      password: {{cf-password}}
+      organization: {{cf-org}}
+      space: {{cf-space}}
 
-- name: docs-docker-image
-  type: git
-  source:
-    uri: git@github.com:dingotiles/dingo-docs.git
-    branch: master
-    private_key: {{github-key}}
-    paths: [ci/ci_image/*]
-- name: docker-image
-  type: docker-image
-  source:
-    email: {{docker-hub-email}}
-    username: {{docker-hub-username}}
-    password: {{docker-hub-password}}
-    repository: dingotiles/dingo-docs-pipeline
+  - name: docs-docker-image
+    type: git
+    source:
+      uri: git@github.com:dingotiles/dingo-docs.git
+      branch: master
+      private_key: {{github-key}}
+      paths:
+        - ci/ci_image/*
+
+  - name: docker-image
+    type: docker-image
+    source:
+      email: {{docker-hub-email}}
+      username: {{docker-hub-username}}
+      password: {{docker-hub-password}}
+      repository: dingotiles/dingo-docs-pipeline

@@ -18,7 +18,7 @@ Add an HTML snippet into an appropriate place within the subnav:
 
 There is a CI pipeline setup to automatically deploy any new changes to the documentation site.
 
-* CI https://ci.vsphere.starkandwayne.com/pipelines/dingo-docs
+* CI https://ci.starkandwayne.com/pipelines/dingo-docs
 * WWW/docs site https://www.dingotiles.com/ & https://docs.dingotiles.com/ currently same site
 
 The docs application is deployed to Pivotal Web Services' organization `dingotiles`:

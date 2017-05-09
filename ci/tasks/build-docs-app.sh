@@ -1,7 +1,6 @@
 #!/bin/bash
 
 set -e # fail fast
-set -x # show commands
 
 git clone docs docs-app
 

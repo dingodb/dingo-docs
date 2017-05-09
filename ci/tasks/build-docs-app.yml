@@ -3,11 +3,11 @@ platform: linux
 image: docker:///dingotiles/dingo-docs-pipeline
 
 inputs:
-- name: docs-ci
-- name: docs
+  - name: docs-ci
+  - name: docs
 
 outputs:
-- name: docs-app
+  - name: docs-app
 
 params:
   app_name:
