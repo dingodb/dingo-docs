@@ -36,7 +36,67 @@ There are two panels of configuration for Dingo Shield™ that are specific to t
 
 5. Enter the default **Retention Policy** in days (how long archived data is kept).
 
-6. Click **Save**.
+6. Choose the default **Central Archiving Storage** (where to store the backup archives).
+
+#### <a id="configuration-archiving-s3"></a>Amazon AWS S3 bucket
+
+1. Select **Amazon S3 bucket**.
+
+    ![installation-shield-archiving-s3](images/installation-shield-archiving-s3.png)
+
+2. Complete the following fields:
+
+    | Field | Notes |
+    | --- | --- |
+    | AWS Access Key | Specify the Access Key for AWS S3 |
+    | AWS Secret Access Key | Specify the Secret Access Key for AWS S3 |
+    | AWS S3 Bucket Name | Specify the shared AWS S3 Bucket for all backup files |
+    | AWS S3 Bucket Path Prefix | Place all backup files under this common path prefix |
+
+    **NOTE**: Ensure that the Bucket has been created before clicking **Save**.
+
+3. Click **Save**.
+
+#### <a id="configuration-archiving-s3-compatible"></a>S3 compatible bucket
+
+1. Select **S3 compatible bucket**.
+
+    ![installation-shield-archiving-s3-compatible](images/installation-shield-archiving-s3-compatible.png)
+
+2. Complete the following fields:
+
+    | Field | Notes |
+    | --- | --- |
+    | S3 API Hostname | Specify the hostname for the S3 compatible API |
+    | S3 API Port | Specify the port for the S3 compatible API |
+    | Skip SSL validation | Check if SSL validation must be skipped when connecting to the S3 compatible API |
+    | S3 Access Key | Specify the Access Key for the S3 compatible API |
+    | S3 Secret Access Key | Specify the Secret Access Key for the S3 compatible API |
+    | S3 Bucket Name | Specify the shared S3 Bucket for all backup files |
+    | S3 Bucket Path Prefix | Optionally, specify if all backup files should be store under this common path prefix |
+    | SOCKS5 proxy | Optionally, specify the defined SOCKS5 proxy to use for the S3 compatible API |
+
+    **NOTE**: Ensure that the Bucket has been created before clicking **Save**.
+
+3. Click **Save**.
+
+#### <a id="configuration-archiving-azure"></a>Azure container
+
+1. Select **Azure container**.
+
+    ![installation-shield-archiving-azure](images/installation-shield-archiving-azure.png)
+
+2. Complete the following fields:
+
+    | Field | Notes |
+    | --- | --- |
+    | Azure Account | Specify the Account for Azure Storage |
+    | Azure Account Key | Specify the Account Key for Azure Storage |
+    | Azure Storage Container Name | Specify the shared Azure Storage Container for all backup files |
+
+    **NOTE**: Ensure that the Container has been created before clicking **Save**.
+
+3. Click **Save**.
 
 ### <a id="configuration-database"></a>Databases
 
@@ -106,7 +166,7 @@ If you want to use external MySQL databases for your deployment, perform the fol
     | --- | --- |
     | Hostname DNS Name | Specify the hostname of the database server |
     | TCP Port | Specify the port of the database server |
-    | Username | Specify a unique username that can access this specific database on the database server. |
+    | Username | Specify a unique username that can access this specific database on the database server |
     | Password | Specify a password for the provided username |
     | Database Name | Specify the database name on the database server |
 
@@ -160,7 +220,7 @@ If you want to use external PostgreSQL databases for your deployment, perform th
     | --- | --- |
     | Hostname DNS Name | Specify the hostname of the database server |
     | TCP Port | Specify the port of the database server |
-    | Username | Specify a unique username that can access this specific database on the database server. |
+    | Username | Specify a unique username that can access this specific database on the database server |
     | Password | Specify a password for the provided username |
     | Database Name | Specify the database name on the database server |
 
