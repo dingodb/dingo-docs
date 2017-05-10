@@ -12,7 +12,7 @@ There are two Shield components that we need to configure.
 
 Shield Targets stores the information about the remote data systems that should be backed up.
 
-Perform the following steps in order to create Targets for the Pivotal Cloud Foundry databases:
+Perform the following steps in order to create **Targets** for the Pivotal Cloud Foundry databases:
 
 1. In Pivotal Ops Manager, navigate to **Pivotal Elastic Runtime > Settings** and grab the **MySQL Admin Credentials**:
 
@@ -51,7 +51,7 @@ Perform the following steps in order to create Targets for the Pivotal Cloud Fou
 	}
 	```
 
-  * At the **Remote IP:port** field enter the **Shield VM IP Address** followed by `:5444` (ie: `10.213.11.50:5444`)
+  * At the **Remote IP:port** field enter the **Shield VM IP Address** followed by `:5444` (ie: `10.213.10.57:5444`)
 
   * Click on `Create`.
 
@@ -59,7 +59,7 @@ Perform the following steps in order to create Targets for the Pivotal Cloud Fou
 
 Shield Jobs keeps track of a desired backup behavior, by marrying a target (the data to backup) with a store (where to send that data), according to a schedule (when to do the backups) and a retention policy (how long to keep the data for).
 
-Perform the following steps in order to create Jobs for the Pivotal Cloud Foundry databases:
+Perform the following steps in order to create **Jobs** for the Pivotal Cloud Foundry databases:
 
 1. At the Dingo Shield™ Web UI, click on the **Jobs** tab.
 
@@ -75,7 +75,7 @@ Perform the following steps in order to create Jobs for the Pivotal Cloud Foundr
 
   * At the **Schedule** field select the desired schedule (ie: `default`).
 
-  * At the **Retention Policy* field select the desired retention policy (ie: `default`).
+  * At the **Retention Policy** field select the desired retention policy (ie: `default`).
 
   * Click on `Create`.
 
