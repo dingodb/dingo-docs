@@ -4,13 +4,19 @@ title: Backing up Pivotal Cloud Foundry databases
 
   **NOTE**: The exact procedure to back up Pivotal Cloud Foundry databases depends upon the database provider you select for your deployment. The following procedure assumes **Internal Databases - MySQL** as an example.
 
-## <a id="configuring-targets"></a>Configuring Targets
+## <a id="configuration"></a>Configuration
+
+There are two Shield components that we need to configure.
+
+### <a id="configuring-targets"></a>Configuring Targets
 
 Shield Targets stores the information about the remote data systems that should be backed up.
 
-1. In Pivotal Ops Manager, navigate to **Pivotal Elastic Runtime > Settings** and grab the **MySQL Backup Server** credentials:
+Perform the following steps in order to create Targets for the Pivotal Cloud Foundry databases:
 
-    ![backup-pcf-mysql-credentials](images/backup-pcf-mysql-credentials.png)
+1. In Pivotal Ops Manager, navigate to **Pivotal Elastic Runtime > Settings** and grab the **MySQL Admin Credentials**:
+
+    ![backup-pcf-mysql](images/backup-pcf-mysql-credentials.png)
 
 2. Navigate to **Dingo Shield™ > Status** tab and grab the **IP address** of the **Shield VM**:
 
@@ -36,22 +42,24 @@ Shield Targets stores the information about the remote data systems that should 
 
   * At the **Configuration (JSON)** field enter:
 
-		```
-		{
-		  "mysql_host": "mysql.service.cf.internal",
-		  "mysql_user": "MySQL Backup USERNAME",
-		  "mysql_password": "MySQL Backup PASSWORD",
-		  "mysql_database": "DATABASE NAME"
-		}
-		```
+	```
+	{
+	  "mysql_host": "mysql.service.cf.internal",
+	  "mysql_user": "MySQL Admin USERNAME",
+	  "mysql_password": "MySQL Admin PASSWORD",
+	  "mysql_database": "DATABASE NAME"
+	}
+	```
 
   * At the **Remote IP:port** field enter the **Shield VM IP Address** followed by `:5444` (ie: `10.213.11.50:5444`)
 
   * Click on `Create`.
 
-## <a id="configuring-jobs"></a>Configuring Jobs
+### <a id="configuring-jobs"></a>Configuring Jobs
 
 Shield Jobs keeps track of a desired backup behavior, by marrying a target (the data to backup) with a store (where to send that data), according to a schedule (when to do the backups) and a retention policy (how long to keep the data for).
+
+Perform the following steps in order to create Jobs for the Pivotal Cloud Foundry databases:
 
 1. At the Dingo Shield™ Web UI, click on the **Jobs** tab.
 
@@ -70,3 +78,19 @@ Shield Jobs keeps track of a desired backup behavior, by marrying a target (the 
     * At the **Retention Policy* field select the desired retention policy (ie: `default`).
 
     * Click on `Create`.
+
+## <a id="verification"></a>Verification
+
+1. At the Dingo Shield™ Web UI, click on the **Jobs** tab. You should be able to see the four Jobs we created previously.
+
+2. For each of them schedule an immediate run of the backup job by clicking on the left icon next to each job name:
+
+    ![backup-pcf-jobs](images/backup-pcf-jobs.png)
+
+3. Click on the **Dashboard** tab, and check that the **Status** of the **Completed Tasks** is **done**:
+
+    ![backup-pcf-done-tasks](images/backup-pcf-done-tasks.png)
+
+4. Click on the **Backups** tab, for each of the **Target Systems** you should be able to see the existing archives:
+
+    ![backup-pcf-archives](images/backup-pcf-archives.png)
