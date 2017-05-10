@@ -42,14 +42,15 @@ Perform the following steps in order to create **Targets** for the Pivotal Cloud
 
   * At the **Configuration (JSON)** field enter:
 
-	```
-	{
-	  "mysql_host": "mysql.service.cf.internal",
-	  "mysql_user": "MySQL Admin USERNAME",
-	  "mysql_password": "MySQL Admin PASSWORD",
-	  "mysql_database": "DATABASE NAME"
-	}
-	```
+  ```
+  {
+    "mysql_host": "mysql.service.cf.internal",
+    "mysql_port": "3306",
+    "mysql_user": "MySQL Admin USERNAME",
+    "mysql_password": "MySQL Admin PASSWORD",
+    "mysql_database": "DATABASE NAME"
+  }
+  ```
 
   * At the **Remote IP:port** field enter the **Shield VM IP Address** followed by `:5444` (ie: `10.213.10.57:5444`)
 
