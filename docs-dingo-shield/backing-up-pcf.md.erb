@@ -1,0 +1,72 @@
+---
+title: Backing up Pivotal Cloud Foundry databases
+---
+
+  **NOTE**: The exact procedure to back up Pivotal Cloud Foundry databases depends upon the database provider you select for your deployment. The following procedure assumes **Internal Databases - MySQL** as an example.
+
+## <a id="configuring-targets"></a>Configuring Targets
+
+Shield Targets stores the information about the remote data systems that should be backed up.
+
+1. In Pivotal Ops Manager, navigate to **Pivotal Elastic Runtime > Settings** and grab the **MySQL Backup Server** credentials:
+
+    ![backup-pcf-mysql-credentials](images/backup-pcf-mysql-credentials.png)
+
+2. Navigate to **Dingo Shield™ > Status** tab and grab the **IP address** of the **Shield VM**:
+
+    ![backup-pcf-shield-ip](images/backup-pcf-shield-ip.png)
+
+3. Open a new browser tab and navigate to the Dingo Shield™ Web UI (`shield.YOUR-SYSTEM-DOMAIN`), click on the **Targets** tab.
+
+4. There are four Pivotal Cloud Foundry databases that we should backup:
+    * `ccdb`: holds the **Cloud Controller** component data
+    * `diego`: holds the **Diego** component data
+    * `routing`: holds the **TCP Routing** component data
+    * `uaa`: holds the **UAA** component data
+
+5. Create a new **Target** for each of the above four databases:
+
+    ![backup-pcf-new-target](images/backup-pcf-new-target.png)
+
+	* At the **Target Name** field enter the name of the database (ie: `ccdb`).
+
+	* At the **Summary** field enter a short description (ie: `Internal Cloud Foundry CC Database`).
+
+	* At the **Plugin Name** field enter `mysql`.
+
+	* At the **Configuration (JSON)** field enter:
+
+		```
+		{
+		  "mysql_host": "mysql.service.cf.internal",
+		  "mysql_user": "MySQL Backup USERNAME",
+		  "mysql_password": "MySQL Backup PASSWORD",
+		  "mysql_database": "DATABASE NAME"
+		}
+		```
+
+	* At the **Remote IP:port** field enter the **Shield VM IP Address** followed by `:5444` (ie: `10.213.11.50:5444`)
+
+	* Click on `Create`.
+
+## <a id="configuring-jobs"></a>Configuring Jobs
+
+Shield Jobs keeps track of a desired backup behavior, by marrying a target (the data to backup) with a store (where to send that data), according to a schedule (when to do the backups) and a retention policy (how long to keep the data for).
+
+1. At the Dingo Shield™ Web UI, click on the **Jobs** tab.
+
+2. We need to create a **Job** for each of the four Pivotal Cloud Foundry databases:
+
+    ![backup-pcf-new-job](images/backup-pcf-new-job.png)
+
+    * At the **Job Name** field enter the name of the database (ie: `ccdb`).
+
+    * At the **Target System** field select the desired targets (ie: `ccdb`).
+
+    * At the **Storage Backend** field select the desired storage (ie: `default`).
+
+    * At the **Schedule* field select the desired schedule (ie: `default`).
+
+    * At the **Retention Policy* field select the desired retention policy (ie: `default`).
+
+    * Click on `Create`.
