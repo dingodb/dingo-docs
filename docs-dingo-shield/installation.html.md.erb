@@ -33,7 +33,7 @@ There are two panels of configuration for Dingo Shield™ that are specific to t
 Dingo Shield™ product needs an external Storage system to store the backup archives. It also needs to know when to backup the different targets and how long
 should maintain the backup archives.
 
-1. In Dingo Shield™ Settings, select **Archiving**.
+1. In **Dingo Shield™ > Settings**, select **Archiving**.
 
     ![installation-shield-archiving](images/installation-shield-archiving.png)
 
@@ -51,11 +51,11 @@ should maintain the backup archives.
 
 If you want to use an Amazon AWS S3 Bucket to store your backup archives, perform the following steps:
 
-1. At the Amazon AWS console, navigate to the **S3** service and create a S3 Bucket:
+1. At the Amazon AWS console, navigate to the **S3** service and create a **S3 Bucket**:
 
     ![installation-shield-s3-bucket](images/installation-shield-s3-bucket.png)
 
-2. Navigate to the **IAM** service and create an AWS IAM User with **Programmatic access** type:
+2. Navigate to the **IAM** service and create an **AWS IAM User** with **Programmatic access** type:
 
     ![installation-shield-s3-iam-user](images/installation-shield-s3-iam-user.png)
 
@@ -85,7 +85,7 @@ your values:
     }
     ```
 
-4. In Dingo Shield™ Settings, select **Amazon AWS S3 bucket**.
+4. In **Dingo Shield™ > Settings**, select **Amazon AWS S3 bucket**.
 
     ![installation-shield-archiving-s3](images/installation-shield-archiving-s3.png)
 
@@ -106,9 +106,9 @@ your values:
 
 If you want to use a compatible AWS S3 Bucket (like Ceph) to store your backup archives, perform the following steps:
 
-1. At your compatible Amazon AWS S3 system, create a new user (and access keys) and a new Bucket.
+1. At your compatible Amazon AWS S3 system, create a new user (and access keys) and a new bucket.
 
-2. In Dingo Shield™ Settings, select **Amazon AWS S3 Compatible Bucket**.
+2. In **Dingo Shield™ > Settings**, select **Amazon AWS S3 Compatible Bucket**.
 
     ![installation-shield-archiving-s3-compatible](images/installation-shield-archiving-s3-compatible.png)
 
@@ -134,15 +134,15 @@ If you want to use a compatible AWS S3 Bucket (like Ceph) to store your backup a
 
 If you want to use a Microsoft Azure Container to store your backup archives, perform the following steps:
 
-1. At the Microsoft Azure Portal, navigate to the **Storage accounts tab**, and create aa Azure Storage Account:
+1. At the Microsoft Azure Portal, navigate to the **Storage accounts tab**, and create an **Azure Storage Account**:
 
     ![installation-shield-azure-storage-account](images/installation-shield-azure-storage-account.png)
 
-2. After the storage account is created, select the new storage account from the dashboard, navigate to the **Blob Service** section of the storage account, then click on **Containers**, and create a Container, setting the **Access type** to **Private**:
+2. After the storage account is created, select the new storage account from the dashboard, navigate to the **Blob Service** section of the storage account, then click on **Containers**, and create a **Container**, setting the **Access type** to **Private**:
 
     ![installation-shield-azure-container](images/installation-shield-azure-container.png)
 
-3. In Dingo Shield™ Settings, select **Microsoft Azure Container**.
+3. In **Dingo Shield™ > Settings**, select **Microsoft Azure Container**.
 
     ![installation-shield-archiving-azure](images/installation-shield-archiving-azure.png)
 
@@ -160,15 +160,15 @@ If you want to use a Microsoft Azure Container to store your backup archives, pe
 
 If you want to use a Google Cloud Storage Bucket to store your backup archives, perform the following steps:
 
-1. At the Google Cloud Platform dashboard, navigate to the **IAM & Admin > Service Accounts** tab, and create a Google Cloud Service Account with `Storage Admin` privileges and furnish a new JSON private key:
+1. At the Google Cloud Platform dashboard, navigate to the **IAM & Admin > Service Accounts** tab, and create a **Google Cloud Service Account** with **Storage Admin** privileges and furnish a new JSON private key:
 
     ![installation-shield-google-service-account](images/installation-shield-google-service-account.png)
 
-2. At the Google Cloud Platform dashboard, under **Storage**, create a Google Cloud Storage Bucket:
+2. At the Google Cloud Platform dashboard, under **Storage**, create a **Google Cloud Storage Bucket**:
 
     ![installation-shield-google-bucket](images/installation-shield-google-bucket.png)
 
-3. In Dingo Shield™ Settings, select **Google Cloud Storage Bucket**.
+3. In **Dingo Shield™ > Settings**, select **Google Cloud Storage Bucket**.
 
     ![installation-shield-archiving-google](images/installation-shield-archiving-google.png)
 
@@ -198,7 +198,7 @@ You can configure Dingo Shield™ to use the provided internal PostgreSQL databa
 
 If you want to use internal databases for your deployment, perform the following steps:
 
-1. In Dingo Shield™ Settings, select **Databases**.
+1. In **Dingo Shield™ > Settings**, select **Databases**.
 
 2. Select **Internal Databases (PostgreSQL NOT highly-available)**.
 
@@ -240,7 +240,7 @@ If you want to use external MySQL databases for your deployment, perform the fol
 
 5. Type `exit` to quit the MySQL client, and `exit` again to close your connection to the Ops Manager VM.
 
-6. In Dingo Shield™ Settings, select **Databases**.
+6. In **Dingo Shield™ > Settings**, select **Databases**.
 
 7. Select **External MySQL Database**.
 
@@ -294,7 +294,7 @@ If you want to use external PostgreSQL databases for your deployment, perform th
 
 5. Type `exit` to quit the PostgreSQL client, and `exit` again to close your connection to the Ops Manager VM.
 
-6. In Dingo Shield™ Settings, select **Databases**.
+6. In **Dingo Shield™ > Settings**, select **Databases**.
 
 2. Select **External PostgreSQL Database**.
 
@@ -334,7 +334,7 @@ The install process generally requires several minutes to complete. The image sh
 
 Dingo Shield™ Web UI should now be available at the `shield` hostname in your system domain.
 
-1. The Dingo Shield™ Web UI is protected by a `username` and `password`. In Dingo Shield™ Credentials, look for the **Shield Credentials**:
+1. The Dingo Shield™ Web UI is protected by a `username` and `password`. In **Dingo Shield™ > Credentials**, look for the **Shield Credentials**:
 
     ![installation-shield-credentials](images/installation-shield-credentials.png)
 
@@ -384,4 +384,4 @@ Dingo Shield™ Web UI should now be available at the `shield` hostname in your 
 
 4. Confirm that there is a **shielddb** job:
 
-    ![installation-shield-shielddb-job.png](images/installation-shield-shielddb-job.png)
+    ![installation-shield-shielddb-job](images/installation-shield-shielddb-job.png)
