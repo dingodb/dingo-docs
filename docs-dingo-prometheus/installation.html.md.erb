@@ -25,9 +25,47 @@ There are four panels of configuration for Dingo Prometheus™ that are specific
 
 ### <a id="configuration-monitoring"></a>Monitoring
 
+Dingo Prometheus™ cames with a set of predefined integrations with Cloud Foundry components. Some of them (**Ops Manager Director** and **Elastic Runtime**) are enabled by default, and others (like **RabbitMQ for PCF** or **Redis for PCF**) are optional based on your deployment.
+
+1. In Pivotal Ops Manager, navigate to **Ops Manager Director > Credentials** and grab the **Health Monitor Credentials**:
+
+    ![installation-prometheus-director-credentials](images/installation-prometheus-director-credentials.png)
+
+2. Navigate to **Dingo Prometheus™ > Settings** and select **Monitoring**:
+
+    ![installation-prometheus-monitoring](images/installation-prometheus-monitoring.png)
+
+3. Enter an **Environment** name for your Prometheus installation (ie: `production`).
+
+4. Enter the **Health Monitor Credentials** from **Ops Manager Director > Credentials**.
+
+5. If you have deployed the Node Exporter Addon, checking the **Monitor Nodes?** option will enable alerts and dashboards for Nodes.
+
+6. f you have deployed [RabbitMQ for PCF](https://network.pivotal.io/products/pivotal-rabbitmq-service/), checking the **Monitor RabbitMQ for PCF?** option will enable alerts and dashboards for RabbitMQ.
+
+7. If you have deployed [Redis for PCF](https://network.pivotal.io/products/p-redis/), checking the **Monitor Redis for PCF?** option will enable alerts and dashboards for Redis.
+
+8. If you have deployed [Dingo Shield™](/dingo-shield/), checking the **Monitor Dingo Shield?** option will enable alerts and dashboards for Shield.
+
+9. Enter how long (in hours) to retain metrics in the local storage at the **Metrics Retention** field (ie: 360h).
+
+10. Click **Save**.
+
 ### <a id="configuration-alerting"></a>Alerting
 
+Dingo Prometheus™ cames with a set of predefined alerts and has receiver integrations such as email, HipChat, PagerDuty or Slack.
+
+1. In **Dingo Prometheus™ > Settings**, select **Alerting**.
+
+    ![installation-prometheus-alerting](images/installation-prometheus-alerting.png)
+
 ### <a id="configuration-dashboards"></a>Dashboards
+
+Dingo Prometheus™ cames with a set of predefined dashboards.
+
+1. In **Dingo Prometheus™ > Settings**, select **Dashboards**.
+
+    ![installation-prometheus-dashboards](images/installation-prometheus-dashboards.png)
 
 ### <a id="configuration-database"></a>Databases
 
@@ -43,13 +81,13 @@ You can configure Dingo Prometheus™ to use the provided internal PostgreSQL da
 
 If you want to use internal databases for your deployment, perform the following steps:
 
-1. In Dingo Prometheus™ Settings, select **Databases**.
+1. In **Dingo Prometheus™ > Settings**, select **Databases**.
 
 2. Select **Internal Databases (PostgreSQL NOT highly-available)**.
 
     ![installation-prometheus-database-internal](images/installation-prometheus-database-internal.png)
 
-3. If you have deployed [Dingo Shield™](/dingo-shield/) and want to automatically register a database backup, enter the Autoprovision Key from the Dingo Shield™ credentials page:
+3. If you have deployed [Dingo Shield™](/dingo-shield/) and want to automatically register a database backup, enter the Autoprovision Key from the **Dingo Shield™ > Credentials** page:
 
     ![installation-prometheus-shield-provisioning-key](images/installation-prometheus-shield-provisioning-key.png)
 
@@ -81,7 +119,7 @@ If you want to use external MySQL databases for your deployment, perform the fol
     mysql --host=RDSHOSTNAME --user=RDSUSERNAME --password=RDSPASSWORD
     ```
 
-4. Run the following MySQL commands to create databases for the Shield components that require a relational database:
+4. Run the following MySQL commands to create databases for the Prometheus components that require a relational database:
 
     ```
     CREATE database grafanadb;
@@ -89,7 +127,7 @@ If you want to use external MySQL databases for your deployment, perform the fol
 
 5. Type `exit` to quit the MySQL client, and `exit` again to close your connection to the Ops Manager VM.
 
-6. In Dingo Prometheus™ Settings, select **Databases**.
+6. In **Dingo Prometheus™ > Settings**, select **Databases**.
 
 7. Select **External MySQL Database**.
 
@@ -135,7 +173,7 @@ If you want to use external PostgreSQL databases for your deployment, perform th
     psql --host=RDSHOSTNAME --username=RDSUSERNAME --password
     ```
 
-4. Run the following PostgreSQL commands to create databases for the Shield components that require a relational database:
+4. Run the following PostgreSQL commands to create databases for the Prometheus components that require a relational database:
 
     ```
     CREATE database grafanadb;
@@ -143,7 +181,7 @@ If you want to use external PostgreSQL databases for your deployment, perform th
 
 5. Type `exit` to quit the PostgreSQL client, and `exit` again to close your connection to the Ops Manager VM.
 
-6. In Dingo Prometheus™ Settings, select **Databases**.
+6. In **Dingo Prometheus™ > Settings**, select **Databases**.
 
 2. Select **External PostgreSQL Database**.
 
@@ -182,13 +220,17 @@ The install process generally requires several minutes to complete. The image sh
 
 ## <a id="verification"></a>Verification
 
-Dingo Prometheus™ Web UI should now be available at the `shield` hostname in your system domain.
+Dingo Prometheus™ Web contains three main components:
 
-## <a id="verification-prometheus"></a>Prometheus
+* Prometheus: scrapes and stores your metrics
+* AlertManager: handles alerts sent by Prometheus
+* Grafana: allows you to query, visualize and understand your metrics
 
-1. The Prometheus Web UI is protected by a `username` and `password`. In Dingo Prometheus™ Credentials, look for the **Prometheus Credentials**:
+### <a id="verification-prometheus"></a>Prometheus
 
-    ![installation-prometheus-prometheus-credentials.png](images/installation-prometheus-prometheus-credentials.png)
+1. The Prometheus Web UI is protected by a `username` and `password`. In **Dingo Prometheus™ > Credentials**, look for the **Prometheus Credentials**:
+
+    ![installation-prometheus-prometheus-credentials](images/installation-prometheus-prometheus-credentials.png)
 
 2. If you do not know the system domain for the deployment, then select **Pivotal Elastic Runtime > Settings > Domains** to locate the configured system domain.
 
@@ -198,11 +240,11 @@ Dingo Prometheus™ Web UI should now be available at the `shield` hostname in y
 
     ![installation-prometheus-prometheus-dashboard](images/installation-prometheus-prometheus-dashboard.png)
 
-## <a id="verification-alertmanager"></a>AlertManager
+### <a id="verification-alertmanager"></a>AlertManager
 
-1. The AlertManager Web UI is protected by a `username` and `password`. In Dingo Prometheus™ Credentials, look for the **AlertManager Credentials**:
+1. The AlertManager Web UI is protected by a `username` and `password`. In **Dingo Prometheus™ > Credentials**, look for the **AlertManager Credentials**:
 
-    ![installation-prometheus-alertmanager-credentials.png](images/installation-prometheus-alertmanager-credentials.png)
+    ![installation-prometheus-alertmanager-credentials](images/installation-prometheus-alertmanager-credentials.png)
 
 2. If you do not know the system domain for the deployment, then select **Pivotal Elastic Runtime > Settings > Domains** to locate the configured system domain.
 
@@ -212,11 +254,11 @@ Dingo Prometheus™ Web UI should now be available at the `shield` hostname in y
 
     ![installation-prometheus-alertmanager-dashboard](images/installation-prometheus-alertmanager-dashboard.png)
 
-## <a id="verification-grafana"></a>Grafana
+### <a id="verification-grafana"></a>Grafana
 
-1. The Grafana Web UI is protected by a `username` and `password`. In Dingo Prometheus™ Credentials, look for the **Grafana Credentials**:
+1. The Grafana Web UI is protected by a `username` and `password`. In **Dingo Prometheus™ > Credentials**, look for the **Grafana Credentials**:
 
-    ![installation-prometheus-grafana-credentials.png](images/installation-prometheus-grafana-credentials.png)
+    ![installation-prometheus-grafana-credentials](images/installation-prometheus-grafana-credentials.png)
 
 2. If you do not know the system domain for the deployment, then select **Pivotal Elastic Runtime > Settings > Domains** to locate the configured system domain.
 
@@ -225,3 +267,5 @@ Dingo Prometheus™ Web UI should now be available at the `shield` hostname in y
 4. Log in using the Grafana credentials for the `admin` user. The Grafana dashboard appears.
 
     ![installation-prometheus-grafana-dashboard](images/installation-prometheus-grafana-dashboard.png)
+
+5. Alernativelly, if you have enabled user access from your Cloud Foundry environment, login using the username and password of one of your users registered at your Cloud Foundry environment.
