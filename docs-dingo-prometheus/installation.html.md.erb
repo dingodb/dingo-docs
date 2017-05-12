@@ -67,6 +67,27 @@ Dingo Prometheus™ cames with a set of predefined dashboards.
 
     ![installation-prometheus-dashboards](images/installation-prometheus-dashboards.png)
 
+2. If you want to enable **Viewer** access to users without requiring them to log in, check the **Anonymous User Access?** option.
+
+    **WARNING**: We recommend keeping this option disabled unless your system domain is only reachable from within your corporate network.
+
+    ![installation-prometheus-grafana-uaa](images/installation-prometheus-grafana-uaa.png)
+
+3. Optionally, if you want to create users on install time, click on the **Add** button located at the right of **Seed Users** and complete the following fields for each user to be created:
+
+    ![installation-prometheus-seed-users](images/installation-prometheus-seed-users.png)
+
+    | Field | Notes |
+    | --- | --- |
+    | Name | Specify the full name |
+    | Email | Specify the email |
+    | Login | Specify a unique login username |
+    | Password | Specify a password for the provided username |
+
+    **NOTE**: Users are only created during install time. If you **update** or **delete** an existing user at the **Seed Users** collection, the changes will not be reflected at the dashboard system.
+
+4. Click **Save**.
+
 ### <a id="configuration-database"></a>Databases
 
 Dingo Prometheus™ product needs a database in order to store the dashboards configuration.
