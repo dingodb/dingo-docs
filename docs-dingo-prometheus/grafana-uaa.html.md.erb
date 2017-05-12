@@ -1,0 +1,58 @@
+---
+title: Enabling Cloud Foundry User Access for Dingo Prometheus™
+---
+
+If you want to enable **Viewer** access to users defined at your Cloud Foundry environment, complete the following steps to create a UAA client that gives Dingo Prometheus™ access to Cloud Foundry UAA:
+
+1. Add the `ubuntu` account key pair from your IaaS deployment to your local SSH profile so you can access the Ops Manager VM. For example, in AWS, you add a key pair created in AWS:
+
+	```
+	ssh-add aws-keypair.pem
+	```
+
+2. SSH in to your Ops Manager using the Ops Manager FQDN and the username `ubuntu`:
+
+	```
+	ssh ubuntu@OPS_MANAGER_FQDN
+	```
+
+3. In Pivotal Ops Manager, navigate to **Pivotal Elastic Runtime Director > Credentials** and grab the **UAA Admin Client Credentials**:
+
+    ![grafana-uaa-uaa-admin-credentials](images/grafana-uaa-uaa-admin-credentials.png)
+
+4. Target your UAA system with the UAA CLI (If you do not know the system domain for the deployment, then navigate to **Pivotal Elastic Runtime > Settings > Domains** to locate the configured system domain):
+
+	```
+	uaac target https://uaa.YOUR-SYSTEM-DOMAIN --skip-ssl-validation
+	```
+
+5. Run the following command to authenticate and obtain an access token for the admin client from the UAA server:
+
+	```
+	uaac token client get admin -s ADMIN-CLIENT-CREDENTIALS-SECRET
+	```
+
+6. Create a **UAA Client ID** (ie: `grafana`) with the **UAA Client Secret* of your choosing:
+
+	```
+	uaac client add grafana \
+	  --name grafana \
+	  --secret RANDOM-CLIENT-SECRET \
+	  --scope openid \
+	  --authorized_grant_types authorization_code \
+	  --authorities uaa.none
+	```
+
+7. Type `exit` to close your connection to the Ops Manager VM.
+
+8. In Pivotal Ops Manager, navigate to **Dingo Prometheus™ > Dasboards > Settings**.
+
+9. Enabled the **Cloud Foundry User Access?** option and enter the previously generate **UAA Client ID** and **UAA Client Secret**:
+
+        ![installation-prometheus-grafana-uaa](images/installation-prometheus-grafana-uaa.png)
+
+10. Click **Save**.
+
+11. Return to the Ops Manager dashboard via the **< Installation Dashboard** link at the top left and press **Apply Changes**.
+
+The install process generally requires several minutes to complete. Once completed, Cloud Foundry users will be allowed to login into the Dingo Prometheus™ dashboard system.

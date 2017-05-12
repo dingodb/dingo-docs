@@ -71,29 +71,7 @@ Dingo Prometheus™ cames with a set of predefined dashboards.
 
     **WARNING**: We recommend keeping this option **disabled** unless your system domain is only reachable from within your corporate network.
 
-3. If you want to enable **Viewer** access to users defined at your Cloud Foundry environment, perform the following steps:
-
-    1. Add the `ubuntu` account key pair from your IaaS deployment to your local SSH profile so you can access the Ops Manager VM. For example, in AWS, you add a key pair created in AWS:
-
-        ```
-        ssh-add aws-keypair.pem
-        ```
-
-    2. SSH in to your Ops Manager using the Ops Manager FQDN and the username `ubuntu`:
-
-        ```
-        ssh ubuntu@OPS_MANAGER_FQDN
-        ```
-
-    3. Create a new **UAA Client** using the following commands:
-
-        ```
-        uaac
-        ```
-
-    4. Enter the **UAA Client ID** and **UAA Client Secret**.
-
-        ![installation-prometheus-grafana-uaa](images/installation-prometheus-grafana-uaa.png)
+3. If you want to enable **Viewer** access to users defined at your Cloud Foundry environment, please follow the [Enabling Cloud Foundry User Access for Dingo Prometheus™](grafana-uaa.html) documentation.
 
 4. If you want to create users on install time, click on the **Add** button located at the right of **Seed Users** and complete the following fields for each user to be created:
 
