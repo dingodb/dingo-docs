@@ -71,9 +71,31 @@ Dingo Prometheus™ cames with a set of predefined dashboards.
 
     **WARNING**: We recommend keeping this option **disabled** unless your system domain is only reachable from within your corporate network.
 
-    ![installation-prometheus-grafana-uaa](images/installation-prometheus-grafana-uaa.png)
+3. If you want to enable **Viewer** access to users defined at your Cloud Foundry environment, perform the following steps:
 
-3. Optionally, if you want to create users on install time, click on the **Add** button located at the right of **Seed Users** and complete the following fields for each user to be created:
+    1. Add the `ubuntu` account key pair from your IaaS deployment to your local SSH profile so you can access the Ops Manager VM. For example, in AWS, you add a key pair created in AWS:
+
+        ```
+        ssh-add aws-keypair.pem
+        ```
+
+    2. SSH in to your Ops Manager using the Ops Manager FQDN and the username `ubuntu`:
+
+        ```
+        ssh ubuntu@OPS_MANAGER_FQDN
+        ```
+
+    3. Create a new **UAA Client** using the following commands:
+
+        ```
+        uaac
+        ```
+
+    4. Enter the **UAA Client ID** and **UAA Client Secret**.
+
+        ![installation-prometheus-grafana-uaa](images/installation-prometheus-grafana-uaa.png)
+
+4. If you want to create users on install time, click on the **Add** button located at the right of **Seed Users** and complete the following fields for each user to be created:
 
     ![installation-prometheus-seed-users](images/installation-prometheus-seed-users.png)
 
@@ -86,7 +108,7 @@ Dingo Prometheus™ cames with a set of predefined dashboards.
 
     **NOTE**: Users are only created during install time. If you **update** or **delete** an existing user at the **Seed Users** collection, the changes will not be reflected at the dashboard system.
 
-4. Click **Save**.
+5. Click **Save**.
 
 ### <a id="configuration-database"></a>Databases
 
