@@ -25,7 +25,7 @@ There are four panels of configuration for Dingo Prometheus™ that are specific
 
 ### <a id="configuration-monitoring"></a>Monitoring
 
-Dingo Prometheus™ cames with a set of predefined integrations with Cloud Foundry components. Some of them (**Ops Manager Director** and **Elastic Runtime**) are enabled by default, and others (like **RabbitMQ for PCF** or **Redis for PCF**) are optional based on your deployment.
+Dingo Prometheus™ cames with a set of predefined integrations with Pivotal Cloud Foundry&reg; components. Some of them (**Pivotal Ops Manager Director** and **Pivotal Elastic Runtime**) are enabled by default, and others (like **Pivotal RabbitMQ for PCF** or **Pivotal Redis for PCF**) are optional based on your deployment.
 
 1. In Pivotal Ops Manager, navigate to **Ops Manager Director > Credentials** and grab the **Health Monitor Credentials**:
 
@@ -80,7 +80,7 @@ Dingo Prometheus™ cames with a set of predefined alerts and has receiver integ
     | Field | Notes |
     | --- | --- |
     | **Room ID** | The HipChat room ID |
-    | **Auth Token ** | The HipChat auth token |
+    | **Auth Token** | The HipChat auth token |
     | **From** | A label to be shown in addition to the sender's name |
     | **Message** | The HipChat message body |
     | **Message Format** | How the message is rendered inside HipChat (`Text`, `HTML`)  |
@@ -118,13 +118,13 @@ Dingo Prometheus™ cames with a set of predefined alerts and has receiver integ
 
 6. If you want to send a **Test Alert**, select from the dropdown when do you want to send it (`Never`, `Hourly`, `Daily`, `Weekly`)
 
-7. Time after which an alert is declared resolved if it has not been updated (ie: 5m)
+7. Specify at the **Resolve timeout** field the time after which an alert is declared resolved if it has not been updated (ie: 5m).
 
 8. Click **Save**.
 
 ### <a id="configuration-dashboards"></a>Dashboards
 
-Dingo Prometheus™ cames with a set of predefined dashboards.
+Dingo Prometheus™ cames with a set of predefined dashboards. Configure in this section which users will be allowed to access the dashboard system.
 
 1. In **Dingo Prometheus™ > Settings**, select **Dashboards**.
 
@@ -134,7 +134,7 @@ Dingo Prometheus™ cames with a set of predefined dashboards.
 
     **WARNING**: We recommend keeping this option **disabled** unless your system domain is only reachable from within your corporate network.
 
-3. If you want to enable **Viewer** access to users defined at your Cloud Foundry environment, please follow the [Enabling Cloud Foundry User Access for Dingo Prometheus™](grafana-uaa.html) documentation.
+3. If you want to enable **Viewer** access to users defined at your Pivotal Cloud Foundry&reg; environment, please follow the [Enabling Pivotal Cloud Foundry&reg; User Access for Dingo Prometheus™](grafana-uaa.html) documentation.
 
 4. If you want to create users on install time, click on the **Add** button located at the right of **Seed Users** and complete the following fields for each user to be created:
 
@@ -352,4 +352,4 @@ Dingo Prometheus™ Web contains three main components:
 
     ![installation-prometheus-grafana-dashboard](images/installation-prometheus-grafana-dashboard.png)
 
-5. Alernativelly, if you have enabled user access from your Cloud Foundry environment, login using the username and password of one of your users registered at your Cloud Foundry environment.
+5. Alernativelly, if you have enabled user access from your Pivotal Cloud Foundry&reg; environment, login using the username and password of one of your users registered at your Pivotal Cloud Foundry&reg; environment.

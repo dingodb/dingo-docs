@@ -1,8 +1,8 @@
 ---
-title: Enabling Cloud Foundry User Access for Dingo Prometheus™
+title: Enabling Pivotal Cloud Foundry&reg; User Access for Dingo Prometheus™
 ---
 
-If you want to enable **Viewer** access to users defined at your Cloud Foundry environment, complete the following steps to create a UAA client that gives Dingo Prometheus™ access to Cloud Foundry UAA:
+If you want to enable **Viewer** access to users defined at your Pivotal Cloud Foundry&reg; environment, complete the following steps to create a client that gives Dingo Prometheus™ access to Pivotal Cloud Foundry&reg; UAA:
 
 1. Add the `ubuntu` account key pair from your IaaS deployment to your local SSH profile so you can access the Ops Manager VM. For example, in AWS, you add a key pair created in AWS:
 
@@ -47,7 +47,7 @@ If you want to enable **Viewer** access to users defined at your Cloud Foundry e
 
 8. In Pivotal Ops Manager, navigate to **Dingo Prometheus™ > Dasboards > Settings**.
 
-9. Enabled the **Cloud Foundry User Access?** option and enter the previously generate **UAA Client ID** and **UAA Client Secret**:
+9. Enable the **Cloud Foundry User Access?** option and enter the previously generate **UAA Client ID** and **UAA Client Secret**:
 
 	![installation-prometheus-grafana-uaa](images/installation-prometheus-grafana-uaa.png)
 
@@ -55,4 +55,4 @@ If you want to enable **Viewer** access to users defined at your Cloud Foundry e
 
 11. Return to the Ops Manager dashboard via the **< Installation Dashboard** link at the top left and press **Apply Changes**.
 
-The install process generally requires several minutes to complete. Once completed, Cloud Foundry users will be allowed to login into the Dingo Prometheus™ dashboard system.
+The install process generally requires several minutes to complete. Once completed, Pivotal Cloud Foundry&reg; users will be allowed to login into the Dingo Prometheus™ dashboard system.

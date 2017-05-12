@@ -1,8 +1,8 @@
 ---
-title: Backing up Pivotal Cloud Foundry databases
+title: Backing up Pivotal Cloud Foundry&reg; databases
 ---
 
-  **NOTE**: The exact procedure to back up Pivotal Cloud Foundry databases depends upon the database provider you select for your deployment. The following procedure assumes **Internal Databases - MySQL** as an example.
+  **NOTE**: The exact procedure to back up Pivotal Cloud Foundry&reg; databases depends upon the database provider you select for your deployment. The following procedure assumes **Internal Databases - MySQL** as an example.
 
 ## <a id="configuration"></a>Configuration
 
@@ -12,7 +12,7 @@ There are two Shield components that we need to configure.
 
 Shield Targets stores the information about the remote data systems that should be backed up.
 
-Perform the following steps in order to create **Targets** for the Pivotal Cloud Foundry databases:
+Perform the following steps in order to create **Targets** for the Pivotal Cloud Foundry&reg; databases:
 
 1. In Pivotal Ops Manager, navigate to **Pivotal Elastic Runtime > Credentials** and grab the **MySQL Admin Credentials**:
 
@@ -24,7 +24,7 @@ Perform the following steps in order to create **Targets** for the Pivotal Cloud
 
 3. Open a new browser tab and navigate to the Dingo Shield™ Web UI (`shield.YOUR-SYSTEM-DOMAIN`), click on the **Targets** tab.
 
-4. There are four Pivotal Cloud Foundry databases that we should backup:
+4. There are four Pivotal Cloud Foundry&reg; databases that we should backup:
     * `ccdb`: holds the **Cloud Controller** component data
     * `diego`: holds the **Diego** component data
     * `routing`: holds the **TCP Routing** component data
@@ -60,11 +60,11 @@ Perform the following steps in order to create **Targets** for the Pivotal Cloud
 
 Shield Jobs keeps track of a desired backup behavior, by marrying a target (the data to backup) with a store (where to send that data), according to a schedule (when to do the backups) and a retention policy (how long to keep the data for).
 
-Perform the following steps in order to create **Jobs** for the Pivotal Cloud Foundry databases:
+Perform the following steps in order to create **Jobs** for the Pivotal Cloud Foundry&reg; databases:
 
 1. At the Dingo Shield™ Web UI, click on the **Jobs** tab.
 
-2. We need to create a **Job** for each of the four Pivotal Cloud Foundry databases:
+2. We need to create a **Job** for each of the four Pivotal Cloud Foundry&reg; databases:
 
     ![backup-pcf-new-job](images/backup-pcf-new-job.png)
 
