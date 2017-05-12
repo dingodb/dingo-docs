@@ -20,7 +20,7 @@ If you want to enable **Viewer** access to users defined at your Cloud Foundry e
 
     ![grafana-uaa-uaa-admin-credentials](images/grafana-uaa-uaa-admin-credentials.png)
 
-4. Target your UAA system with the UAA CLI (If you do not know the system domain for the deployment, then navigate to **Pivotal Elastic Runtime > Settings > Domains** to locate the configured system domain):
+4. At the Ops Manager VM, target your UAA system with the UAA CLI (If you do not know the system domain for the deployment, then navigate to **Pivotal Elastic Runtime > Settings > Domains** to locate the configured system domain):
 
 	```
 	uaac target https://uaa.YOUR-SYSTEM-DOMAIN --skip-ssl-validation
@@ -32,7 +32,7 @@ If you want to enable **Viewer** access to users defined at your Cloud Foundry e
 	uaac token client get admin -s ADMIN-CLIENT-CREDENTIALS-SECRET
 	```
 
-6. Create a **UAA Client ID** (ie: `grafana`) with the **UAA Client Secret* of your choosing:
+6. Create a **UAA Client ID** (ie: `grafana`) with the **UAA Client Secret** of your choosing:
 
 	```
 	uaac client add grafana \
@@ -49,7 +49,7 @@ If you want to enable **Viewer** access to users defined at your Cloud Foundry e
 
 9. Enabled the **Cloud Foundry User Access?** option and enter the previously generate **UAA Client ID** and **UAA Client Secret**:
 
-        ![installation-prometheus-grafana-uaa](images/installation-prometheus-grafana-uaa.png)
+	![installation-prometheus-grafana-uaa](images/installation-prometheus-grafana-uaa.png)
 
 10. Click **Save**.
 

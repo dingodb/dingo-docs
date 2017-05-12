@@ -59,6 +59,69 @@ Dingo Prometheus™ cames with a set of predefined alerts and has receiver integ
 
     ![installation-prometheus-alerting](images/installation-prometheus-alerting.png)
 
+2. If you want to notify **Alerts** via **Email**, **enable** **Email Notifications** and complete the following fields:
+
+    ![installation-prometheus-alerting-email](images/installation-prometheus-alerting-email.png)
+
+    | Field | Notes |
+    | --- | --- |
+    | **From Email** | The sender email address |
+    | **To Email** | The email address to send notifications to |
+    | **SMTP Server** | The address of the SMTP server that sends emails |
+    | **SMTP credentials** | The credentials for the SMTP server that sends emails |
+    | **SMTP secret** | The authentication secret for the SMTP server that sends emails |
+    | **SMTP TLS requirement** | Whether or not to enable TLS |
+    | **Send resolved?** | Whether or not to notify about resolved alerts |
+
+3. If you want to notify **Alerts** via **HipChat**, **enable** **HipChat Notifications** and complete the following fields:
+
+    ![installation-prometheus-alerting-hipchat](images/installation-prometheus-alerting-hipchat.png)
+
+    | Field | Notes |
+    | --- | --- |
+    | **Room ID** | The HipChat room ID |
+    | **Auth Token ** | The HipChat auth token |
+    | **From** | A label to be shown in addition to the sender's name |
+    | **Message** | The HipChat message body |
+    | **Message Format** | How the message is rendered inside HipChat (`Text`, `HTML`)  |
+    | **Color** | Background color for the HipChat message |
+    | **User Notification** | Whether this message should trigger a user notification |
+    | **Send resolved?** | Whether or not to notify about resolved alerts |
+
+4. If you want to notify **Alerts** via **PagerDuty**, **enable** **PagerDuty Notifications** and complete the following fields:
+
+    ![installation-prometheus-alerting-pagerduty](images/installation-prometheus-alerting-pagerduty.png)
+
+    | Field | Notes |
+    | --- | --- |
+    | **Service Key** | The PagerDuty service key |
+    | **Client** | The client identification |
+    | **Description** | A description of the incident |
+    | **Send resolved?** | Whether or not to notify about resolved alerts |
+
+5. If you want to notify **Alerts** via **Slack**, **enable** **Slack Notifications** and complete the following fields:
+
+    ![installation-prometheus-alerting-slack](images/installation-prometheus-alerting-slack.png)
+
+    | Field | Notes |
+    | --- | --- |
+    | **Webhook URL** | The Slack Webhook URL |
+    | **Channel** | The Slack channel, private group, or IM channel to send notifications to |
+    | **Username** | The Slack bot's user name |
+    | **Color** | Color to use for the Slack notifications |
+    | **Icon Emoji** | Emoji to use as the icon for the Slack notifications |
+    | **Icon URL** | URL to an image to use as the icon for the Slack notifications |
+    | **Title** | Title to use for the Slack notifications |
+    | **Pretext** | Pretext to use for the Slack notifications |
+    | **Text** | Text to use for the Slack notifications |
+    | **Send resolved?** | Whether or not to notify about resolved alerts |
+
+6. If you want to send a **Test Alert**, select from the dropdown when do you want to send it (`Never`, `Hourly`, `Daily`, `Weekly`)
+
+7. Time after which an alert is declared resolved if it has not been updated (ie: 5m)
+
+8. Click **Save**.
+
 ### <a id="configuration-dashboards"></a>Dashboards
 
 Dingo Prometheus™ cames with a set of predefined dashboards.
@@ -79,10 +142,10 @@ Dingo Prometheus™ cames with a set of predefined dashboards.
 
     | Field | Notes |
     | --- | --- |
-    | Name | Specify the new user full name |
-    | Email | Specify the new user email |
-    | Login | Specify a unique login username for the new user |
-    | Password | Specify a password for the provided username |
+    | **Name** | Specify the new user full name |
+    | **Email** | Specify the new user email |
+    | **Login** | Specify a unique login username for the new user |
+    | **Password** | Specify a password for the provided username |
 
     **NOTE**: Users are only created during install time. If you **update** or **delete** an existing user at the **Seed Users** collection, the changes will not be reflected at the dashboard system.
 
@@ -158,11 +221,11 @@ If you want to use external MySQL databases for your deployment, perform the fol
 
     | Field | Notes |
     | --- | --- |
-    | Hostname DNS Name | Specify the hostname of the database server |
-    | TCP Port | Specify the port of the database server |
-    | Username | Specify a unique username that can access this specific database on the database server |
-    | Password | Specify a password for the provided username |
-    | Database Name | Specify the database name on the database server |
+    | **Hostname DNS Name** | Specify the hostname of the database server |
+    | **TCP Port** | Specify the port of the database server |
+    | **Username** | Specify a unique username that can access this specific database on the database server |
+    | **Password** | Specify a password for the provided username |
+    | **Database Name** | Specify the database name on the database server |
 
     **NOTE**: Ensure that the Database has been created before clicking **Save**.
 
@@ -212,12 +275,12 @@ If you want to use external PostgreSQL databases for your deployment, perform th
 
     | Field | Notes |
     | --- | --- |
-    | Hostname DNS Name | Specify the hostname of the database server |
-    | TCP Port | Specify the port of the database server |
-    | Username | Specify a unique username that can access this specific database on the database server |
-    | Password | Specify a password for the provided username |
-    | Database Name | Specify the database name on the database server |
-    | SSL Mode | Specify the SSL mode (`disable`, `require`, `verify-full`) to connect to the database server |
+    | **Hostname DNS Name** | Specify the hostname of the database server |
+    | **TCP Port** | Specify the port of the database server |
+    | **Username** | Specify a unique username that can access this specific database on the database server |
+    | **Password** | Specify a password for the provided username |
+    | **Database Name** | Specify the database name on the database server |
+    | **SSL Mode** | Specify the SSL mode (`disable`, `require`, `verify-full`) to connect to the database server |
 
     **NOTE**: Ensure that the Database has been created before clicking **Save**.
 
