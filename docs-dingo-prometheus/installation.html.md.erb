@@ -4,7 +4,8 @@ title: Installing Dingo Prometheus™ to Pivotal Ops Manager
 
 ## <a id="requirements"></a>Requirements
 
-* Pivotal Cloud Foundry&reg;
+* Pivotal Ops Manager&reg; version 1.9 or greater
+* Pivotal Cloud Foundry&reg; version 1.9 or greater
 
 ## <a id="upload-tile"></a>Upload tile
 
@@ -20,6 +21,154 @@ The first time you upload/install the tile it will appear with a red lower borde
 
 ## <a id="configuration"></a>Configuration
 
+There are four panels of configuration for Dingo Prometheus™ that are specific to this tile.
+
+### <a id="configuration-monitoring"></a>Monitoring
+
+### <a id="configuration-alerting"></a>Alerting
+
+### <a id="configuration-dashboards"></a>Dashboards
+
+### <a id="configuration-database"></a>Databases
+
+Dingo Prometheus™ product needs a database in order to store the dashboards configuration.
+
+You can configure Dingo Prometheus™ to use the provided internal PostgreSQL database, or you can configure an external database provider for the databases (only MySQL and PostgreSQL are supported)
+
+  **NOTE**: If you are performing an upgrade, do not modify your existing database configuration or you may lose data. You must migrate your existing data first before changing the configuration. [Contact the Dingo Tiles™ team](contact.html) for help.
+
+#### <a id="configuration-database-internal"></a>Internal Database Configuration
+
+  **WARNING**: The internal PostgreSQL database provided with Dingo Prometheus™ is a single PostgreSQL instance (NOT highly-available).
+
+If you want to use internal databases for your deployment, perform the following steps:
+
+1. In Dingo Prometheus™ Settings, select **Databases**.
+
+2. Select **Internal Databases (PostgreSQL NOT highly-available)**.
+
+    ![installation-prometheus-database-internal](images/installation-prometheus-database-internal.png)
+
+3. If you have deployed [Dingo Shield™](/dingo-shield/) and want to automatically register a database backup, enter the Autoprovision Key from the Dingo Shield™ credentials page:
+
+    ![installation-prometheus-shield-provisioning-key](images/installation-prometheus-shield-provisioning-key.png)
+
+4. Click **Save**.
+
+#### <a id="configuration-database-mysql"></a>External MySQL Database
+
+  **NOTE**: The exact procedure to create databases depends upon the database provider you select for your deployment. The following procedure uses AWS RDS as an example. You can configure a different database provider that provides MySQL support, such as Google Cloud SQL.
+
+  **WARNING**: Protect whichever database you use in your deployment with a password.
+
+If you want to use external MySQL databases for your deployment, perform the following steps:
+
+1. Add the `ubuntu` account key pair from your IaaS deployment to your local SSH profile so you can access the Ops Manager VM. For example, in AWS, you add a key pair created in AWS:
+
+    ```
+    ssh-add aws-keypair.pem
+    ```
+
+2. SSH in to your Ops Manager using the Ops Manager FQDN and the username `ubuntu`:
+
+    ```
+    ssh ubuntu@OPS_MANAGER_FQDN
+    ```
+
+3. Log in to your MySQL database instance using the appropriate hostname and user login values configured in your IaaS account. For example, to log in to your AWS RDS instance, run the following MySQL command:
+
+    ```
+    mysql --host=RDSHOSTNAME --user=RDSUSERNAME --password=RDSPASSWORD
+    ```
+
+4. Run the following MySQL commands to create databases for the Shield components that require a relational database:
+
+    ```
+    CREATE database grafanadb;
+    ```
+
+5. Type `exit` to quit the MySQL client, and `exit` again to close your connection to the Ops Manager VM.
+
+6. In Dingo Prometheus™ Settings, select **Databases**.
+
+7. Select **External MySQL Database**.
+
+    ![installation-prometheus-database-mysql](images/installation-prometheus-database-mysql.png)
+
+8. Complete the following fields:
+
+    | Field | Notes |
+    | --- | --- |
+    | Hostname DNS Name | Specify the hostname of the database server |
+    | TCP Port | Specify the port of the database server |
+    | Username | Specify a unique username that can access this specific database on the database server |
+    | Password | Specify a password for the provided username |
+    | Database Name | Specify the database name on the database server |
+
+    **NOTE**: Ensure that the Database has been created before clicking **Save**.
+
+9. Click **Save**.
+
+#### <a id="configuration-database-postgresql"></a>External PostgreSQL Database
+
+  **NOTE**: The exact procedure to create databases depends upon the database provider you select for your deployment. The following procedure uses AWS RDS as an example. You can configure a different database provider that provides PostgreSQL support, such as Google Cloud SQL.
+
+  **WARNING**: Protect whichever database you use in your deployment with a password.
+
+If you want to use external PostgreSQL databases for your deployment, perform the following steps:
+
+1. Add the `ubuntu` account key pair from your IaaS deployment to your local SSH profile so you can access the Ops Manager VM. For example, in AWS, you add a key pair created in AWS:
+
+    ```
+    ssh-add aws-keypair.pem
+    ```
+
+2. SSH in to your Ops Manager using the Ops Manager FQDN and the username `ubuntu`:
+
+    ```
+    ssh ubuntu@OPS_MANAGER_FQDN
+    ```
+
+3. Log in to your PostgreSQL database instance using the appropriate hostname and user login values configured in your IaaS account. For example, to log in to your AWS RDS instance, run the following PostgreSQL command:
+
+    ```
+    psql --host=RDSHOSTNAME --username=RDSUSERNAME --password
+    ```
+
+4. Run the following PostgreSQL commands to create databases for the Shield components that require a relational database:
+
+    ```
+    CREATE database grafanadb;
+    ```
+
+5. Type `exit` to quit the PostgreSQL client, and `exit` again to close your connection to the Ops Manager VM.
+
+6. In Dingo Prometheus™ Settings, select **Databases**.
+
+2. Select **External PostgreSQL Database**.
+
+    ![installation-prometheus-database-postgresql](images/installation-prometheus-database-postgresql.png)
+
+8. Complete the following fields:
+
+    | Field | Notes |
+    | --- | --- |
+    | Hostname DNS Name | Specify the hostname of the database server |
+    | TCP Port | Specify the port of the database server |
+    | Username | Specify a unique username that can access this specific database on the database server |
+    | Password | Specify a password for the provided username |
+    | Database Name | Specify the database name on the database server |
+    | SSL Mode | Specify the SSL mode (`disable`, `require`, `verify-full`) to connect to the database server |
+
+    **NOTE**: Ensure that the Database has been created before clicking **Save**.
+
+9. Click **Save**.
+
+### <a id="configuration-stemcell"></a>Stemcell
+
+If required to upload a particular stemcell series, you can find the latest available stemcell at [Pivotal Network](https://network.pivotal.io/products/stemcells).
+
+![installation-prometheus-stemcell](images/installation-prometheus-stemcell.png)
 
 ## <a id="installation"></a>Installation
 
@@ -29,6 +178,50 @@ The first time you upload/install the tile it will appear with a red lower borde
 
 The install process generally requires several minutes to complete. The image shows the Changes Applied window that displays when the installation process successfully completes.
 
-![installation-prometheus-completed](images/installation-prometheus-completed.png)
+![installation-sprometheus-completed](images/installation-prometheus-completed.png)
 
 ## <a id="verification"></a>Verification
+
+Dingo Prometheus™ Web UI should now be available at the `shield` hostname in your system domain.
+
+## <a id="verification-prometheus"></a>Prometheus
+
+1. The Prometheus Web UI is protected by a `username` and `password`. In Dingo Prometheus™ Credentials, look for the **Prometheus Credentials**:
+
+    ![installation-prometheus-prometheus-credentials.png](images/installation-prometheus-prometheus-credentials.png)
+
+2. If you do not know the system domain for the deployment, then select **Pivotal Elastic Runtime > Settings > Domains** to locate the configured system domain.
+
+3. Open a browser and navigate to `prometheus.YOUR-SYSTEM-DOMAIN`. For example, if the system domain is `system.example.com`, then point your browser to `prometheus.system.example.com`.
+
+4. Log in using the Prometheus credentials for the `admin` user. The Prometheus dashboard appears.
+
+    ![installation-prometheus-prometheus-dashboard](images/installation-prometheus-prometheus-dashboard.png)
+
+## <a id="verification-alertmanager"></a>AlertManager
+
+1. The AlertManager Web UI is protected by a `username` and `password`. In Dingo Prometheus™ Credentials, look for the **AlertManager Credentials**:
+
+    ![installation-prometheus-alertmanager-credentials.png](images/installation-prometheus-alertmanager-credentials.png)
+
+2. If you do not know the system domain for the deployment, then select **Pivotal Elastic Runtime > Settings > Domains** to locate the configured system domain.
+
+3. Open a browser and navigate to `alertmanager.YOUR-SYSTEM-DOMAIN`. For example, if the system domain is `system.example.com`, then point your browser to `alertmanager.system.example.com`.
+
+4. Log in using the AlertManager credentials for the `admin` user. The AlertManager dashboard appears.
+
+    ![installation-prometheus-alertmanager-dashboard](images/installation-prometheus-alertmanager-dashboard.png)
+
+## <a id="verification-grafana"></a>Grafana
+
+1. The Grafana Web UI is protected by a `username` and `password`. In Dingo Prometheus™ Credentials, look for the **Grafana Credentials**:
+
+    ![installation-prometheus-grafana-credentials.png](images/installation-prometheus-grafana-credentials.png)
+
+2. If you do not know the system domain for the deployment, then select **Pivotal Elastic Runtime > Settings > Domains** to locate the configured system domain.
+
+3. Open a browser and navigate to `grafana.YOUR-SYSTEM-DOMAIN`. For example, if the system domain is `system.example.com`, then point your browser to `grafana.system.example.com`.
+
+4. Log in using the Grafana credentials for the `admin` user. The Grafana dashboard appears.
+
+    ![installation-prometheus-grafana-dashboard](images/installation-prometheus-grafana-dashboard.png)
