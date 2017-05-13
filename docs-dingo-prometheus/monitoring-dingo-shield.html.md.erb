@@ -4,7 +4,7 @@ title: Monitoring Dingo Shield™ with Dingo Prometheus™
 
 Dingo Prometheus™ allows you to monitor your [Dingo Shield™](/dingo-shield/) installation. It comes with a set of predefined **Alerts** and **Dashboards** for Dingo Shield™.
 
-## <a id="shield-alerts"></a>Configuration
+## <a id="monitoring-shield-configuration"></a>Configuration
 
 In order to enable **Alerts** and **Dashboards** for Dingo Shield™, perform the following steps:
 
@@ -20,11 +20,11 @@ In order to enable **Alerts** and **Dashboards** for Dingo Shield™, perform th
 
 The install process generally requires several minutes to complete. Once completed, Dingo Prometheus™ will start monitoring your Dingo Shield™ installation.
 
-## <a id="shield-alerts"></a>Alerts
+## <a id="monitoring-shield-alerts"></a>Alerts
 
 Dingo Prometheus™ comes with a set of predefined alerts for Dingo Shield™.
 
-### <a id="shield-jobs-alerts"></a>Shield Jobs
+### <a id="monitoring-shield-alerts-jobs"></a>Shield Jobs
 
 Shield Jobs alerts monitors your **Shield Jobs** status and emits alerts depending on the Job state:
 
@@ -32,12 +32,12 @@ Shield Jobs alerts monitors your **Shield Jobs** status and emits alerts dependi
 
 | Alert | Description |
 | ----- | ----------- |
-| **ShieldJobFailed1d** | I will emit a **warning** alert if a **Shield Job** is **NOT paused** and has been in a **failing status** for more than 1 day |
-| **ShieldJobPaused1d** | I will emit a **warning** alert if a **Shield Job** has been in a **paused state** for more than 1 day |
-| **ShieldJobPending1d** | I will emit a **warning** alert if a **Shield Job** has been in a **pending state** for more than 1 day |
-| **ShieldJobRunning1d** | I will emit a **warning** alert if a **Shield Job** has been in a **running state** for more than 1 day |
+| **ShieldJobFailed1d** | It will emit a **warning** alert if a **Shield Job** is **NOT paused** and has been in a **failing status** for more than 1 day |
+| **ShieldJobPaused1d** | It will emit a **warning** alert if a **Shield Job** has been in a **paused state** for more than 1 day |
+| **ShieldJobPending1d** | It will emit a **warning** alert if a **Shield Job** has been in a **pending state** for more than 1 day |
+| **ShieldJobRunning1d** | It will emit a **warning** alert if a **Shield Job** has been in a **running state** for more than 1 day |
 
-### <a id="shield-exporter-alerts"></a>Shield Exporter
+### <a id="monitoring-shield-alerts-exporter"></a>Shield Exporter
 
 Shield Exporter alerts monitors the **Shield Exporter**, the component responsible to scrape metrics from Shield, and emits alerts depending on its state:
 
@@ -45,40 +45,40 @@ Shield Exporter alerts monitors the **Shield Exporter**, the component responsib
 
 | Alert | Description |
 | ----- | ----------- |
-| **ShieldExporterArchivesScrapeError** | I will emit a **critical** alert if the exporter is unable to scrape **Archives** metrics from Shield during the last 10 minutes |
-| **ShieldExporterArchivesScrapeTooOld** | I will emit a **warning** alert if the last scrape for **Archives** metrics from Shield was more than 10 minutes ago |
-| **ShieldExporterJobsScrapeError** | I will emit a **critical** alert if the exporter is unable to scrape **Jobs** metrics from Shield during the last 10 minutes |
-| **ShieldExporterJobsScrapeTooOld** | I will emit a **warning** alert if the last scrape for **Jobs** metrics from Shield was more than 10 minutes ago |
-| **ShieldExporterRetentionPoliciesScrapeError** | I will emit a **critical** alert if the exporter is unable to scrape **Retention Policies** metrics from Shield during the last 10 minutes |
+| **ShieldExporterArchivesScrapeError** | It will emit a **critical** alert if the exporter is unable to scrape **Archives** metrics from Shield during the last 10 minutes |
+| **ShieldExporterArchivesScrapeTooOld** | It will emit a **warning** alert if the last scrape for **Archives** metrics from Shield was more than 10 minutes ago |
+| **ShieldExporterJobsScrapeError** | It will emit a **critical** alert if the exporter is unable to scrape **Jobs** metrics from Shield during the last 10 minutes |
+| **ShieldExporterJobsScrapeTooOld** | It will emit a **warning** alert if the last scrape for **Jobs** metrics from Shield was more than 10 minutes ago |
+| **ShieldExporterRetentionPoliciesScrapeError** | It will emit a **critical** alert if the exporter is unable to scrape **Retention Policies** metrics from Shield during the last 10 minutes |
 | **ShieldExporterRetentionPoliciesScrapeTooOld** | I will emit a **warning** alert if the last scrape for **Retention Policies** metrics from Shield was more than 10 minutes ago |
-| **ShieldExporterSchedulesScrapeError** | I will emit a **critical** alert if the exporter is unable to scrape **Schedules** metrics from Shield during the last 10 minutes |
-| **ShieldExporterSchedulesScrapeTooOld** | I will emit a **warning** alert if the last scrape for **Schedules** metrics from Shield was more than 10 minutes ago |
-| **ShieldExporterStatusScrapeError** | I will emit a **critical** alert if the exporter is unable to scrape **Status** metrics from Shield during the last 10 minutes |
-| **ShieldExporterStatusScrapeTooOld** | I will emit a **warning** alert if the last scrape for **Status** metrics from Shield was more than 10 minutes ago |
-| **ShieldExporterStoresScrapeError** | I will emit a **critical** alert if the exporter is unable to scrape **Stores** metrics from Shield during the last 10 minutes |
-| **ShieldExporterStoresScrapeTooOld** | I will emit a **warning** alert if the last scrape for **Stores** metrics from Shield was more than 10 minutes ago |
-| **ShieldExporterTargetsScrapeError** | I will emit a **critical** alert if the exporter is unable to scrape **Targets** metrics from Shield during the last 10 minutes |
-| **ShieldExporterTargetsScrapeTooOld** | I will emit a **warning** alert if the last scrape for **Targets** metrics from Shield was more than 10 minutes ago |
-| **ShieldExporterTasksScrapeError** | I will emit a **critical** alert if the exporter is unable to scrape **Tasks** metrics from Shield during the last 10 minutes |
-| **ShieldExporterTasksScrapeTooOld** | I will emit a **warning** alert if the last scrape for **Tasks** metrics from Shield was more than 10 minutes ago |
+| **ShieldExporterSchedulesScrapeError** | It will emit a **critical** alert if the exporter is unable to scrape **Schedules** metrics from Shield during the last 10 minutes |
+| **ShieldExporterSchedulesScrapeTooOld** | It will emit a **warning** alert if the last scrape for **Schedules** metrics from Shield was more than 10 minutes ago |
+| **ShieldExporterStatusScrapeError** | It will emit a **critical** alert if the exporter is unable to scrape **Status** metrics from Shield during the last 10 minutes |
+| **ShieldExporterStatusScrapeTooOld** | It will emit a **warning** alert if the last scrape for **Status** metrics from Shield was more than 10 minutes ago |
+| **ShieldExporterStoresScrapeError** | It will emit a **critical** alert if the exporter is unable to scrape **Stores** metrics from Shield during the last 10 minutes |
+| **ShieldExporterStoresScrapeTooOld** | It will emit a **warning** alert if the last scrape for **Stores** metrics from Shield was more than 10 minutes ago |
+| **ShieldExporterTargetsScrapeError** | It will emit a **critical** alert if the exporter is unable to scrape **Targets** metrics from Shield during the last 10 minutes |
+| **ShieldExporterTargetsScrapeTooOld** | It will emit a **warning** alert if the last scrape for **Targets** metrics from Shield was more than 10 minutes ago |
+| **ShieldExporterTasksScrapeError** | It will emit a **critical** alert if the exporter is unable to scrape **Tasks** metrics from Shield during the last 10 minutes |
+| **ShieldExporterTasksScrapeTooOld** | It will emit a **warning** alert if the last scrape for **Tasks** metrics from Shield was more than 10 minutes ago |
 
-## <a id="dashboards"></a>Dashboards
+## <a id="monitoring-shield-dashboards"></a>Dashboards
 
 Dingo Prometheus™ comes with a set predefined dashboards for Dingo Shield™.
 
-### <a id="shield-summary-dashboard"></a>Shield Summary
+### <a id="monitoring-shield-dashboard-summary"></a>Shield Summary
 
 The "**Shield: Summary**" dahboard provides an overall view of your **Shield installation**:
 
   ![monitoring-shield-summary-dashboard](images/monitoring-shield-summary-dashboard.png)
 
-### <a id="shield-tasks-dashboard"></a>Shield Tasks
+### <a id="monitoring-shield-dashboard-tasks"></a>Shield Tasks
 
 The "**Shield: Tasks**" dahboard provides an overall view of your **Shield Tasks**:
 
   ![monitoring-shield-tasks-dashboard](images/monitoring-shield-tasks-dashboard.png)
 
-### <a id="shield-exporter-dashboard"></a>Shield Exporter
+### <a id="monitoring-shield-dashboard-exporter"></a>Shield Exporter
 
 The "**Prometheus: Shield Exporter**" dahboard provides an overall view of your **Shield Exporter**:
 
