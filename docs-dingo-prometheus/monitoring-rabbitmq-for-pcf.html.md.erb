@@ -3,3 +3,39 @@ title: Monitoring Pivotal RabbitMQ for PCF&reg; with Dingo Prometheus™
 ---
 
 Dingo Prometheus™ allows you to monitor your [Pivotal RabbitMQ for PCF&reg;](https://network.pivotal.io/products/pivotal-rabbitmq-service/) installation. It comes with a set of predefined **Alerts** and **Dashboards** for RabbitMQ.
+
+## <a id="monitoring-rabbitmq-configuration"></a>Configuration
+
+In order to enable **Alerts** and **Dashboards** for Pivotal RabbitMQ for PCF&reg, perform the following steps:
+
+1. In Pivotal Ops Manager, navigate to **Dingo Prometheus™ > Settings > Monitoring**.
+
+2. Enable the **Monitor RabbitMQ for PCF&reg?** option:
+
+    ![monitoring-rabbitmq-prometheus-configuration](images/monitoring-rabbitmq-prometheus-configuration.png)
+
+3. Click **Save**.
+
+4. Return to the Ops Manager dashboard via the **< Installation Dashboard** link at the top left and press **Apply Changes**.
+
+The install process generally requires several minutes to complete. Once completed, Dingo Prometheus™ will start monitoring your Pivotal RabbitMQ for PCF&reg; installation.
+
+## <a id="monitoring-rabbitmq-alerts"></a>Alerts
+
+Dingo Prometheus™ comes with a set of predefined alerts for Pivotal RabbitMQ for PCF&reg;.
+
+### <a id="monitoring-rabbitmq-nodes-alerts"></a>Nodes
+
+Nodes alerts monitors your **RabbitMQ Nodes** status and emits alerts depending on the node state:
+
+![monitoring-rabbitmq-nodes-alerts](images/monitoring-rabbitmq-nodes-alerts.png)
+
+| Alert | Description |
+| ----- | ----------- |
+| **PRabbitMQServerDown** | It will emit a **critical** alert if a **RabbitMQ Server Node** has been **down** during the last 5 minutes |
+| **PRabbitMQHaProxyDown** | It will emit a **critical** alert if a **RabbitMQ HAProxy Node** has been **down** during the last 5 minutes |
+| **PRabbitMQServiceBrokerDown** | It will emit a **critical** alert if a **RabbitMQ Service Broker Node** has been **down** during the last 5 minutes |
+
+## <a id="monitoring-rabbitmq-dashboards"></a>Dashboards
+
+Dingo Prometheus™ comes with a set predefined dashboards for Pivotal RabbitMQ for PCF&reg;.

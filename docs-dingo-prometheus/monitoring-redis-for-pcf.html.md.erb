@@ -4,3 +4,53 @@ title: Monitoring Pivotal Redis for PCF&reg; with Dingo Prometheus™
 
 Dingo Prometheus™ allows you to monitor your [Pivotal Redis for PCF&reg;](https://network.pivotal.io/products/p-redis/) installation. It comes with a set of predefined **Alerts** and **Dashboards** for Redis.
 
+## <a id="monitoring-redis-configuration"></a>Configuration
+
+In order to enable **Alerts** and **Dashboards** for Pivotal Redis for PCF&reg, perform the following steps:
+
+1. In Pivotal Ops Manager, navigate to **Dingo Prometheus™ > Settings > Monitoring**.
+
+2. Enable the **Monitor Redis for PCF&reg?** option:
+
+    ![monitoring-redis-prometheus-configuration](images/monitoring-redis-prometheus-configuration.png)
+
+3. Click **Save**.
+
+4. Return to the Ops Manager dashboard via the **< Installation Dashboard** link at the top left and press **Apply Changes**.
+
+The install process generally requires several minutes to complete. Once completed, Dingo Prometheus™ will start monitoring your Pivotal Redis for PCF&reg; installation.
+
+## <a id="monitoring-redis-alerts"></a>Alerts
+
+Dingo Prometheus™ comes with a set of predefined alerts for Pivotal Redis for PCF&reg;.
+
+### <a id="monitoring-redis-nodes-alerts"></a>Nodes
+
+Nodes alerts monitors your **Redis Nodes** status and emits alerts depending on the node state:
+
+![monitoring-redis-nodes-alerts](images/monitoring-redis-nodes-alerts.png)
+
+| Alert | Description |
+| ----- | ----------- |
+| **PRedisNoClientsConnected** | It will emit a **warning** alert if a Redis node had **NO clients connected** during the last 30 minutes |
+| **PRedisRejectedConnections** | It will emit a **warning** alert if a Redis node had **rejected connections** during the last 30 minutes |
+| **PRedisHighMemoryFragmentation** | It will emit a **warning** alert if a Redis node had **more than 30% of memory fragmentation** during the last 30 minutes |
+| **PRedisHighAOFRewriteTime** | It will emit a **warning** alert if the last **AOF rewrite** took more than 10 minutes during the last 30 minutes |
+| **PRedisHighRDBBgSaveTime** | It will emit a **warning** alert if the last **RDB bgsave** took more than 10 minutes during the last 30 minutes |
+
+### <a id="monitoring-redis-service-broker-alerts"></a>Service Broker
+
+Service Broker alerts monitors your **Redis Service Broker** status and emits alerts depending on its state:
+
+![monitoring-redis-alerts](images/monitoring-redis-service-broker-alerts.png)
+
+| Alert | Description |
+| ----- | ----------- |
+| **PRedisServiceBrokerDedicatedPlanLowVMsAvailable** | It will emit a **warning** alert if there are **less than 10%** of VMs available for the **Dedicated Plan** during the last 5 minutes |
+| **PRedisServiceBrokerDedicatedPlanNoVMsAvailable** | It will emit a **critical** alert if **there are NOT any VMs available** for the **Dedicated Plan** during the last 5 minutes |
+| **PRedisServiceBrokerSharedPlanLowInstancesAvailable** | It will emit a **warning** alert if there are **less than 10%** of Instances available for the **Shared Plan** during the last 5 minutes |
+| **PRedisServiceBrokerSharedPlanNoInstancesAvailable** | It will emit a **critical** alert if **there are NOT any Instances available** for the **Shared Plan** during the last 5 minutes |
+
+## <a id="monitoring-redis-dashboards"></a>Dashboards
+
+Dingo Prometheus™ comes with a set predefined dashboards for Pivotal Redis for PCF&reg;.
