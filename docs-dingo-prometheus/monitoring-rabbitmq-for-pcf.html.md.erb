@@ -4,7 +4,7 @@ title: Monitoring Pivotal RabbitMQ for PCF&reg; with Dingo Prometheus™
 
 Dingo Prometheus™ allows you to monitor your [Pivotal RabbitMQ for PCF&reg;](https://network.pivotal.io/products/pivotal-rabbitmq-service/) installation. It comes with a set of predefined **Alerts** and **Dashboards** for RabbitMQ.
 
-## <a id="monitoring-rabbitmq-configuration"></a>Configuration
+## <a id="monitoring-p-rabbitmq-configuration"></a>Configuration
 
 In order to enable **Alerts** and **Dashboards** for Pivotal RabbitMQ for PCF&reg, perform the following steps:
 
@@ -12,7 +12,7 @@ In order to enable **Alerts** and **Dashboards** for Pivotal RabbitMQ for PCF&re
 
 2. Enable the **Monitor RabbitMQ for PCF&reg?** option:
 
-    ![monitoring-rabbitmq-prometheus-configuration](images/monitoring-rabbitmq-prometheus-configuration.png)
+    ![monitoring-p-rabbitmq-prometheus-configuration](images/monitoring-p-rabbitmq-prometheus-configuration.png)
 
 3. Click **Save**.
 
@@ -20,15 +20,15 @@ In order to enable **Alerts** and **Dashboards** for Pivotal RabbitMQ for PCF&re
 
 The install process generally requires several minutes to complete. Once completed, Dingo Prometheus™ will start monitoring your Pivotal RabbitMQ for PCF&reg; installation.
 
-## <a id="monitoring-rabbitmq-alerts"></a>Alerts
+## <a id="monitoring-p-rabbitmq-alerts"></a>Alerts
 
 Dingo Prometheus™ comes with a set of predefined alerts for Pivotal RabbitMQ for PCF&reg;.
 
-### <a id="monitoring-rabbitmq-nodes-alerts"></a>Nodes
+### <a id="monitoring-p-rabbitmq-nodes-alerts"></a>Nodes
 
 Nodes alerts monitors your **RabbitMQ Nodes** status and emits alerts depending on the node state:
 
-![monitoring-rabbitmq-nodes-alerts](images/monitoring-rabbitmq-nodes-alerts.png)
+![monitoring-p-rabbitmq-nodes-alerts](images/monitoring-p-rabbitmq-nodes-alerts.png)
 
 | Alert | Description |
 | ----- | ----------- |
@@ -36,6 +36,41 @@ Nodes alerts monitors your **RabbitMQ Nodes** status and emits alerts depending 
 | **PRabbitMQHaProxyDown** | It will emit a **critical** alert if a **RabbitMQ HAProxy Node** has been **down** during the last 5 minutes |
 | **PRabbitMQServiceBrokerDown** | It will emit a **critical** alert if a **RabbitMQ Service Broker Node** has been **down** during the last 5 minutes |
 
-## <a id="monitoring-rabbitmq-dashboards"></a>Dashboards
+### <a id="monitoring-p-rabbitmq-service-broker-alerts"></a>Service Broker
+
+Service Broker alerts monitors your **RabbitMQ Service Broker** status and emits alerts depending on its state:
+
+![monitoring-p-rabbitmq-alerts](images/monitoring-p-rabbitmq-service-broker-alerts.png)
+
+| Alert | Description |
+| ----- | ----------- |
+| **PRabbitMQServiceBrokerOnDemandLowInstancesAvailable** | It will emit a **warning** alert if there are **less than 10%** of Instances available for the **On Demand Service Broker** during the last 30 minutes |
+| **PRabbitMQServiceBrokerOnDemandNoInstancesAvailable** | It will emit a **critical** alert if **there are NOT any Instances available** for the **On Demand Service Broker** during the last 30 minutes |
+
+## <a id="monitoring-p-rabbitmq-dashboards"></a>Dashboards
 
 Dingo Prometheus™ comes with a set predefined dashboards for Pivotal RabbitMQ for PCF&reg;.
+
+### <a id="monitoring-p-rabbitmq-dashboard-overview"></a>Overview
+
+The "**P-RabbitMQ: Overview**" dashboard provides an overall view of your **RabbitMQ Nodes**:
+
+  ![monitoring-p-rabbitmq-overview-dashboard](images/monitoring-p-rabbitmq-overview-dashboard.png)
+
+### <a id="monitoring-p-rabbitmq-dashboard-haproxy"></a>HAProxy
+
+The "**P-RabbitMQ: HAProxy**" dashboard provides an overall view of your **RabbitMQ HAProxy**:
+
+  ![monitoring-p-rabbitmq-haproxy-dashboard](images/monitoring-p-rabbitmq-haproxy-dashboard.png)
+
+### <a id="monitoring-p-rabbitmq-dashboard-queues"></a>Queues
+
+The "**P-RabbitMQ: Queues**" dashboard provides an overall view of your **RabbitMQ Queuesy**:
+
+  ![monitoring-p-rabbitmq-queues-dashboard](images/monitoring-p-rabbitmq-queues-dashboard.png)
+
+### <a id="monitoring-p-rabbitmq-dashboard-components"></a>Components
+
+The "**P-RabbitMQ: rabbitmq-metrics**" dashboard provides an overall view of your **RabbitMQ Components**:
+
+  ![monitoring-p-rabbitmq-components-dashboard](images/monitoring-p-rabbitmq-components-dashboard.png)
