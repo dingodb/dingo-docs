@@ -1,0 +1,34 @@
+---
+title: Known Issues
+---
+
+* Each service instance (SI) only supports provisioning a single topic
+* No additional authentication nor authorization is included with each set of credentials to Kafka, beyond the random unique GUID for the topic name
+* Kafka Manager is not automatically configured for the zookeeper/kafka cluster deployed by Dingo Kafka. [See instructions for manually setup](admin-kakfa-manager.html).
+
+## Installation help
+
+If Dingo Kafka tile fails to install, check the Installation Logs.
+
+Check if the bottom of the logs looks similar to `Could not find service redis-for-kafka to bind to dingo-kafka-broker`:
+
+```
+FAILED
+Could not find service redis-for-kafka to bind to dingo-kafka-broker
+
+[stderr]
+None
+
+
+Errand 'kafka_service_broker_deploy' completed with error (exit code 1)
+===== 2017-05-12 06:29:37 UTC Finished "bundle exec bosh -n run errand kafka_service_broker_deploy"; Duration: 187s; Exit Status: 1
+Exited with 1.
+```
+
+If this is the case then you have not yet installed the Dingo Redis tile.
+
+1. You must delete the Dingo Kafka tile. It is important that the Dingo Redis tile is already installed successfully before installing Dingo Kafka.
+
+2. Install the Dingo Redis tile.
+
+3. Install Dingo Kafka tile again.

@@ -1,0 +1,67 @@
+---
+title: Installing to Pivotal Ops Manager
+---
+
+## <a id="requirements"></a>Requirements
+
+* Pivotal Ops Manager&reg;
+* Pivotal Cloud Foundry&reg;
+* Dingo Redis
+
+## <a id="dingo-redis"></a>Confirm Dingo Redis installed
+
+On the Ops Manager dashboard confirm that Dingo Redis is already installed.
+
+![dingo-redis-installed](images/dingo-redis-installed.png)
+
+## <a id="upload-tile"></a>Upload tile
+
+See [Downloads](download.html) for instructions for downloading the latest tile.
+
+Click "Import a Product" on the left hand side of your Ops Manager dashboard. Select the `dingo-kafka-x.y.z.pivotal` file to upload.
+
+## <a id="installation"></a>Installation
+
+The "Dingo Kafka" product will appear in the "Available Products" list. Click "Add" to move it to the Installation Dashboard.
+
+The first time you upload/install the tile it will appear with a green lower border. This means it is immediately ready to be installed - there is no additional mandatory configuration that you will need to provide.
+
+Return to the Ops Manager dashboard via the "< Installation Dashboard" link at the top left.
+
+The Dingo Kafka tile is now green and is ready to be installed.
+
+Press "Apply Changes".
+
+## <a id="verification"></a>Verification
+
+The `dingo-kafka` service should be available to all users after installation. Observe it in the marketplace:
+
+```
+cf marketplace
+```
+
+The output will look like:
+
+```
+Getting services from marketplace in org system / space dingo-kafka as admin...
+OK
+
+service      plans      description
+dingo-kafka  topic      Apache Kafka 0.10
+```
+
+### <a id="verification-create-service"></a>Create service
+
+To confirm that you and your users can create & delete Kafka database:
+
+```
+cf create-service dingo-kafka topic test-kafka
+```
+
+### <a id="verification-delete-service"></a>Delete service
+
+To destroy the test databases:
+
+```
+cf delete-service test-kafka -f
+```

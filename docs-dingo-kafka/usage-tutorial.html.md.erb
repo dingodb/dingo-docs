@@ -1,0 +1,140 @@
+---
+title: Usage tutorial
+---
+
+This page is a guided walk-thru of basic usage features:
+
+* Deploying sample REST API app to Pivotal Cloud Foundry
+* Provisioning Dingo Kafka database and binding to the app
+* Interacting with the app, which stores/retrieves data from Dingo Kafka
+* Deleting a database
+
+## Deploying sample REST API app to Pivotal Cloud Foundry
+
+This app is an example of how you can consume the Dingo Kafka service within an application.
+
+The app provides an API to end users (for example `curl` commands) to get/set/delete key value pairs. The data is stored in a Dingo Kafka service instance.
+
+### Using with Pivotal Cloud Foundry
+
+Check that Dingo Kafka has been installed by your platform operators:
+
+```
+cf marketplace -s dingo-kafka
+```
+
+The output might look like:
+
+```
+Getting service plan information for service dingo-kafka as admin...
+OK
+
+service plan   description     free or paid
+topic          Share a topic   free
+```
+
+### Provisioning and binding
+
+Deploy the app by pushing it to your Pivotal Cloud Foundry and binding with the Dingo Kafka service:
+
+```
+git clone https://github.com/dingotiles/dingo-kafka-example-ruby-app
+cd dingo-kafka-example-ruby-app
+cf push --no-start --random-route
+cf create-service dingo-kafka ready Kafka
+cf bind-service dingo-kafka-example-ruby-app Kafka
+cf start dingo-kafka-example-ruby-app
+```
+
+The final terminal output will include the URL:
+
+```
+requested state: started
+instances: 1/1
+usage: 256M x 1 instances
+urls: dingo-kafka-example-ruby-app-noncash-bisphenoid.apps.pcf110.starkandwayne.com
+last uploaded: Sat Apr 15 18:26:03 UTC 2017
+stack: cflinuxfs2
+buildpack: ruby_buildpack
+```
+
+In the example above, the application is now running at `https://dingo-kafka-example-ruby-app-noncash-bisphenoid.apps.pcf110.starkandwayne.com`.
+
+
+### Interact with app API
+
+The app's API can be interacted with using `curl` to `PUT`, `GET`, and `DELETE` values, which in turn are stored/fetched/deleted from a Dingo Kafka service instance.
+
+#### PUT /:key
+
+Sets the value stored in Kafka at the specified key to a value posted in the 'data' field. Example:
+
+```
+$ export APP=https://dingo-kafka-example-ruby-app-noncash-bisphenoid.apps.pcf110.starkandwayne.com
+$ curl -k -X PUT $APP/foo -d 'data=bar'
+success
+```
+
+#### GET /:key
+
+Returns the value stored in Kafka at the key specified by the path. Example:
+
+```
+$ curl -k -X GET $APP/foo
+bar
+```
+
+#### DELETE /:key
+
+Deletes a Kafka key spcified by the path. Example:
+
+```
+$ curl -k -X DELETE $APP/foo
+success
+$ curl -k -X GET $APP/foo
+key not present
+```
+
+### Service credentials
+
+When the Dingo Kafka service instance is bound to the app, it has provided a set of credentials. The app then used those credentials to connect to Dingo Kafka with a Kafka client library.
+
+To see the credentials:
+
+```
+cf env dingo-kafka-example-ruby-app
+```
+
+The output will include a snippet like:
+
+```json
+{
+ "VCAP_SERVICES": {
+  "dingo-kafka": [
+   {
+    "credentials": {
+     "hostname": "10.213.10.48",
+     "password": "crfdm0j9qyovuzuj",
+     "port": "32771",
+     "ports": {
+      "6379/tcp": "32771"
+     }
+    },
+    "label": "dingo-kafka",
+    "name": "Kafka",
+    "plan": "ready",
+    "provider": null,
+    "syslog_drain_url": null,
+    "tags": [
+     "Kafka32",
+     "Kafka",
+     "key-value"
+    ],
+    "volume_mounts": []
+   }
+  ]
+ }
+}
+```
+
+The `credentials` object contains `hostname`, `port` and `password` connection information which you will pass into your application's Kafka client.

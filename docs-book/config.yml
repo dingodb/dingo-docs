@@ -29,6 +29,9 @@ sections:
 - repository: {name: dingotiles/docs-dingo-prometheus}
   directory: dingo-prometheus
   subnav_template: dingo_prometheus_subnav.erb
+- repository: {name: dingotiles/docs-dingo-kafka}
+  directory: dingo-kafka
+  subnav_template: dingo_kafka_subnav.erb
 
 template_variables:
   title: Dingo Tiles™
