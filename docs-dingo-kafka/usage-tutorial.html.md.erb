@@ -56,7 +56,7 @@ To build and deploy the sample producer application:
 ```bash
 cd kafka-sample-producer
 mvn clean install
-cf push --no-route
+cf push
 ```
 
 This application is a headless application - it continously pushes events to the Kafka topic.
@@ -92,7 +92,7 @@ To build and deploy the sample consumer application:
 cd -
 cd kafka-sample-consumer
 mvn clean install
-cf push --no-route
+cf push
 ```
 
 This application is a headless application - it continously pushes events to the Kafka topic.
