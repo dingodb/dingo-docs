@@ -9,13 +9,13 @@ Dingo Kafka allows all Pivotal Cloud Foundry&reg; users to create and use Kafka 
 Create a new Kafka topic using the `cf create-service` (or `cf cs` alias):
 
 ```
-cf create-service dingo-kafka topic myapp-kakfa
+cf create-service dingo-kafka topic myapp-kafka
 ```
 
 You can then share the Kafka topic with one or more applications within the same Cloud Foundry "space".
 
 ```
-cf bind-service myapp myapp-kakfa
+cf bind-service myapp myapp-kafka
 ```
 
 Applications will have access to the connection information when they are next pushed, restarted or restaged.
