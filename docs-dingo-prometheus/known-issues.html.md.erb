@@ -2,4 +2,9 @@
 title: Known Issues
 ---
 
-Dingo Prometheus™ is currently in BETA. Upgrades are NOT guaranted. We encourage you to [contact the Dingo Tiles™ team](contact.html) for help configuring and installing this product.
+* Dingo Prometheus™ is currently in preview BETA. Upgrades to newer versions are NOT guaranted.
+* Dingo Prometheus™ scrapes your **Ops Manager Director** to get detailed information about deployments. This action has two side effects:
+    * In order to get detailed VM metrics, a new BOSH task needs to be created. You will observe then that the number of BOSH Tasks is unusually high,
+    * In some rare scenarios where the **Ops Manager Director** has low resources (CPU, Memory, ...), we have detected that the BOSH workers process may stuck and stop processing the queue.
+
+We encourage you to [contact the Dingo Tiles™ team](contact.html) for help configuring and installing this product.
