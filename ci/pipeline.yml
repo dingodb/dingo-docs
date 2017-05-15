@@ -84,6 +84,7 @@ resources:
         - docs-dingo-redis/*
         - docs-dingo-shield/*
         - docs-dingo-prometheus/*
+        - docs-dingo-kafka/*
 
   - name: docs-staging
     type: git
@@ -101,6 +102,7 @@ resources:
         - docs-dingo-redis/*
         - docs-dingo-shield/*
         - docs-dingo-prometheus/*
+        - docs-dingo-kafka/*
 
   - name: docs-web-app
     type: cf
