@@ -208,23 +208,15 @@ The install process generally requires several minutes to complete. The **Node M
     bosh runtime-config > runtime-config
     ```
 
-4. Remove the `node-exporter` release and addon::
+4. Remove the **Node Metrics Addon** configuration:
 
     ```
-    releases:
-      - name: node-exporter
-        version: x.y.z
+    releases: []
 
-    addons:
-      - name: node_exporter
-        jobs:
-          - name: node_exporter
-            release: node-exporter
-        include:
-          stemcell:
-            - os: ubuntu-trusty
-        properties: {}
+    addons: []
     ```
+
+    **NOTE**: If you installed other BOSH Addons, you must remove only the `node-exporter` release and addon.
 
 5. Update your runtime configuration:
 
