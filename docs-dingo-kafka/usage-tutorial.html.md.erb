@@ -4,105 +4,119 @@ title: Usage tutorial
 
 This page is a guided walk-thru of basic usage features:
 
-* Deploying sample REST API app to Pivotal Cloud Foundry
-* Provisioning Dingo Kafka database and binding to the app
-* Interacting with the app, which stores/retrieves data from Dingo Kafka
-* Deleting a database
+* Deploying a sample producer and sample consumer applications to Pivotal Cloud Foundry
+* Provisioning Dingo Kafka database and binding to the two apps
+* Observing their intercommunication via Apache Kafka
+* Cleanup
 
-## Deploying sample REST API app to Pivotal Cloud Foundry
+![kafka-producer-consumer-demo](images/kafka-producer-consumer-demo.png)
 
-This app is an example of how you can consume the Dingo Kafka service within an application.
+## Preparation
 
-The app provides an API to end users (for example `curl` commands) to get/set/delete key value pairs. The data is stored in a Dingo Kafka service instance.
+Create a new Pivotal Cloud Foundry space:
 
-### Using with Pivotal Cloud Foundry
-
-Check that Dingo Kafka has been installed by your platform operators:
-
-```
-cf marketplace -s dingo-kafka
+```bash
+cf create-space kakfa-tutorial
+cf t -s kakfa-tutorial
 ```
 
-The output might look like:
+Clone the repository containing the two sample applications:
 
+```bash
+git clone https://github.com/dingotiles/dingo-kafka-sample-apps.git
 ```
-Getting service plan information for service dingo-kafka as admin...
-OK
+
+## Discover Dingo Kafka service
+
+Confirm that Dingo Kafka has been installed by your platform operators:
+
+```bash
+$ cf marketplace
+
+service        plans   description
+dingo-kafka    topic   Apache Kafka 0.10
+...
+
+$ cf marketplace -s dingo-kafka
 
 service plan   description     free or paid
 topic          Share a topic   free
 ```
 
-### Provisioning and binding
-
-Deploy the app by pushing it to your Pivotal Cloud Foundry and binding with the Dingo Kafka service:
+## Provision shared Apache Kafka topic
 
 ```
-git clone https://github.com/dingotiles/dingo-kafka-example-ruby-app
-cd dingo-kafka-example-ruby-app
-cf push --no-start --random-route
-cf create-service dingo-kafka ready Kafka
-cf bind-service dingo-kafka-example-ruby-app Kafka
-cf start dingo-kafka-example-ruby-app
+$ cf create-service dingo-kafka topic kafka-service
 ```
 
-The final terminal output will include the URL:
+## Deploy producer app to Pivotal Cloud Foundry
 
-```
-requested state: started
-instances: 1/1
-usage: 256M x 1 instances
-urls: dingo-kafka-example-ruby-app-noncash-bisphenoid.apps.pcf110.starkandwayne.com
-last uploaded: Sat Apr 15 18:26:03 UTC 2017
-stack: cflinuxfs2
-buildpack: ruby_buildpack
+To build and deploy the sample producer application:
+
+```bash
+cd kafka-sample-producer
+mvn clean install
+cf push --no-route
 ```
 
-In the example above, the application is now running at `https://dingo-kafka-example-ruby-app-noncash-bisphenoid.apps.pcf110.starkandwayne.com`.
+This application is a headless application - it continously pushes events to the Kafka topic.
 
+To observe it in action, watch its logs:
 
-### Interact with app API
-
-The app's API can be interacted with using `curl` to `PUT`, `GET`, and `DELETE` values, which in turn are stored/fetched/deleted from a Dingo Kafka service instance.
-
-#### PUT /:key
-
-Sets the value stored in Kafka at the specified key to a value posted in the 'data' field. Example:
-
-```
-$ export APP=https://dingo-kafka-example-ruby-app-noncash-bisphenoid.apps.pcf110.starkandwayne.com
-$ curl -k -X PUT $APP/foo -d 'data=bar'
-success
+```bash
+cf logs kafka-sample-producer
 ```
 
-#### GET /:key
-
-Returns the value stored in Kafka at the key specified by the path. Example:
+An example of the logs might be:
 
 ```
-$ curl -k -X GET $APP/foo
-bar
+2017-05-15T13:07:16.88+1000 [APP/PROC/WEB/0] OUT 2017-05-15 03:07:16 [pool-1-thread-1] INFO  o.a.kafka.common.utils.AppInfoParser - Kafka version : 0.10.0.1
+2017-05-15T13:07:16.88+1000 [APP/PROC/WEB/0] OUT 2017-05-15 03:07:16 [pool-1-thread-1] INFO  o.a.kafka.common.utils.AppInfoParser - Kafka commitId : a7a17cdec9eaa6c5
+2017-05-15T13:07:26.87+1000 [APP/PROC/WEB/0] OUT 2017-05-15 03:07:26 [pool-1-thread-1] INFO  i.p.c.s.p.app.KafkaSampleProducer - sending message: the time is now 03:07:26
+2017-05-15T13:07:26.87+1000 [APP/PROC/WEB/0] OUT 2017-05-15 03:07:26 [pool-1-thread-1] INFO  o.a.k.c.producer.ProducerConfig - ProducerConfig values:
+2017-05-15T13:07:26.87+1000 [APP/PROC/WEB/0] OUT 	metric.reporters = []
+2017-05-15T13:07:26.87+1000 [APP/PROC/WEB/0] OUT 	metadata.max.age.ms = 300000
+2017-05-15T13:07:26.87+1000 [APP/PROC/WEB/0] OUT 	reconnect.backoff.ms = 50
+2017-05-15T13:07:26.87+1000 [APP/PROC/WEB/0] OUT 	sasl.kerberos.ticket.renew.window.factor = 0.8
+2017-05-15T13:07:26.87+1000 [APP/PROC/WEB/0] OUT 	bootstrap.servers = [10.244.0.148:9092, 10.244.0.149:9092, 10.244.0.155:9092]
+...
 ```
 
-#### DELETE /:key
+## Deploying consumer app
 
-Deletes a Kafka key spcified by the path. Example:
+Open another terminal window.
+
+To build and deploy the sample consumer application:
 
 ```
-$ curl -k -X DELETE $APP/foo
-success
-$ curl -k -X GET $APP/foo
-key not present
+cd -
+cd kafka-sample-consumer
+mvn clean install
+cf push --no-route
 ```
 
-### Service credentials
+This application is a headless application - it continously pushes events to the Kafka topic.
 
-When the Dingo Kafka service instance is bound to the app, it has provided a set of credentials. The app then used those credentials to connect to Dingo Kafka with a Kafka client library.
+To observe it in action, watch its logs:
+
+```bash
+cf logs kafka-sample-consumer
+```
+
+An example of each message received from the `kafka-sample-producer` via Apache Kafka is:
+
+```
+2017-05-15T13:12:56.98+1000 [APP/PROC/WEB/0] OUT 2017-05-15 03:12:56 [-kafka-consumer-1] INFO  i.p.c.s.c.app.ConsumerListener - received: ConsumerRecord(topic = 23ff851e-8642-4682-839b-1d1b04125f19, partition = 1, offset = 26, CreateTime = 1494817976982, checksum = 535612902, serialized key size = -1, serialized value size = 49, key = null, value = hello from the KafkaSampleProducer: 1494817976878)
+```
+
+## Service credentials
+
+When the Dingo Kafka service instance is bound to the app, it has provided a set of connection credentials. Each application uses those credentials to connect to Apache Kafka with a Kafka client library.
 
 To see the credentials:
 
-```
-cf env dingo-kafka-example-ruby-app
+```bash
+cf env kafka-sample-producer
 ```
 
 The output will include a snippet like:
@@ -113,22 +127,17 @@ The output will include a snippet like:
   "dingo-kafka": [
    {
     "credentials": {
-     "hostname": "10.213.10.48",
-     "password": "crfdm0j9qyovuzuj",
-     "port": "32771",
-     "ports": {
-      "6379/tcp": "32771"
-     }
+     "hostname": "10.244.0.148:9092,10.244.0.149:9092,10.244.0.155:9092",
+     "topicName": "23ff851e-8642-4682-839b-1d1b04125f19",
+     "uri": "kafka://10.244.0.148:9092,10.244.0.149:9092,10.244.0.155:9092/23ff851e-8642-4682-839b-1d1b04125f19"
     },
     "label": "dingo-kafka",
-    "name": "Kafka",
-    "plan": "ready",
+    "name": "kafka-service",
+    "plan": "topic",
     "provider": null,
     "syslog_drain_url": null,
     "tags": [
-     "Kafka32",
-     "Kafka",
-     "key-value"
+     "kafka"
     ],
     "volume_mounts": []
    }
@@ -137,4 +146,10 @@ The output will include a snippet like:
 }
 ```
 
-The `credentials` object contains `hostname`, `port` and `password` connection information which you will pass into your application's Kafka client.
+## Cleanup
+
+```
+cf delete kafka-sample-consumer
+cf delete kafka-sample-producer
+cf delete-service kafka-service
+```
