@@ -4,15 +4,13 @@ title: Dingo Prometheus™ Node Metrics Addon
 
 ## <a id="overview"></a>Overview
 
-The Dingo Prometheus™ Node Metrics Addon is a component that gets detailed OS metrics (CPU, Memory, Disk, Network, ...) from all you VMs.
+The Dingo Prometheus™ Node Metrics Addon is a component that gets detailed OS metrics (CPU, Memory, Disk, Network, ...) from all you VM's Nodes.
 
-## <a id="installation"></a>Installation
-
-### <a id="installation-requirements"></a>Requirements
+## <a id="installation-requirements"></a>Requirements
 
 * Pivotal Ops Manager&reg; version 1.9 or greater
 
-### <a id="installation-manifest"></a>Create the Addon Manifest
+## <a id="installation"></a>Installation
 
 1. In Pivotal Ops Manager, navigate to **Ops Manager Director > Status** and grab the **Ops Manager Director IP Address**:
 
@@ -36,31 +34,31 @@ The Dingo Prometheus™ Node Metrics Addon is a component that gets detailed OS 
 
 5. Target the internal IP address of your BOSH Director. When prompted, enter your BOSH Director credentials:
 
-   ```
-   bosh --ca-cert /var/tempest/workspaces/default/root_ca_certificate target YOUR-BOSH-DIRECTOR-INTERNAL-IP
-   Target set to 'p-bosh'
-   Your username: director
-   Enter password: ******************
-   Logged in as 'director'
-   ```
+    ```
+    bosh --ca-cert /var/tempest/workspaces/default/root_ca_certificate target YOUR-BOSH-DIRECTOR-INTERNAL-IP
+    Target set to 'p-bosh'
+    Your username: director
+    Enter password: ******************
+    Logged in as 'director'
+    ```
 
 6. Navigate to the `/var/tempest/releases` directory and locate the latest version of the `node-exporter-x.y.z.tgz` BOSH release:
 
     ![monitoring-node-exporter-release-version](images/monitoring-node-exporter-release-version.png)
 
-7 . Upload the `node-exporter-x.y.z.tgz` BOSH release:
+7. Upload the `node-exporter-x.y.z.tgz` BOSH release:
 
     ```
     bosh upload release /var/tempest/releases/node-exporter-x.y.z.tgz
     ```
 
-8. Optionally, from the command line, confirm that the upload of the Node Exporter software binary completed:
+8. Optionally, from the command line, confirm that the upload of the `node-exporter` software binary completed:
 
     ```
     bosh releases
     ```
 
-9. Create a YAML file (ie: `node-exporter.yml`) that contains runtime configuration information for Node Metrics Addon, replacing the `x.y.z` with the version of the `node-exporter-x.y.z.tgz` BOSH release:
+9. Create a YAML file (ie: `node-exporter.yml`) that contains runtime configuration information for the **Node Metrics Addon**, replacing the `x.y.z` with the version of the `node-exporter-x.y.z.tgz` BOSH release:
 
     ```
     releases:
@@ -78,13 +76,13 @@ The Dingo Prometheus™ Node Metrics Addon is a component that gets detailed OS 
         properties: {}
     ```
 
-10. Update your runtime configuration to include the Node Metrics Addon:
+10. Update your runtime configuration to include the **Node Metrics Addon**:
 
     ```
     bosh update-runtime-config node-exporter.yml
     ```
 
-    **NOTE**: If you installed other BOSH add-ons, you must merge the Node Metrics Addon manifest into your existing Addon manifest. Append the contents of `node-exporter.yml` to your existing Addon YML file.
+    **NOTE**: If you installed other BOSH Addons, you must merge the **Node Metrics Addon** manifest into your existing Addon manifest. Append the contents of `node-exporter.yml` to your existing Addon YML file.
 
 11. Verify your runtime configuration changes match what you specified in the `node-exporter.yml` file.
 
@@ -94,7 +92,7 @@ The Dingo Prometheus™ Node Metrics Addon is a component that gets detailed OS 
 
 12. Return to Pivotal Ops Manager, and press **Apply Changes**.
 
-The install process generally requires several minutes to complete. The Node Metrics Addon will be installed in all your Nodes.
+The install process generally requires several minutes to complete. The **Node Metrics Addon** will be installed in all your VM's nodes.
 
 ## <a id="monitoring-node-addon-configuration"></a>Configuration
 
@@ -110,11 +108,11 @@ In order to enable **Alerts** and **Dashboards** for Node Metrics, perform the f
 
 4. Return to the Ops Manager dashboard via the **< Installation Dashboard** link at the top left and press **Apply Changes**.
 
-The install process generally requires several minutes to complete. Once completed, Dingo Prometheus™ will start monitoring your Nodes.
+The install process generally requires several minutes to complete. Once completed, Dingo Prometheus™ will start monitoring your VM's nodes.
 
 ## <a id="monitoring-node-addon-dashboards"></a>Dashboards
 
-Dingo Prometheus™ comes with a set predefined dashboards for Node Metrics Addon.
+Dingo Prometheus™ comes with a set predefined dashboards for the **Node Metrics Addon**.
 
 ### <a id="monitoring-node-addon-dashboard-overview"></a>System Overview
 
