@@ -6,6 +6,7 @@ title: Using the Dingo Shield™ CLI
 
 The Shield CLI is well documented and offers a detailed description of all available commands.
 To see the list of commands:
+
 ```
 $ shield commands
 NAME:
@@ -41,6 +42,7 @@ COMMANDS:
 ```
 
 To see the explanation of a specific command:
+
 ```
 $ shield help create-target
 shield create-target [-k] [--raw]
@@ -100,6 +102,7 @@ In order to set up a regularly running job in Shield you must create a number of
 - job
 
 Each of these entities can be created interactively via the CLI by answering the questions presented.
+
 ```
 $ shield create-policy -k
 Policy Name: daily
@@ -121,6 +124,7 @@ Expiration: 10 days
 ```
 
 For the store and target entities a plugin and its configuration must be specified. The plugin configuration must be valid JSON:
+
 ```
 $ shield create-target -k
 Target Name: A Postgres DB
@@ -147,6 +151,7 @@ Plugin:        postgres
 Configuration: {"pg_host":"127.0.0.1","pg_password":"<password>","pg_port":"5432","pg_user":"vcap"}
 Remote IP:     10.0.1.2:5444
 ```
+
 Notice that the `pg_host` is set to `127.0.0.1` in the plugin configuration and the `Remote Ip` is set to `10.0.1.2:5444`. In this case it is assumed that the Shield Agent performing the backup is colocated on the same VM as the PostgreSQL database. The Agent is listening on `10.0.1.2:5444` and the database will be reachable via localhost on that VM. When the backup is run the Shield Daemon will contact the remotely running Agent and pass the configuration which will be used to execute the plugin.
 
 ## Setting up a job
@@ -194,6 +199,7 @@ Notes:
 ```
 
 The job will be run at the time specified in the schedule. It can also be triggered manually from the CLI via:
+
 ```
 $ shield run -k db-backup
 Scheduled immediate run of job
@@ -247,6 +253,7 @@ UUID                                  Target                     Restore IP     
 ## Scripting
 
 The Shield CLI is easy to use in scripts by adding the `--raw` flag. This will make the CLI accept JSON formatted configuration piped from Stdin and output configuration via JSON so that it can be further used by other tools.
+
 ```
 $ echo '{"endpoint":"{\"bucket\":\"backups\"}","name":"default","plugin":"google"}' | \
 > shield --raw create-store -k
