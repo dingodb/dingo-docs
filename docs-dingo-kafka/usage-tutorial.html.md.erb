@@ -51,11 +51,11 @@ $ cf create-service dingo-kafka topic kafka-service
 
 ## Deploy producer app to Pivotal Cloud Foundry
 
-To build and deploy the sample producer application:
+To build and deploy the sample producer application, in the root directory of dingo-kafka-simple-apps git repository we downloaded above:
 
 ```bash
+mvn -Dmaven.test.skip=true install
 cd kafka-sample-producer
-mvn clean install
 cf push
 ```
 
@@ -84,14 +84,13 @@ An example of the logs might be:
 
 ## Deploying consumer app
 
-Open another terminal window.
+Open another terminal window. We've already done a mvn install during the kafka-sample-producer phase, but if that was skipped, run `mvn -Dmaven.test.skip=true install` in the base directory of dingo-kafka-simple-apps:
 
 To build and deploy the sample consumer application:
 
 ```
 cd -
 cd kafka-sample-consumer
-mvn clean install
 cf push
 ```
 
